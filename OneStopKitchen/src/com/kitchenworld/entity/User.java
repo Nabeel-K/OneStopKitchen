@@ -50,12 +50,8 @@ public class User implements Serializable {
 	//bi-directional many-to-one association to Order
 	@OneToMany(mappedBy="user" , fetch=FetchType.EAGER)
 	private List<Orders> orders;
-
-	//bi-directional many-to-one association to Review
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
-	private List<Review> reviews;
 	
-	@OneToOne
+	@OneToOne(mappedBy="user")
 	private Cart cart;
 
 	/**
@@ -69,11 +65,10 @@ public class User implements Serializable {
 	 * @param state
 	 * @param zipcode
 	 * @param orders
-	 * @param reviews
 	 * @param cart
 	 */
 	public User(int userId, String address, String city, String country, String email, String firstName,
-			String lastName, String state, String zipcode, List<Orders> orders, List<Review> reviews, Cart cart) {
+			String lastName, String state, String zipcode, List<Orders> orders, Cart cart) {
 		this.setUserId(userId);
 		this.setAddress(address);
 		this.setCity(city);
@@ -84,7 +79,6 @@ public class User implements Serializable {
 		this.setState(state);
 		this.setZipcode(zipcode);
 		this.setOrders(orders);
-		this.setReviews(reviews);
 		this.setCart(cart);
 	}
 	
@@ -102,6 +96,7 @@ public class User implements Serializable {
 		this.setZipcode(zipcode);
 	}
 	
+	//Constructor for information regarding the users name and location
 	public User(String address, String city, String country, String email, String firstName,
 			String lastName, String state, String zipcode) {
 		this.setAddress(address);
@@ -114,6 +109,7 @@ public class User implements Serializable {
 		this.setZipcode(zipcode);
 	}
 
+	//Constructor using information necessary for account creation
 	public User( String email, String firstName,
 			String lastName) {
 		this.setEmail(email);
@@ -121,6 +117,7 @@ public class User implements Serializable {
 		this.setLastName(lastName);
 	}
 
+	//Constructor for the above with id (to be removed)
 	public User( int id, String email, String firstName,
 			String lastName) {
 		this.setUserId(id);
@@ -212,14 +209,6 @@ public class User implements Serializable {
 		this.orders = orders;
 	}
 
-	public List<Review> getReviews() {
-		return this.reviews;
-	}
-
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
-
 	/**
 	 * @return the cart
 	 */
@@ -257,8 +246,6 @@ public class User implements Serializable {
 		builder.append(zipcode);
 		builder.append(", orders=");
 		builder.append(orders);
-		builder.append(", reviews=");
-		builder.append(reviews);
 		builder.append(", cart=");
 		builder.append(cart);
 		builder.append("]");
@@ -277,7 +264,6 @@ public class User implements Serializable {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
-		result = prime * result + ((reviews == null) ? 0 : reviews.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + userId;
 		result = prime * result + ((zipcode == null) ? 0 : zipcode.hashCode());
@@ -333,11 +319,6 @@ public class User implements Serializable {
 				return false;
 		} else if (!orders.equals(other.orders))
 			return false;
-		if (reviews == null) {
-			if (other.reviews != null)
-				return false;
-		} else if (!reviews.equals(other.reviews))
-			return false;
 		if (state == null) {
 			if (other.state != null)
 				return false;
@@ -353,6 +334,6 @@ public class User implements Serializable {
 		return true;
 	}
 
-
+	
 
 }

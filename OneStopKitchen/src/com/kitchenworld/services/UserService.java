@@ -22,6 +22,7 @@ public class UserService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public User findUserById(int id) {
 		Query getUser = em.createNamedQuery("User.findById");
 		getUser.setParameter("selectId", id);
@@ -30,6 +31,7 @@ public class UserService extends AbstractServices {
 		return results.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers(){
 		Query getUsers = em.createNamedQuery("User.findAll");
 		List<User> results = getUsers.getResultList();

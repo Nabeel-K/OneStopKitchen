@@ -18,55 +18,125 @@ public class CartItems implements Serializable {
 	@Id
 	private Integer id;
 
+	@Column(name="line_number", nullable=false)
+	private Integer lineItems;
+
 	@Column(name = "quantity")
 	private int quantity;
 
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name="cart_id", nullable=false)
 	private Cart cart;
 
 	private static final long serialVersionUID = 1L;
 
-	public CartItems(Integer id, int quantity) {
-		this.setCartItemsKey(id);
-		this.setQuantity(quantity);
-	}
-
+	
+	
 	public CartItems() {
 		super();
 	}
 
+
+
 	/**
-	 * @return the cartItemsKey
+	 * @param id
+	 * @param lineItems
+	 * @param quantity
+	 * @param cart
 	 */
-	public Integer getCartItemsKey() {
+	public CartItems(Integer id, Integer lineItems, int quantity, Cart cart) {
+		this.setId(id);
+		this.setLineItems(lineItems);
+		this.setQuantity(quantity);
+		this.setCart(cart);
+	}
+
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
 		return id;
 	}
 
+
+
 	/**
-	 * @param cartItemsKey the cartItemsKey to set
+	 * @param id the id to set
 	 */
-	public void setCartItemsKey(Integer cartItemsKey) {
-		this.id = cartItemsKey;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
+
+
+	/**
+	 * @return the lineItems
+	 */
+	public Integer getLineItems() {
+		return lineItems;
+	}
+
+
+
+	/**
+	 * @param lineItems the lineItems to set
+	 */
+	public void setLineItems(Integer lineItems) {
+		this.lineItems = lineItems;
+	}
+
+
+
+	/**
+	 * @return the quantity
+	 */
 	public int getQuantity() {
-		return this.quantity;
+		return quantity;
 	}
 
+
+
+	/**
+	 * @param quantity the quantity to set
+	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+
+
+	/**
+	 * @return the cart
+	 */
+	public Cart getCart() {
+		return cart;
+	}
+
+
+	/**
+	 * @param cart the cart to set
+	 */
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Integer [cartItemsKey=");
+		builder.append("CartItems [id=");
 		builder.append(id);
+		builder.append(", lineItems=");
+		builder.append(lineItems);
 		builder.append(", quantity=");
 		builder.append(quantity);
+		builder.append(", cart=");
+		builder.append(cart);
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -74,42 +144,40 @@ public class CartItems implements Serializable {
 		int result = 1;
 		result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lineItems == null) ? 0 : lineItems.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
 
+
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		CartItems other = (CartItems) obj;
 		if (cart == null) {
-			if (other.cart != null) {
+			if (other.cart != null)
 				return false;
-			}
-		} else if (!cart.equals(other.cart)) {
+		} else if (!cart.equals(other.cart))
 			return false;
-		}
 		if (id == null) {
-			if (other.id != null) {
+			if (other.id != null)
 				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		} else if (!id.equals(other.id))
 			return false;
-		}
-		if (quantity != other.quantity) {
+		if (lineItems == null) {
+			if (other.lineItems != null)
+				return false;
+		} else if (!lineItems.equals(other.lineItems))
 			return false;
-		}
+		if (quantity != other.quantity)
+			return false;
 		return true;
 	}
-
-
-
+	
 }

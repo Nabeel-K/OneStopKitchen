@@ -10,7 +10,6 @@ import javax.persistence.Query;
 
 import com.kitchenworld.entity.Category;
 import com.kitchenworld.entity.Product;
-import com.kitchenworld.entity.Category;
 
 /**
  * @author Nabeel Khan
@@ -23,6 +22,7 @@ public class CategoryService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Category findCategoryById(int id) {
 		Query getCategory = em.createNamedQuery("Category.findById");
 		getCategory.setParameter("selectId", id);
@@ -31,6 +31,7 @@ public class CategoryService extends AbstractServices {
 		return results.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Category> findAllCategories(){
 		Query getCategories = em.createNamedQuery("Category.findAll");
 		List<Category> results = getCategories.getResultList();

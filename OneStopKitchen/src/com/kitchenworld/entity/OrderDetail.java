@@ -54,12 +54,12 @@ public class OrderDetail implements Serializable {
 	 */
 	public OrderDetail(Integer id, Integer lineNumber, BigDecimal priceEach, int quantityOrdered, String skuNumber,
 			Orders order) {
-		this.id = id;
-		this.lineNumber = lineNumber;
-		this.priceEach = priceEach;
-		this.quantityOrdered = quantityOrdered;
-		this.skuNumber = skuNumber;
-		this.order = order;
+		this.setId(id);
+		this.setLineNumber(lineNumber);
+		this.setPriceEach(priceEach);
+		this.setQuantityOrdered(quantityOrdered);
+		this.setSkuNumber(skuNumber);
+		this.setOrder(order);
 	}
 
 

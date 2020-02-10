@@ -2,6 +2,8 @@ package com.kitchenworld.entity;
 
 import java.io.Serializable;
 import java.lang.Integer;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -20,25 +22,46 @@ public class Cart implements Serializable {
 	@Id
 	private Integer cartId;
 	
-	@OneToOne(mappedBy = "cart")
+	@OneToOne
 	private User user;
 	
-	@OneToOne
-	private CartItems cartItems;
+	@OneToMany(mappedBy = "cart")
+	private List<CartItems> cartItems;
 	
 	private static final long serialVersionUID = 1L;
 
 	public Cart() {
 		super();
 	}   
+
+
 	/**
 	 * @param cartId
+	 * @param lineItems
 	 * @param user
+	 * @param cartItems
 	 */
-	public Cart(Integer cartId, User user) {
+	public Cart(Integer cartId, User user, List<CartItems> cartItems) {
 		this.setCartId(cartId);
-		this.setUser(user); 
+		this.setUser(user);
+		this.setCartItems(cartItems);
 	}
+
+	/**
+	 * @return the cartItems
+	 */
+	public List<CartItems> getCartItems() {
+		return cartItems;
+	}
+
+
+	/**
+	 * @param cartItems the cartItems to set
+	 */
+	public void setCartItems(List<CartItems> cartItems) {
+		this.cartItems = cartItems;
+	}
+
 
 	public Integer getCartId() {
 		return this.cartId;
@@ -61,6 +84,7 @@ public class Cart implements Serializable {
 		this.user = user;
 	}
 
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -68,17 +92,24 @@ public class Cart implements Serializable {
 		builder.append(cartId);
 		builder.append(", user=");
 		builder.append(user);
+		builder.append(", cartItems=");
+		builder.append(cartItems);
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cartId == null) ? 0 : cartId.hashCode());
+		result = prime * result + ((cartItems == null) ? 0 : cartItems.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -93,6 +124,11 @@ public class Cart implements Serializable {
 				return false;
 		} else if (!cartId.equals(other.cartId))
 			return false;
+		if (cartItems == null) {
+			if (other.cartItems != null)
+				return false;
+		} else if (!cartItems.equals(other.cartItems))
+			return false;
 		if (user == null) {
 			if (other.user != null)
 				return false;
@@ -100,4 +136,7 @@ public class Cart implements Serializable {
 			return false;
 		return true;
 	}
+
+
+	
 }
