@@ -13,7 +13,8 @@ import java.util.List;
 @Table(name="users")
 @NamedQueries(value = {
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.findById", query="SELECT u FROM User u WHERE u.userId = :selectId")
+	@NamedQuery(name="User.findById", query="SELECT u FROM User u WHERE u.userId = :selectId"),
+	@NamedQuery(name="User.deleteById", query="DELETE FROM User u WHERE u.userId = :deleteId")
 })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -82,20 +83,6 @@ public class User implements Serializable {
 		this.setCart(cart);
 	}
 	
-	//May need to get rid of me
-	public User(int userId, String address, String city, String country, String email, String firstName,
-			String lastName, String state, String zipcode) {
-		this.setUserId(userId);
-		this.setAddress(address);
-		this.setCity(city);
-		this.setCountry(country);
-		this.setEmail(email);
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.setState(state);
-		this.setZipcode(zipcode);
-	}
-	
 	//Constructor for information regarding the users name and location
 	public User(String address, String city, String country, String email, String firstName,
 			String lastName, String state, String zipcode) {
@@ -112,15 +99,6 @@ public class User implements Serializable {
 	//Constructor using information necessary for account creation
 	public User( String email, String firstName,
 			String lastName) {
-		this.setEmail(email);
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-	}
-
-	//Constructor for the above with id (to be removed)
-	public User( int id, String email, String firstName,
-			String lastName) {
-		this.setUserId(id);
 		this.setEmail(email);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);

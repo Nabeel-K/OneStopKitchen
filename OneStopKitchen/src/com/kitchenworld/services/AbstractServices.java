@@ -14,7 +14,7 @@ public class AbstractServices {
 	protected EntityManager em = null;
 	
 	public void connect() {
-		emf = Persistence.createEntityManagerFactory("KitchenWorld");
+		emf = Persistence.createEntityManagerFactory("OneStopKitchen");
 		em = emf.createEntityManager();
 	}
 	

@@ -101,4 +101,11 @@ public class UserService extends AbstractServices {
 		userToUpdate.setCart(newCart);
 		em.getTransaction().commit();
 	}
+	public void deleteUser(int id) {
+		em.getTransaction().begin();
+		Query deleteUser = em.createNamedQuery("User.deleteById");
+		deleteUser.setParameter("deleteId", id);
+		deleteUser.executeUpdate();
+		em.getTransaction().commit();
+	}
 }

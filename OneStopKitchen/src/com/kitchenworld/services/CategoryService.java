@@ -55,7 +55,7 @@ public class CategoryService extends AbstractServices {
 	
 	public void deleteCategory(int id) {
 		Query deleteCategory = em.createNamedQuery("Category.deleteById");
-		deleteCategory.setParameter("selectId", id);
+		deleteCategory.setParameter("deleteId", id);
 		deleteCategory.executeUpdate();
 	}
 }
