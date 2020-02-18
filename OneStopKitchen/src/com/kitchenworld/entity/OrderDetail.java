@@ -2,7 +2,6 @@ package com.kitchenworld.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 /**
@@ -20,13 +19,15 @@ public class OrderDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="line_id", unique=true, nullable=false)
+	private Long id;
 	
 	@Column(name="line_number", nullable=false)
 	private Integer lineNumber;
 
 	@Column(name="price_each", nullable=false, precision=10, scale=2)
-	private BigDecimal priceEach;
+	private double priceEach;
 
 	@Column(name="quantity_ordered", nullable=false)
 	private int quantityOrdered;
@@ -52,7 +53,7 @@ public class OrderDetail implements Serializable {
 	 * @param skuNumber
 	 * @param order
 	 */
-	public OrderDetail(Integer id, Integer lineNumber, BigDecimal priceEach, int quantityOrdered, String skuNumber,
+	public OrderDetail(Long id, Integer lineNumber, double priceEach, int quantityOrdered, String skuNumber,
 			Orders order) {
 		this.setId(id);
 		this.setLineNumber(lineNumber);
@@ -61,22 +62,36 @@ public class OrderDetail implements Serializable {
 		this.setSkuNumber(skuNumber);
 		this.setOrder(order);
 	}
+	/**
+	 * @param lineNumber
+	 * @param priceEach
+	 * @param quantityOrdered
+	 * @param skuNumber
+	 * @param order
+	 */
+	public OrderDetail(Integer lineNumber, double priceEach, int quantityOrdered, String skuNumber,
+			Orders order) {
+		this.setLineNumber(lineNumber);
+		this.setPriceEach(priceEach);
+		this.setQuantityOrdered(quantityOrdered);
+		this.setSkuNumber(skuNumber);
+		this.setOrder(order);
+	}
 
 
-
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public BigDecimal getPriceEach() {
+	public double getPriceEach() {
 		return this.priceEach;
 	}
 
-	public void setPriceEach(BigDecimal priceEach) {
+	public void setPriceEach(double priceEach) {
 		this.priceEach = priceEach;
 	}
 
@@ -159,8 +174,9 @@ public class OrderDetail implements Serializable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lineNumber == null) ? 0 : lineNumber.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + ((priceEach == null) ? 0 : priceEach.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(priceEach);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + quantityOrdered;
 		result = prime * result + ((skuNumber == null) ? 0 : skuNumber.hashCode());
 		return result;
@@ -200,11 +216,7 @@ public class OrderDetail implements Serializable {
 		} else if (!order.equals(other.order)) {
 			return false;
 		}
-		if (priceEach == null) {
-			if (other.priceEach != null) {
-				return false;
-			}
-		} else if (!priceEach.equals(other.priceEach)) {
+		if (Double.doubleToLongBits(priceEach) != Double.doubleToLongBits(other.priceEach)) {
 			return false;
 		}
 		if (quantityOrdered != other.quantityOrdered) {
@@ -220,6 +232,6 @@ public class OrderDetail implements Serializable {
 		return true;
 	}
 
-	
 
+	
 }

@@ -6,10 +6,12 @@ package com.kitchenworld.drivers;
 import java.util.Date;
 
 import com.kitchenworld.entity.Category;
+import com.kitchenworld.entity.OrderDetail;
 import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.Product;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.CategoryService;
+import com.kitchenworld.services.OrderDetailsService;
 import com.kitchenworld.services.OrdersService;
 import com.kitchenworld.services.ProductService;
 import com.kitchenworld.services.UserService;
@@ -23,12 +25,14 @@ public class Populator {
 	private CategoryService cs;
 	private ProductService ps;
 	private OrdersService os;
+	private OrderDetailsService ods;
 	
 	public Populator() {
 		us = new UserService();
 		cs = new CategoryService();
 		ps = new ProductService();
 		os = new OrdersService();
+		ods = new OrderDetailsService();
 		
 	}
 	
@@ -46,6 +50,7 @@ public class Populator {
 		cs.connect();
 		ps.connect();
 		os.connect();
+		ods.connect();
 		
 		/*ADD USERS*/
 		User user1 = new User("bob@gold.com","ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
@@ -127,6 +132,67 @@ public class Populator {
 		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(2L), null));
 		os.addOrder(new Orders(new Date(), "CANCELLED", null , us.findUserById(1L), null));
 		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(1L), null));
+		
+		/*ADD ORDER DETAILS*/
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "GA213512",os.findOrderById(1L)));
+		ods.addOrderDetails(new OrderDetail(2,225.50, 2, "GA212312",os.findOrderById(1L)));
+		ods.addOrderDetails(new OrderDetail(3,215.50, 2, "GA2514512",os.findOrderById(1L)));
+		ods.addOrderDetails(new OrderDetail(1,125.50, 2, "GA2135142",os.findOrderById(2L)));
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "HN254512",os.findOrderById(3L)));
+		ods.addOrderDetails(new OrderDetail(1,625.50, 2, "HN21512",os.findOrderById(4L)));
+		ods.addOrderDetails(new OrderDetail(2,215.50, 2, "HN25312",os.findOrderById(4L)));
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "HN259712",os.findOrderById(5L)));
+		ods.addOrderDetails(new OrderDetail(2,75.50, 2, "HN258912",os.findOrderById(5L)));
+		ods.addOrderDetails(new OrderDetail(1,15.50, 2, "HN253212",os.findOrderById(6L)));
+		ods.addOrderDetails(new OrderDetail(1,35.50, 2, "HN252412",os.findOrderById(7L)));
+		ods.addOrderDetails(new OrderDetail(1,15.50, 1, "LE96323",os.findOrderById(8L)));
+		ods.addOrderDetails(new OrderDetail(1,65.50, 2, "LE91223",os.findOrderById(9L)));
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "LE91878",os.findOrderById(10L)));
+		ods.addOrderDetails(new OrderDetail(2,15.50, 2, "LE12823",os.findOrderById(10L)));
+		ods.addOrderDetails(new OrderDetail(3,215.50, 2, "LE98923",os.findOrderById(10L)));
+		ods.addOrderDetails(new OrderDetail(1,125.50, 2, "LE90823",os.findOrderById(11L)));
+		ods.addOrderDetails(new OrderDetail(2,25.50, 2, "LE90023",os.findOrderById(11L)));
+		ods.addOrderDetails(new OrderDetail(1,525.50, 2, "IP19820",os.findOrderById(12L)));
+		ods.addOrderDetails(new OrderDetail(1,225.50, 2, "IP09120",os.findOrderById(13L)));
+		ods.addOrderDetails(new OrderDetail(2,25.50, 2, "IP19030",os.findOrderById(13L)));
+		ods.addOrderDetails(new OrderDetail(1,225.50, 3, "IP54120",os.findOrderById(14L)));
+		ods.addOrderDetails(new OrderDetail(1,215.50, 2, "IP16420",os.findOrderById(15L)));
+		ods.addOrderDetails(new OrderDetail(2,25.50, 2, "IP16920",os.findOrderById(15L)));
+		ods.addOrderDetails(new OrderDetail(3,235.50, 2, "IP14220",os.findOrderById(15L)));
+		ods.addOrderDetails(new OrderDetail(4,215.50, 2, "GA218912",os.findOrderById(15L)));
+		ods.addOrderDetails(new OrderDetail(1,215.50, 2, "GA214612",os.findOrderById(16L)));
+		ods.addOrderDetails(new OrderDetail(2,215.50, 2, "GA21112",os.findOrderById(16L)));
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "GA216512",os.findOrderById(17L)));
+		ods.addOrderDetails(new OrderDetail(1,25.50, 2, "GA983512",os.findOrderById(18L)));
+		ods.addOrderDetails(new OrderDetail(2,251.50, 2, "GA210412",os.findOrderById(18L)));
+		ods.addOrderDetails(new OrderDetail(2,215.50, 2, "GA214622",os.findOrderById(2L)));
+		ods.addOrderDetails(new OrderDetail(3,725.50, 2, "GA209512",os.findOrderById(2L)));
+		ods.addOrderDetails(new OrderDetail(2,25.50, 2, "GA217822",os.findOrderById(3L)));
+		ods.addOrderDetails(new OrderDetail(3,245.50, 2, "GA210572",os.findOrderById(4L)));
+		ods.addOrderDetails(new OrderDetail(3,25.50, 2, "GA213978",os.findOrderById(5L)));
+		ods.addOrderDetails(new OrderDetail(2,25.50, 2, "GA20512",os.findOrderById(12L)));
+
+		
+		/*Update Orders to match order details*/
+		os.updateOrderDetailsList(1L, os.findAllOrderDetailsInOrder(1L));
+		os.updateOrderDetailsList(2L, os.findAllOrderDetailsInOrder(2L));
+		os.updateOrderDetailsList(3L, os.findAllOrderDetailsInOrder(3L));
+		os.updateOrderDetailsList(4L, os.findAllOrderDetailsInOrder(4L));
+		os.updateOrderDetailsList(5L, os.findAllOrderDetailsInOrder(5L));
+		os.updateOrderDetailsList(6L, os.findAllOrderDetailsInOrder(6L));
+		os.updateOrderDetailsList(7L, os.findAllOrderDetailsInOrder(7L));
+		os.updateOrderDetailsList(8L, os.findAllOrderDetailsInOrder(8L));
+		os.updateOrderDetailsList(9L, os.findAllOrderDetailsInOrder(9L));
+		os.updateOrderDetailsList(10L, os.findAllOrderDetailsInOrder(10L));
+		os.updateOrderDetailsList(11L, os.findAllOrderDetailsInOrder(11L));
+		os.updateOrderDetailsList(12L, os.findAllOrderDetailsInOrder(12L));
+		os.updateOrderDetailsList(13L, os.findAllOrderDetailsInOrder(13L));
+		os.updateOrderDetailsList(14L, os.findAllOrderDetailsInOrder(14L));
+		os.updateOrderDetailsList(15L, os.findAllOrderDetailsInOrder(15L));
+		os.updateOrderDetailsList(16L, os.findAllOrderDetailsInOrder(16L));
+		os.updateOrderDetailsList(17L, os.findAllOrderDetailsInOrder(17L));
+		os.updateOrderDetailsList(18L, os.findAllOrderDetailsInOrder(18L));
+
 
 	}
 	
@@ -135,6 +201,7 @@ public class Populator {
 		cs.closeConnection();
 		ps.closeConnection();
 		os.closeConnection();
+		ods.closeConnection();
 	}
 
 }
