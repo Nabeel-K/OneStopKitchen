@@ -21,7 +21,7 @@ public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id", unique=true, nullable=false)
-	private int categoryId;
+	private Long categoryId;
 
 	@Column(name="category_name", nullable=false, length=20)
 	private String categoryName;
@@ -39,7 +39,7 @@ public class Category implements Serializable {
 	 * @param categoryName
 	 * @param products
 	 */
-	public Category(int categoryId, String categoryName, List<Product> products) {
+	public Category(Long categoryId, String categoryName, List<Product> products) {
 		this.setCategoryId(categoryId);
 		this.setCategoryName(categoryName);
 		this.setProducts(products);
@@ -49,13 +49,17 @@ public class Category implements Serializable {
 		this.setCategoryName(categoryName);
 		this.setProducts(products);
 	}
+	
+	public Category(String categoryName) {
+		this.setCategoryName(categoryName);
+	}
 
 	//Getters and setters
-	public int getCategoryId() {
+	public Long getCategoryId() {
 		return this.categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 
@@ -93,7 +97,7 @@ public class Category implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + categoryId;
+		result = prime * result + ((categoryId == null) ? 0 : categoryId.hashCode());
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
 		result = prime * result + ((products == null) ? 0 : products.hashCode());
 		return result;
@@ -101,26 +105,39 @@ public class Category implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Category other = (Category) obj;
-		if (categoryId != other.categoryId)
+		if (categoryId == null) {
+			if (other.categoryId != null) {
+				return false;
+			}
+		} else if (!categoryId.equals(other.categoryId)) {
 			return false;
+		}
 		if (categoryName == null) {
-			if (other.categoryName != null)
+			if (other.categoryName != null) {
 				return false;
-		} else if (!categoryName.equals(other.categoryName))
+			}
+		} else if (!categoryName.equals(other.categoryName)) {
 			return false;
+		}
 		if (products == null) {
-			if (other.products != null)
+			if (other.products != null) {
 				return false;
-		} else if (!products.equals(other.products))
+			}
+		} else if (!products.equals(other.products)) {
 			return false;
+		}
 		return true;
 	}
 
+	
 }

@@ -23,7 +23,7 @@ public class UserService extends AbstractServices {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public User findUserById(int id) {
+	public User findUserById(Long id) {
 		Query getUser = em.createNamedQuery("User.findById");
 		getUser.setParameter("selectId", id);
 		List<User> results = getUser.getResultList();
@@ -39,69 +39,76 @@ public class UserService extends AbstractServices {
 		return results;
 	}
 	
-	public void updateUserFirstName(int id, String newName) {
+	public void updateUserFirstName(Long id, String newName) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setFirstName(newName);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserLastName(int id, String newName) {
+	public void updateUserLastName(Long id, String newName) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setLastName(newName);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserEmail(int id, String newEmail) {
+	public void updateUserEmail(Long id, String newEmail) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setEmail(newEmail);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserAddress(int id, String newAddress) {
+	public void updateUserPassword(Long id, String newPass) {
+		em.getTransaction().begin();
+		User userToUpdate = em.find(User.class, id);
+		userToUpdate.setPassword(newPass);
+		em.getTransaction().commit();
+	}
+	
+	public void updateUserAddress(Long id, String newAddress) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setAddress(newAddress);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserCity(int id, String newCity) {
+	public void updateUserCity(Long id, String newCity) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setCity(newCity);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserState(int id, String newState) {
+	public void updateUserState(Long id, String newState) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setState(newState);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserCountry(int id, String newCountry) {
+	public void updateUserCountry(Long id, String newCountry) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setCountry(newCountry);
 		em.getTransaction().commit();
 	}
 	
-	public void updateUserZipCode(int id, String newZip) {
+	public void updateUserZipCode(Long id, String newZip) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setZipcode(newZip);
 		em.getTransaction().commit();
 	}
 	
-	public void updateCart(int id, Cart newCart) {
+	public void updateCart(Long id, Cart newCart) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
 		userToUpdate.setCart(newCart);
 		em.getTransaction().commit();
 	}
-	public void deleteUser(int id) {
+	public void deleteUser(Long id) {
 		em.getTransaction().begin();
 		Query deleteUser = em.createNamedQuery("User.deleteById");
 		deleteUser.setParameter("deleteId", id);

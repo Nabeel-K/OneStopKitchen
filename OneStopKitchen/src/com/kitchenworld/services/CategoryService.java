@@ -23,37 +23,41 @@ public class CategoryService extends AbstractServices {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Category findCategoryById(int id) {
+	public Category findCategoryById(Long id) {
 		Query getCategory = em.createNamedQuery("Category.findById");
 		getCategory.setParameter("selectId", id);
-		List<Category> results = getCategory.getResultList();
-		
+		List<Category> results = getCategory.getResultList();	
 		return results.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Product> findAllProductsInCategory(Long id){
+		Query getProducts = em.createQuery("SELECT p from Product p JOIN p.category g WHERE g.categoryId = :selectId");
+		getProducts.setParameter("selectId", id);
+		return getProducts.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Category> findAllCategories(){
 		Query getCategories = em.createNamedQuery("Category.findAll");
-		List<Category> results = getCategories.getResultList();
-		
-		return results;
+		return getCategories.getResultList();
 	}
 	
-	public void updateCategoryName(int id, String newName) {
+	public void updateCategoryName(Long id, String newName) {
 		em.getTransaction().begin();
 		Category categoryToUpdate = em.find(Category.class, id);
 		categoryToUpdate.setCategoryName(newName);
 		em.getTransaction().commit();
 	}
 	
-	public void updateProducts(int id, List<Product> newProducts) {
+	public void updateProducts(Long id, List<Product> newProducts) {
 		em.getTransaction().begin();
 		Category categoryToUpdate = em.find(Category.class, id);
 		categoryToUpdate.setProducts(newProducts);
 		em.getTransaction().commit();
 	}
 	
-	public void deleteCategory(int id) {
+	public void deleteCategory(Long id) {
 		Query deleteCategory = em.createNamedQuery("Category.deleteById");
 		deleteCategory.setParameter("deleteId", id);
 		deleteCategory.executeUpdate();

@@ -6,7 +6,6 @@ package com.kitchenworld.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,8 +13,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kitchenworld.entity.Cart;
-import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.UserService;
 
@@ -30,7 +27,7 @@ class TestUserService {
 
 	 @BeforeAll
 	 static void setUpBeforeClass() throws Exception{
-		 us.connect();;
+		 us.connect();
 	 }
 	 
 	 @AfterAll
@@ -42,7 +39,6 @@ class TestUserService {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		testUser = new User("12345 Test rd.", "TestVille", "USA", "test1234@test.com", "John","Doe","MI","49102");		
 
 	}
 
@@ -63,10 +59,10 @@ class TestUserService {
 		
 	}
 	
-	@Test
-	void testRemoveUser() {
-		us.deleteUser(testUser.getUserId());
-		assertTrue(!us.findAllUsers().contains(testUser));
-	}
+//	@Test
+//	void testRemoveUser() {
+//		us.deleteUser(testUser.getUserId());
+//		assertTrue(!us.findAllUsers().contains(testUser));
+//	}
 
 }

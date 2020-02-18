@@ -2,7 +2,6 @@ package com.kitchenworld.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 /**
@@ -11,19 +10,24 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="products")
-@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+@NamedQueries(value= {
+		@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p"),
+		@NamedQuery(name="Product.findById", query="SELECT p FROM Product p WHERE p.productId = :selectId"),
+		@NamedQuery(name="Product.deleteById", query="DELETE FROM Product p WHERE p.productId = :deleteId")
+})
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="product_id", unique=true, nullable=false)
-	private int productId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long productId;
 
 	@Lob
 	private String description;
 
 	@Column(nullable=false, precision=10, scale=2)
-	private BigDecimal price;
+	private double price;
 
 	@Column(name="product_name", nullable=false, length=50)
 	private String productName;
@@ -45,7 +49,7 @@ public class Product implements Serializable {
 	 * @param quantityInStock
 	 * @param category
 	 */
-	public Product(int productId, String description, BigDecimal price, String productName, int quantityInStock,
+	public Product(Long productId, String description, double price, String productName, int quantityInStock,
 			 Category category) {
 		this.setProductId(productId);
 		this.setDescription(description);
@@ -55,14 +59,30 @@ public class Product implements Serializable {
 		this.setCategory(category);
 	}
 
+	public Product(String description, double price, String productName, int quantityInStock,
+			 Category category) {
+		this.setDescription(description);
+		this.setPrice(price);
+		this.setProductName(productName);
+		this.setQuantityInStock(quantityInStock);
+		this.setCategory(category);
+	}
+	
+	public Product(String description, double price, String productName, int quantityInStock) {
+		this.setDescription(description);
+		this.setPrice(price);
+		this.setProductName(productName);
+		this.setQuantityInStock(quantityInStock);
+	}
+	
 	public Product() {
 	}
 
-	public int getProductId() {
+	public Long getProductId() {
 		return this.productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 
@@ -74,11 +94,11 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -129,10 +149,11 @@ public class Product implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((price == null) ? 0 : price.hashCode());
-		result = prime * result + productId;
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 		result = prime * result + quantityInStock;
 		return result;
@@ -140,39 +161,54 @@ public class Product implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Product other = (Product) obj;
 		if (category == null) {
-			if (other.category != null)
+			if (other.category != null) {
 				return false;
-		} else if (!category.equals(other.category))
+			}
+		} else if (!category.equals(other.category)) {
 			return false;
+		}
 		if (description == null) {
-			if (other.description != null)
+			if (other.description != null) {
 				return false;
-		} else if (!description.equals(other.description))
+			}
+		} else if (!description.equals(other.description)) {
 			return false;
-		if (price == null) {
-			if (other.price != null)
+		}
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price)) {
+			return false;
+		}
+		if (productId == null) {
+			if (other.productId != null) {
 				return false;
-		} else if (!price.equals(other.price))
+			}
+		} else if (!productId.equals(other.productId)) {
 			return false;
-		if (productId != other.productId)
-			return false;
+		}
 		if (productName == null) {
-			if (other.productName != null)
+			if (other.productName != null) {
 				return false;
-		} else if (!productName.equals(other.productName))
+			}
+		} else if (!productName.equals(other.productName)) {
 			return false;
-		if (quantityInStock != other.quantityInStock)
+		}
+		if (quantityInStock != other.quantityInStock) {
 			return false;
+		}
 		return true;
 	}
-	
 
+
+
+	
 }
