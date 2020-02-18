@@ -1,6 +1,6 @@
 /**
  * ProductService.java
- * DESC: Services for product entities
+ * DESC: DAO Services for product entities
  */
 package com.kitchenworld.services;
 

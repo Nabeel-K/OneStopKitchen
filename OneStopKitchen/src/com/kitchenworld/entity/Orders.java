@@ -22,18 +22,15 @@ public class Orders implements Serializable {
 
 	@Id
 	@Column(name="order_id", unique=true, nullable=false)
-	private int orderId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long orderId;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_ordered", nullable=false)
 	private Date dateOrdered;
 
-	@Column(name="order_status", length=1)
+	@Column(name="order_status", length=15)
 	private String orderStatus;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name="ship_date")
-	private Date shipDate;
 
 	//bi-directional many-to-one association to OrderDetail
 	@OneToMany(mappedBy="order")
@@ -41,7 +38,7 @@ public class Orders implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id")
 	private User user;
 
 	//bi-directional many-to-one association to Shipment
@@ -55,74 +52,133 @@ public class Orders implements Serializable {
 	 * @param orderId
 	 * @param dateOrdered
 	 * @param orderStatus
-	 * @param shipDate
 	 * @param orderDetails
 	 * @param user
 	 * @param shipments
 	 */
-	public Orders(int orderId, Date dateOrdered, String orderStatus, Date shipDate, List<OrderDetail> orderDetails,
-			User user, List<Shipment> shipments) {
-		this.setOrderId(orderId);
-		this.setDateOrdered(dateOrdered);
-		this.setOrderStatus(orderStatus);
-		this.setShipDate(shipDate);
-		this.setOrderDetails(orderDetails);
-		this.setUser(user);
-		this.setShipments(shipments);
+	public Orders(Long orderId, Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, User user,
+			List<Shipment> shipments) {
+		this.orderId = orderId;
+		this.dateOrdered = dateOrdered;
+		this.orderStatus = orderStatus;
+		this.orderDetails = orderDetails;
+		this.user = user;
+		this.shipments = shipments;
+	}
+	
+	/**
+	 * @param dateOrdered
+	 * @param orderStatus
+	 * @param orderDetails
+	 * @param user
+	 * @param shipments
+	 */
+	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, User user,
+			List<Shipment> shipments) {
+		this.dateOrdered = dateOrdered;
+		this.orderStatus = orderStatus;
+		this.orderDetails = orderDetails;
+		this.user = user;
+		this.shipments = shipments;
+	}
+	
+	
+	//In case order was made by a guest, in which case user will be null
+	/**
+	 * @param dateOrdered
+	 * @param orderStatus
+	 * @param orderDetails
+	 * @param shipments
+	 */
+	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails,
+			List<Shipment> shipments) {
+		this.dateOrdered = dateOrdered;
+		this.orderStatus = orderStatus;
+		this.orderDetails = orderDetails;
+		this.shipments = shipments;
 	}
 
-	public int getOrderId() {
-		return this.orderId;
+
+	/**
+	 * @return the orderId
+	 */
+	public Long getOrderId() {
+		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	/**
+	 * @param orderId the orderId to set
+	 */
+	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
 
+	/**
+	 * @return the dateOrdered
+	 */
 	public Date getDateOrdered() {
-		return this.dateOrdered;
+		return dateOrdered;
 	}
 
+	/**
+	 * @param dateOrdered the dateOrdered to set
+	 */
 	public void setDateOrdered(Date dateOrdered) {
 		this.dateOrdered = dateOrdered;
 	}
 
+	/**
+	 * @return the orderStatus
+	 */
 	public String getOrderStatus() {
-		return this.orderStatus;
+		return orderStatus;
 	}
 
+	/**
+	 * @param orderStatus the orderStatus to set
+	 */
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
 
-	public Date getShipDate() {
-		return this.shipDate;
-	}
-
-	public void setShipDate(Date shipDate) {
-		this.shipDate = shipDate;
-	}
-
+	/**
+	 * @return the orderDetails
+	 */
 	public List<OrderDetail> getOrderDetails() {
-		return this.orderDetails;
+		return orderDetails;
 	}
 
+	/**
+	 * @param orderDetails the orderDetails to set
+	 */
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
 
+	/**
+	 * @return the user
+	 */
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
+	/**
+	 * @param user the user to set
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	/**
+	 * @return the shipments
+	 */
 	public List<Shipment> getShipments() {
-		return this.shipments;
+		return shipments;
 	}
 
+	/**
+	 * @param shipments the shipments to set
+	 */
 	public void setShipments(List<Shipment> shipments) {
 		this.shipments = shipments;
 	}
@@ -136,8 +192,6 @@ public class Orders implements Serializable {
 		builder.append(dateOrdered);
 		builder.append(", orderStatus=");
 		builder.append(orderStatus);
-		builder.append(", shipDate=");
-		builder.append(shipDate);
 		builder.append(", orderDetails=");
 		builder.append(orderDetails);
 		builder.append(", user=");
@@ -154,9 +208,8 @@ public class Orders implements Serializable {
 		int result = 1;
 		result = prime * result + ((dateOrdered == null) ? 0 : dateOrdered.hashCode());
 		result = prime * result + ((orderDetails == null) ? 0 : orderDetails.hashCode());
-		result = prime * result + orderId;
+		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
 		result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
-		result = prime * result + ((shipDate == null) ? 0 : shipDate.hashCode());
 		result = prime * result + ((shipments == null) ? 0 : shipments.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
@@ -164,46 +217,61 @@ public class Orders implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Orders other = (Orders) obj;
 		if (dateOrdered == null) {
-			if (other.dateOrdered != null)
+			if (other.dateOrdered != null) {
 				return false;
-		} else if (!dateOrdered.equals(other.dateOrdered))
+			}
+		} else if (!dateOrdered.equals(other.dateOrdered)) {
 			return false;
+		}
 		if (orderDetails == null) {
-			if (other.orderDetails != null)
+			if (other.orderDetails != null) {
 				return false;
-		} else if (!orderDetails.equals(other.orderDetails))
+			}
+		} else if (!orderDetails.equals(other.orderDetails)) {
 			return false;
-		if (orderId != other.orderId)
+		}
+		if (orderId == null) {
+			if (other.orderId != null) {
+				return false;
+			}
+		} else if (!orderId.equals(other.orderId)) {
 			return false;
+		}
 		if (orderStatus == null) {
-			if (other.orderStatus != null)
+			if (other.orderStatus != null) {
 				return false;
-		} else if (!orderStatus.equals(other.orderStatus))
+			}
+		} else if (!orderStatus.equals(other.orderStatus)) {
 			return false;
-		if (shipDate == null) {
-			if (other.shipDate != null)
-				return false;
-		} else if (!shipDate.equals(other.shipDate))
-			return false;
+		}
 		if (shipments == null) {
-			if (other.shipments != null)
+			if (other.shipments != null) {
 				return false;
-		} else if (!shipments.equals(other.shipments))
+			}
+		} else if (!shipments.equals(other.shipments)) {
 			return false;
+		}
 		if (user == null) {
-			if (other.user != null)
+			if (other.user != null) {
 				return false;
-		} else if (!user.equals(other.user))
+			}
+		} else if (!user.equals(other.user)) {
 			return false;
+		}
 		return true;
 	}
 
+	
+	
 }

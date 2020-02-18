@@ -3,10 +3,14 @@
  */
 package com.kitchenworld.drivers;
 
+import java.util.Date;
+
 import com.kitchenworld.entity.Category;
+import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.Product;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.CategoryService;
+import com.kitchenworld.services.OrdersService;
 import com.kitchenworld.services.ProductService;
 import com.kitchenworld.services.UserService;
 
@@ -18,11 +22,13 @@ public class Populator {
 	private UserService us;
 	private CategoryService cs;
 	private ProductService ps;
+	private OrdersService os;
 	
 	public Populator() {
 		us = new UserService();
 		cs = new CategoryService();
 		ps = new ProductService();
+		os = new OrdersService();
 		
 	}
 	
@@ -39,6 +45,7 @@ public class Populator {
 		us.connect();
 		cs.connect();
 		ps.connect();
+		os.connect();
 		
 		/*ADD USERS*/
 		User user1 = new User("bob@gold.com","ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
@@ -99,12 +106,35 @@ public class Populator {
 		cs.updateProducts(2L, cs.findAllProductsInCategory(2L));
 		cs.updateProducts(3L, cs.findAllProductsInCategory(3L));
 		cs.updateProducts(4L, cs.findAllProductsInCategory(4L));
+		
+		
+		/*ADD ORDERS*/
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(2L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(3L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "CANCELLED", null , us.findUserById(2L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(3L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null, null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null, null));
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(3L), null));
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "SHIPPED", null , us.findUserById(3L), null));
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(2L), null));
+		os.addOrder(new Orders(new Date(), "CANCELLED", null , us.findUserById(1L), null));
+		os.addOrder(new Orders(new Date(), "PROCESSING", null , us.findUserById(1L), null));
+
 	}
 	
 	private void close() {
 		us.closeConnection();
 		cs.closeConnection();
 		ps.closeConnection();
+		os.closeConnection();
 	}
 
 }

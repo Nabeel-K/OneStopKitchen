@@ -30,7 +30,7 @@ public class QueryRunner {
 	private void run() {
 		us.connect();
 
-		int testUserId = 2;
+		Long testUserId = 2L;
 
 		System.out.println("USERS");
 		List<User> allUsers = us.findAllUsers();
