@@ -9,28 +9,27 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="category")
-@NamedQueries(value= {
-		@NamedQuery(name="Category.findById", query="SELECT c FROM Category c WHERE c.categoryId = :selectId"),
-		@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c"),
-		@NamedQuery(name="Category.deleteById", query="DELETE FROM Category c WHERE c.categoryId = :deleteId")
-})
+@Table(name = "category")
+@NamedQueries(value = {
+		@NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.categoryId = :selectId"),
+		@NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+		@NamedQuery(name = "Category.deleteById", query = "DELETE FROM Category c WHERE c.categoryId = :deleteId") })
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="category_id", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "category_id", unique = true, nullable = false)
 	private Long categoryId;
 
-	@Column(name="category_name", nullable=false, length=20)
+	@Column(name = "category_name", nullable = false, length = 20)
 	private String categoryName;
 
-	//bi-directional many-to-one association to Product
-	@OneToMany(mappedBy="category")
+	// bi-directional many-to-one association to Product
+	@OneToMany(mappedBy = "category")
 	private List<Product> products;
 
-	//Constructors
+	// Constructors
 	public Category() {
 	}
 
@@ -44,17 +43,17 @@ public class Category implements Serializable {
 		this.setCategoryName(categoryName);
 		this.setProducts(products);
 	}
-	
+
 	public Category(String categoryName, List<Product> products) {
 		this.setCategoryName(categoryName);
 		this.setProducts(products);
 	}
-	
+
 	public Category(String categoryName) {
 		this.setCategoryName(categoryName);
 	}
 
-	//Getters and setters
+	// Getters and setters
 	public Long getCategoryId() {
 		return this.categoryId;
 	}
@@ -79,7 +78,7 @@ public class Category implements Serializable {
 		this.products = products;
 	}
 
-	//Overrides
+	// Overrides
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -139,5 +138,4 @@ public class Category implements Serializable {
 		return true;
 	}
 
-	
 }

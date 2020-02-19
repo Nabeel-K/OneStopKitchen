@@ -8,43 +8,38 @@ import javax.persistence.*;
  *
  */
 @Entity
-@NamedQueries(value= {
-		@NamedQuery(name="CartItems.findById", query="SELECT c FROM CartItems c WHERE c.id = :selectKey"),
-		@NamedQuery(name="CartItems.findAll", query="SELECT c FROM CartItems c"),
-		@NamedQuery(name="CartItems.deleteById", query="DELETE FROM CartItems c WHERE c.id = :deleteId")
-})
+@NamedQueries(value = {
+		@NamedQuery(name = "CartItems.findById", query = "SELECT c FROM CartItems c WHERE c.id = :selectKey"),
+		@NamedQuery(name = "CartItems.findAll", query = "SELECT c FROM CartItems c"),
+		@NamedQuery(name = "CartItems.deleteById", query = "DELETE FROM CartItems c WHERE c.id = :deleteId") })
 public class CartItems implements Serializable {
 
 	@Id
-	@Column(name="cartline_id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "cartline_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="line_number", nullable=false)
+	@Column(name = "line_number", nullable = false)
 	private Integer lineNumber;
 
 	@Column(name = "quantity")
 	private int quantity;
-	
+
 	@Column(name = "price_each")
 	private double priceEach;
-	
-	@Column(name="sku_number", nullable=false)
+
+	@Column(name = "sku_number", nullable = false)
 	private String skuNumber;
 
 	@ManyToOne
-	@JoinColumn(name="cart_id", nullable=false)
+	@JoinColumn(name = "cart_id", nullable = false)
 	private Cart cart;
 
 	private static final long serialVersionUID = 1L;
 
-	
-	
 	public CartItems() {
 		super();
 	}
-
-
 
 	/**
 	 * @param id
@@ -62,7 +57,7 @@ public class CartItems implements Serializable {
 		this.setSkuNumber(skuNumber);
 		this.setCart(cart);
 	}
-	
+
 	/**
 	 * @param lineNumber
 	 * @param quantity
@@ -78,15 +73,12 @@ public class CartItems implements Serializable {
 		this.setCart(cart);
 	}
 
-
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
-
-
 
 	/**
 	 * @param id the id to set
@@ -95,16 +87,12 @@ public class CartItems implements Serializable {
 		this.id = id;
 	}
 
-
-
 	/**
 	 * @return the lineItems
 	 */
 	public Integer getLineNumber() {
 		return lineNumber;
 	}
-
-
 
 	/**
 	 * @param lineItems the lineItems to set
@@ -113,16 +101,12 @@ public class CartItems implements Serializable {
 		this.lineNumber = lineNumber;
 	}
 
-
-
 	/**
 	 * @return the quantity
 	 */
 	public int getQuantity() {
 		return quantity;
 	}
-
-
 
 	/**
 	 * @param quantity the quantity to set
@@ -131,16 +115,12 @@ public class CartItems implements Serializable {
 		this.quantity = quantity;
 	}
 
-
-
 	/**
 	 * @return the priceEach
 	 */
 	public double getPriceEach() {
 		return priceEach;
 	}
-
-
 
 	/**
 	 * @param priceEach the priceEach to set
@@ -149,16 +129,12 @@ public class CartItems implements Serializable {
 		this.priceEach = priceEach;
 	}
 
-
-
 	/**
 	 * @return the skuNumber
 	 */
 	public String getSkuNumber() {
 		return skuNumber;
 	}
-
-
 
 	/**
 	 * @param skuNumber the skuNumber to set
@@ -167,8 +143,6 @@ public class CartItems implements Serializable {
 		this.skuNumber = skuNumber;
 	}
 
-
-
 	/**
 	 * @return the cart
 	 */
@@ -176,16 +150,12 @@ public class CartItems implements Serializable {
 		return cart;
 	}
 
-
-
 	/**
 	 * @param cart the cart to set
 	 */
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -204,8 +174,6 @@ public class CartItems implements Serializable {
 		return builder.toString();
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -219,8 +187,6 @@ public class CartItems implements Serializable {
 		result = prime * result + ((skuNumber == null) ? 0 : skuNumber.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -270,8 +236,5 @@ public class CartItems implements Serializable {
 		}
 		return true;
 	}
-
-
-
 
 }

@@ -35,15 +35,14 @@ public class CartService extends AbstractServices {
 		Query getCarts = em.createNamedQuery("Cart.findAll");
 		return getCarts.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<CartItems> findAllItemsInCart(Long id){
+	public List<CartItems> findAllItemsInCart(Long id) {
 		Query getDetails = em.createQuery("SELECT ci from CartItems ci JOIN ci.cart c WHERE c.cartId = :selectId");
 		getDetails.setParameter("selectId", id);
 		return getDetails.getResultList();
 	}
-	
-	
+
 	public void updateCartItems(Long id, List<CartItems> newItems) {
 		em.getTransaction().begin();
 		Cart cartToUpdate = em.find(Cart.class, id);

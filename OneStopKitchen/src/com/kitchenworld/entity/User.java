@@ -4,58 +4,55 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the users database table.
  * 
  */
 @Entity
-@Table(name="users")
-@NamedQueries(value = {
-	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.findById", query="SELECT u FROM User u WHERE u.userId = :selectId"),
-	@NamedQuery(name="User.deleteById", query="DELETE FROM User u WHERE u.userId = :deleteId")
-})
+@Table(name = "users")
+@NamedQueries(value = { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.userId = :selectId"),
+		@NamedQuery(name = "User.deleteById", query = "DELETE FROM User u WHERE u.userId = :deleteId") })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name = "user_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long userId;
-	
-	@Column(nullable=false, length=320)
+
+	@Column(nullable = false, length = 320)
 	private String email;
-	
-	@Column(nullable=false, length=32)
+
+	@Column(nullable = false, length = 32)
 	private String password;
 
-	@Column(name="first_name", nullable=false, length=50)
+	@Column(name = "first_name", nullable = false, length = 50)
 	private String firstName;
 
-	@Column(name="last_name", nullable=false, length=50)
+	@Column(name = "last_name", nullable = false, length = 50)
 	private String lastName;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String address;
 
-	@Column(length=50)
+	@Column(length = 50)
 	private String city;
 
-	@Column(length=3)
+	@Column(length = 3)
 	private String country;
 
-	@Column(length=50)
+	@Column(length = 50)
 	private String state;
 
-	@Column(length=20)
+	@Column(length = 20)
 	private String zipcode;
 
-	//bi-directional many-to-one association to Order
-	@OneToMany(mappedBy="user" , fetch=FetchType.EAGER)
+	// bi-directional many-to-one association to Order
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Orders> orders;
-	
-	@OneToOne(mappedBy="user")
+
+	@OneToOne(mappedBy = "user")
 	private Cart cart;
 
 	/**
@@ -101,9 +98,8 @@ public class User implements Serializable {
 	 * @param cart
 	 */
 
-	
-	//Constructor for information regarding the users name and location
-	public User(String address, String city, String country, String email,String password, String firstName,
+	// Constructor for information regarding the users name and location
+	public User(String address, String city, String country, String email, String password, String firstName,
 			String lastName, String state, String zipcode) {
 		this.setAddress(address);
 		this.setCity(city);
@@ -116,9 +112,8 @@ public class User implements Serializable {
 		this.setZipcode(zipcode);
 	}
 
-	//Constructor using information necessary for account creation
-	public User( String email, String password, String firstName,
-			String lastName) {
+	// Constructor using information necessary for account creation
+	public User(String email, String password, String firstName, String lastName) {
 		this.setEmail(email);
 		this.setPassword(password);
 		this.setFirstName(firstName);
@@ -444,8 +439,5 @@ public class User implements Serializable {
 		}
 		return true;
 	}
-
-	
-	
 
 }

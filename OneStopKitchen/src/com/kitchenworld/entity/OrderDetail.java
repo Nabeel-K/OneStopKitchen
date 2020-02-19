@@ -32,7 +32,7 @@ public class OrderDetail implements Serializable {
 	@Column(name="quantity_ordered", nullable=false)
 	private int quantityOrdered;
 	
-	@Column(name="sku_number", nullable=false)
+	@Column(name = "sku_number", nullable = false)
 	private String skuNumber;
 
 	//bi-directional many-to-one association to Order

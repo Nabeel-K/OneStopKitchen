@@ -4,41 +4,36 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the shipments database table.
  * 
  */
 @Entity
-@Table(name="shipments")
-@NamedQueries(value= {
-		@NamedQuery(name="Shipment.findAll", query="SELECT s FROM Shipment s"),
-		@NamedQuery(name="Shipment.findById", query="SELECT s FROM Shipment s WHERE s.shipmentId = :selectId"),
-		@NamedQuery(name="Shipment.deleteById", query="DELETE FROM Shipment s WHERE s.shipmentId = :deleteId")
-})
+@Table(name = "shipments")
+@NamedQueries(value = { @NamedQuery(name = "Shipment.findAll", query = "SELECT s FROM Shipment s"),
+		@NamedQuery(name = "Shipment.findById", query = "SELECT s FROM Shipment s WHERE s.shipmentId = :selectId"),
+		@NamedQuery(name = "Shipment.deleteById", query = "DELETE FROM Shipment s WHERE s.shipmentId = :deleteId") })
 public class Shipment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="shipment_id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "shipment_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long shipmentId;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_delivered")
+	@Column(name = "date_delivered")
 	private Date dateDelivered;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_shipped", nullable=false)
+	@Column(name = "date_shipped", nullable = false)
 	private Date dateShipped;
 
-	//bi-directional many-to-one association to Order
+	// bi-directional many-to-one association to Order
 	@ManyToOne
-	@JoinColumn(name="order_id", nullable=false)
+	@JoinColumn(name = "order_id", nullable = false)
 	private Orders order;
 
-	
-	
 	/**
 	 * @param shipmentId
 	 * @param dateDelivered
@@ -51,7 +46,7 @@ public class Shipment implements Serializable {
 		this.setDateShipped(dateShipped);
 		this.setOrder(order);
 	}
-	
+
 	/**
 	 * @param dateDelivered
 	 * @param dateShipped
@@ -163,7 +158,5 @@ public class Shipment implements Serializable {
 		}
 		return true;
 	}
-
-
 
 }

@@ -40,12 +40,12 @@ public class OrdersService extends AbstractServices{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<OrderDetail> findAllOrderDetailsInOrder(Long id){
+	public List<OrderDetail> findAllOrderDetailsInOrder(Long id) {
 		Query getDetails = em.createQuery("SELECT od from OrderDetail od JOIN od.order o WHERE o.orderId = :selectId");
 		getDetails.setParameter("selectId", id);
 		return getDetails.getResultList();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Shipment> findAllShipmentsInOrder(Long id){
 		Query getShipments = em.createQuery("SELECT s from Shipment s JOIN s.order o WHERE o.orderId = :selectId");

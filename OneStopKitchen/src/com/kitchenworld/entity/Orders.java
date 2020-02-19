@@ -5,44 +5,42 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the orders database table.
  * 
  */
 @Entity
-@Table(name="orders")
-@NamedQueries(value= {
-		@NamedQuery(name="Orders.findById", query="SELECT o FROM Orders o WHERE o.orderId = :selectId"),
-		@NamedQuery(name="Orders.findAll", query="SELECT o FROM Orders o"),
-		@NamedQuery(name="Orders.deleteById", query="DELETE FROM Orders o WHERE o.orderId = :deleteId")
-})
+@Table(name = "orders")
+@NamedQueries(value = {
+		@NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.orderId = :selectId"),
+		@NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
+		@NamedQuery(name = "Orders.deleteById", query = "DELETE FROM Orders o WHERE o.orderId = :deleteId") })
 public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="order_id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "order_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_ordered", nullable=false)
+	@Column(name = "date_ordered", nullable = false)
 	private Date dateOrdered;
 
-	@Column(name="order_status", length=15)
+	@Column(name = "order_status", length = 15)
 	private String orderStatus;
 
-	//bi-directional many-to-one association to OrderDetail
-	@OneToMany(mappedBy="order")
+	// bi-directional many-to-one association to OrderDetail
+	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
 
-	//bi-directional many-to-one association to User
+	// bi-directional many-to-one association to User
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	//bi-directional many-to-one association to Shipment
-	@OneToMany(mappedBy="order")
+	// bi-directional many-to-one association to Shipment
+	@OneToMany(mappedBy = "order")
 	private List<Shipment> shipments;
 
 	public Orders() {
@@ -65,7 +63,7 @@ public class Orders implements Serializable {
 		this.user = user;
 		this.shipments = shipments;
 	}
-	
+
 	/**
 	 * @param dateOrdered
 	 * @param orderStatus
@@ -81,23 +79,20 @@ public class Orders implements Serializable {
 		this.user = user;
 		this.shipments = shipments;
 	}
-	
-	
-	//In case order was made by a guest, in which case user will be null
+
+	// In case order was made by a guest, in which case user will be null
 	/**
 	 * @param dateOrdered
 	 * @param orderStatus
 	 * @param orderDetails
 	 * @param shipments
 	 */
-	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails,
-			List<Shipment> shipments) {
+	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, List<Shipment> shipments) {
 		this.dateOrdered = dateOrdered;
 		this.orderStatus = orderStatus;
 		this.orderDetails = orderDetails;
 		this.shipments = shipments;
 	}
-
 
 	/**
 	 * @return the orderId
@@ -272,6 +267,4 @@ public class Orders implements Serializable {
 		return true;
 	}
 
-	
-	
 }
