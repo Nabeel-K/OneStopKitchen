@@ -235,13 +235,6 @@ public class Populator {
 		cts.addCart(new Cart(us.findUserById(4L), null));
 		cts.addCart(new Cart(us.findUserById(5L), null));
 
-		/* Update user carts */
-
-		us.updateCart(1L, cts.findCartById(1L));
-		us.updateCart(2L, cts.findCartById(2L));
-		us.updateCart(3L, cts.findCartById(3L));
-		us.updateCart(4L, cts.findCartById(4L));
-		us.updateCart(5L, cts.findCartById(5L));
 
 		/* ADD CART ITEMS */
 		cis.addCartItem(new CartItems(1, 5, 39.99, "LE90023", cts.findCartById(1L)));
@@ -257,13 +250,6 @@ public class Populator {
 		cis.addCartItem(new CartItems(1, 5, 19.99, "LE98623", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(2, 7, 39.99, "LE03023", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(3, 2, 29.99, "LE7823", cts.findCartById(5L)));
-
-		/* Update carts with items */
-		cts.updateCartItems(1L, cts.findAllItemsInCart(1L));
-		cts.updateCartItems(2L, cts.findAllItemsInCart(2L));
-		cts.updateCartItems(3L, cts.findAllItemsInCart(3L));
-		cts.updateCartItems(4L, cts.findAllItemsInCart(4L));
-		cts.updateCartItems(5L, cts.findAllItemsInCart(5L));
 
 	}
 

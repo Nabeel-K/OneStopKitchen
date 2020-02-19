@@ -52,7 +52,7 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Orders> orders;
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
 	private Cart cart;
 
 	/**

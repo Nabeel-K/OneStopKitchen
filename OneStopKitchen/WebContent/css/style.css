@@ -1,0 +1,32 @@
+html,body{
+    height:100%;
+    margin:0;
+
+}
+
+.title-bar{
+    border-bottom: 2px solid gray;
+}
+
+.homepage-content{
+    align-items: center;
+    text-align: center;
+}
+
+.item_block > img{
+    width:200px;
+    height:300px;
+}
+
+.header{
+	text-align:center;
+	background:#89f5a6;
+	height: 70px;
+}
+.footer {
+	position: absolute;
+	bottom:0;
+	width:100%;
+	background:lightblue;
+	text-align:center;
+}

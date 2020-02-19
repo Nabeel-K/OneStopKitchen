@@ -110,10 +110,14 @@ public class UserService extends AbstractServices {
 	}
 
 	public void deleteUser(Long id) {
+		Query getUser = em.createNamedQuery("User.findById");
+		getUser.setParameter("selectId", id);
+		List<User> results = getUser.getResultList();
+		User user = results.get(0);
+
 		em.getTransaction().begin();
-		Query deleteUser = em.createNamedQuery("User.deleteById");
-		deleteUser.setParameter("deleteId", id);
-		deleteUser.executeUpdate();
+		em.remove(user);
+		em.flush();
 		em.getTransaction().commit();
 	}
 }

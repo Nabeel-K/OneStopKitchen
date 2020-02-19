@@ -140,7 +140,7 @@ public class Product implements Serializable {
 		builder.append(", quantityInStock=");
 		builder.append(quantityInStock);
 		builder.append(", category=");
-		builder.append(category);
+		builder.append(category.getCategoryName());
 		builder.append("]");
 		return builder.toString();
 	}

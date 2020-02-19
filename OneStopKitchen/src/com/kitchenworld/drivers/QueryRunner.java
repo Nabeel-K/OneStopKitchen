@@ -6,6 +6,8 @@ package com.kitchenworld.drivers;
 
 import java.util.List;
 
+import com.kitchenworld.entity.Category;
+import com.kitchenworld.entity.Product;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.*;
 
@@ -15,19 +17,15 @@ import com.kitchenworld.services.*;
  */
 public class QueryRunner {
 
-	private UserService us;
-
-	public QueryRunner() {
-		us = new UserService();
-	}
-
 	public static void main(String[] args) {
 		QueryRunner qr = new QueryRunner();
-		qr.run();
-		qr.close();
+		qr.runUserQueries();
+		qr.runCategoryQueries();
+		qr.runProductQueries();
 	}
 
-	private void run() {
+	private void runUserQueries() {
+		UserService us = new UserService();
 		us.connect();
 
 		Long testUserId = 2L;
@@ -38,7 +36,7 @@ public class QueryRunner {
 		for (User user : allUsers) {
 			System.out.println(user);
 		}
-		System.out.println("User testUserId is " + foundUser.getFirstName() + " " + foundUser.getLastName()
+		System.out.println("User " +testUserId+" is " + foundUser.getFirstName() + " " + foundUser.getLastName()
 				+ " and he lives in " + foundUser.getCity());
 
 		us.updateUserCity(testUserId, "London");
@@ -53,9 +51,53 @@ public class QueryRunner {
 		foundUser = us.findUserById(testUserId);
 		System.out.println(foundUser);
 		
-	}
-
-	private void close() {
+//		us.deleteUser(2L);
+//		allUsers = us.findAllUsers();
+//		for (User user : allUsers) {
+//			System.out.println(user);
+//		}
+		
 		us.closeConnection();
 	}
+	
+	private void runCategoryQueries() {
+		CategoryService cs = new CategoryService();
+		cs.connect();
+		
+		Long testId = 2L;
+		List<Category> allCategories = cs.findAllCategories();
+		Category foundCatgeory = cs.findCategoryById(testId);
+		for (Category c : allCategories) {
+			System.out.println(c);
+		}
+		System.out.println(foundCatgeory);
+		
+		cs.updateCategoryName(testId, "Dishwashers");
+		foundCatgeory = cs.findCategoryById(testId);
+		System.out.println(foundCatgeory);
+		cs.closeConnection();
+	}
+	private void runProductQueries() {
+		ProductService ps = new ProductService();
+		ps.connect();
+		Long testId = 4L;
+
+		List<Product> allProducts = ps.findAllProducts();
+		Product foundProduct = ps.findProductById(testId);
+		for (Product p : allProducts) {
+			System.out.println(p);
+		}
+		System.out.println(foundProduct);
+		
+		ps.updateProductName(testId, "Toaster");
+		ps.updateProductDescription(testId, "Toasts bread to perfection");
+		ps.updateProductPrice(testId, 29.99);
+		ps.updateProductQuantity(testId, 17);
+		foundProduct = ps.findProductById(testId);
+		System.out.println(foundProduct);
+
+		
+		ps.closeConnection();
+	}
+
 }
