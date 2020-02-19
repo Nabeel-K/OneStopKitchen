@@ -5,15 +5,21 @@ package com.kitchenworld.drivers;
 
 import java.util.Date;
 
+import com.kitchenworld.entity.Cart;
+import com.kitchenworld.entity.CartItems;
 import com.kitchenworld.entity.Category;
 import com.kitchenworld.entity.OrderDetail;
 import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.Product;
+import com.kitchenworld.entity.Shipment;
 import com.kitchenworld.entity.User;
+import com.kitchenworld.services.CartItemsService;
+import com.kitchenworld.services.CartService;
 import com.kitchenworld.services.CategoryService;
 import com.kitchenworld.services.OrderDetailsService;
 import com.kitchenworld.services.OrdersService;
 import com.kitchenworld.services.ProductService;
+import com.kitchenworld.services.ShipmentService;
 import com.kitchenworld.services.UserService;
 
 /**
@@ -26,6 +32,9 @@ public class Populator {
 	private ProductService ps;
 	private OrdersService os;
 	private OrderDetailsService ods;
+	private ShipmentService ss;
+	private CartService cts;
+	private CartItemsService cis;
 	
 	public Populator() {
 		us = new UserService();
@@ -33,7 +42,9 @@ public class Populator {
 		ps = new ProductService();
 		os = new OrdersService();
 		ods = new OrderDetailsService();
-		
+		ss = new ShipmentService();
+		cts = new CartService();
+		cis = new CartItemsService();
 	}
 	
 	/**
@@ -51,6 +62,9 @@ public class Populator {
 		ps.connect();
 		os.connect();
 		ods.connect();
+		ss.connect();
+		cts.connect();
+		cis.connect();
 		
 		/*ADD USERS*/
 		User user1 = new User("bob@gold.com","ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
@@ -193,6 +207,66 @@ public class Populator {
 		os.updateOrderDetailsList(17L, os.findAllOrderDetailsInOrder(17L));
 		os.updateOrderDetailsList(18L, os.findAllOrderDetailsInOrder(18L));
 
+		/*ADD SHIPMENTS*/
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(2L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(3L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(4L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(5L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(7L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(8L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(9L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(11L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(14L)));
+		ss.addShipment(new Shipment(new Date(), new Date(), os.findOrderById(15L)));
+		
+		/*Update order to reflect shipments ONLY where status = "SHIPPED"*/
+		os.updateOrderShipmentDetails(2L, os.findAllShipmentsInOrder(2L));
+		os.updateOrderShipmentDetails(3L, os.findAllShipmentsInOrder(3L));
+		os.updateOrderShipmentDetails(4L, os.findAllShipmentsInOrder(4L));
+		os.updateOrderShipmentDetails(5L, os.findAllShipmentsInOrder(5L));
+		os.updateOrderShipmentDetails(7L, os.findAllShipmentsInOrder(7L));
+		os.updateOrderShipmentDetails(8L, os.findAllShipmentsInOrder(8L));
+		os.updateOrderShipmentDetails(9L, os.findAllShipmentsInOrder(9L));
+		os.updateOrderShipmentDetails(11L, os.findAllShipmentsInOrder(11L));
+		os.updateOrderShipmentDetails(14L, os.findAllShipmentsInOrder(14L));
+		os.updateOrderShipmentDetails(15L, os.findAllShipmentsInOrder(15L));
+		
+		/*ADD CARTS 1 per user*/
+		cts.addCart(new Cart(us.findUserById(1L),null));
+		cts.addCart(new Cart(us.findUserById(2L),null));
+		cts.addCart(new Cart(us.findUserById(3L),null));
+		cts.addCart(new Cart(us.findUserById(4L),null));
+		cts.addCart(new Cart(us.findUserById(5L),null));
+		
+		/*Update user carts*/
+
+		us.updateCart(1L, cts.findCartById(1L));
+		us.updateCart(2L, cts.findCartById(2L));
+		us.updateCart(3L, cts.findCartById(3L));
+		us.updateCart(4L, cts.findCartById(4L));
+		us.updateCart(5L, cts.findCartById(5L));
+
+		/*ADD CART ITEMS*/
+		cis.addCartItem(new CartItems(1, 5, 39.99,"LE90023",cts.findCartById(1L)));
+		cis.addCartItem(new CartItems(2, 7, 9.99,"IP19820",cts.findCartById(1L)));
+		cis.addCartItem(new CartItems(3, 1, 339.99,"GA214612",cts.findCartById(1L)));
+		cis.addCartItem(new CartItems(1, 2, 39.99,"LE90023",cts.findCartById(2L)));
+		cis.addCartItem(new CartItems(2, 8, 19.99,"LE9223",cts.findCartById(2L)));
+		cis.addCartItem(new CartItems(1, 3, 39.99,"LE932023",cts.findCartById(3L)));
+		cis.addCartItem(new CartItems(2, 1, 29.99,"LE96023",cts.findCartById(3L)));
+		cis.addCartItem(new CartItems(1, 8, 69.99,"LE96023",cts.findCartById(4L)));
+		cis.addCartItem(new CartItems(2, 5, 89.99,"LE80023",cts.findCartById(4L)));
+		cis.addCartItem(new CartItems(3, 5, 19.99,"LE72023",cts.findCartById(4L)));
+		cis.addCartItem(new CartItems(1, 5, 19.99,"LE98623",cts.findCartById(5L)));
+		cis.addCartItem(new CartItems(2, 7, 39.99,"LE03023",cts.findCartById(5L)));
+		cis.addCartItem(new CartItems(3, 2, 29.99,"LE7823",cts.findCartById(5L)));
+		
+		/*Update carts with items*/
+		cts.updateCartItems(1L, cts.findAllItemsInCart(1L));
+		cts.updateCartItems(2L, cts.findAllItemsInCart(2L));
+		cts.updateCartItems(3L, cts.findAllItemsInCart(3L));
+		cts.updateCartItems(4L, cts.findAllItemsInCart(4L));
+		cts.updateCartItems(5L, cts.findAllItemsInCart(5L));
 
 	}
 	
@@ -202,6 +276,9 @@ public class Populator {
 		ps.closeConnection();
 		os.closeConnection();
 		ods.closeConnection();
+		ss.closeConnection();
+		cts.closeConnection();
+		cis.closeConnection();
 	}
 
 }

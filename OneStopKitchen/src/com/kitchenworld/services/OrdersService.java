@@ -46,6 +46,13 @@ public class OrdersService extends AbstractServices{
 		return getDetails.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Shipment> findAllShipmentsInOrder(Long id){
+		Query getShipments = em.createQuery("SELECT s from Shipment s JOIN s.order o WHERE o.orderId = :selectId");
+		getShipments.setParameter("selectId", id);
+		return getShipments.getResultList();
+	}
+	
 	public void updateOrderDate(Long id, Date newDate) {
 		em.getTransaction().begin();
 		Orders orderToUpdate = em.find(Orders.class, id);

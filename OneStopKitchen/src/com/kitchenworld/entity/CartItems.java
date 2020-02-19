@@ -16,13 +16,21 @@ import javax.persistence.*;
 public class CartItems implements Serializable {
 
 	@Id
-	private Integer id;
+	@Column(name="cartline_id", unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	@Column(name="line_number", nullable=false)
-	private Integer lineItems;
+	private Integer lineNumber;
 
 	@Column(name = "quantity")
 	private int quantity;
+	
+	@Column(name = "price_each")
+	private double priceEach;
+	
+	@Column(name="sku_number", nullable=false)
+	private String skuNumber;
 
 	@ManyToOne
 	@JoinColumn(name="cart_id", nullable=false)
@@ -40,14 +48,33 @@ public class CartItems implements Serializable {
 
 	/**
 	 * @param id
-	 * @param lineItems
+	 * @param lineNumber
 	 * @param quantity
+	 * @param priceEach
+	 * @param skuNumber
 	 * @param cart
 	 */
-	public CartItems(Integer id, Integer lineItems, int quantity, Cart cart) {
+	public CartItems(Long id, Integer lineNumber, int quantity, double priceEach, String skuNumber, Cart cart) {
 		this.setId(id);
-		this.setLineItems(lineItems);
+		this.setLineNumber(lineNumber);
 		this.setQuantity(quantity);
+		this.setPriceEach(priceEach);
+		this.setSkuNumber(skuNumber);
+		this.setCart(cart);
+	}
+	
+	/**
+	 * @param lineNumber
+	 * @param quantity
+	 * @param priceEach
+	 * @param skuNumber
+	 * @param cart
+	 */
+	public CartItems(Integer lineNumber, int quantity, double priceEach, String skuNumber, Cart cart) {
+		this.setLineNumber(lineNumber);
+		this.setQuantity(quantity);
+		this.setPriceEach(priceEach);
+		this.setSkuNumber(skuNumber);
 		this.setCart(cart);
 	}
 
@@ -55,7 +82,7 @@ public class CartItems implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -64,7 +91,7 @@ public class CartItems implements Serializable {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -73,8 +100,8 @@ public class CartItems implements Serializable {
 	/**
 	 * @return the lineItems
 	 */
-	public Integer getLineItems() {
-		return lineItems;
+	public Integer getLineNumber() {
+		return lineNumber;
 	}
 
 
@@ -82,8 +109,8 @@ public class CartItems implements Serializable {
 	/**
 	 * @param lineItems the lineItems to set
 	 */
-	public void setLineItems(Integer lineItems) {
-		this.lineItems = lineItems;
+	public void setLineNumber(Integer lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 
 
@@ -107,11 +134,48 @@ public class CartItems implements Serializable {
 
 
 	/**
+	 * @return the priceEach
+	 */
+	public double getPriceEach() {
+		return priceEach;
+	}
+
+
+
+	/**
+	 * @param priceEach the priceEach to set
+	 */
+	public void setPriceEach(double priceEach) {
+		this.priceEach = priceEach;
+	}
+
+
+
+	/**
+	 * @return the skuNumber
+	 */
+	public String getSkuNumber() {
+		return skuNumber;
+	}
+
+
+
+	/**
+	 * @param skuNumber the skuNumber to set
+	 */
+	public void setSkuNumber(String skuNumber) {
+		this.skuNumber = skuNumber;
+	}
+
+
+
+	/**
 	 * @return the cart
 	 */
 	public Cart getCart() {
 		return cart;
 	}
+
 
 
 	/**
@@ -121,17 +185,21 @@ public class CartItems implements Serializable {
 		this.cart = cart;
 	}
 
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("CartItems [id=");
 		builder.append(id);
-		builder.append(", lineItems=");
-		builder.append(lineItems);
+		builder.append(", lineNumber=");
+		builder.append(lineNumber);
 		builder.append(", quantity=");
 		builder.append(quantity);
-		builder.append(", cart=");
-		builder.append(cart);
+		builder.append(", priceEach=");
+		builder.append(priceEach);
+		builder.append(", skuNumber=");
+		builder.append(skuNumber);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -142,10 +210,13 @@ public class CartItems implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lineItems == null) ? 0 : lineItems.hashCode());
+		result = prime * result + ((lineNumber == null) ? 0 : lineNumber.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(priceEach);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + quantity;
+		result = prime * result + ((skuNumber == null) ? 0 : skuNumber.hashCode());
 		return result;
 	}
 
@@ -153,31 +224,54 @@ public class CartItems implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		CartItems other = (CartItems) obj;
 		if (cart == null) {
-			if (other.cart != null)
+			if (other.cart != null) {
 				return false;
-		} else if (!cart.equals(other.cart))
+			}
+		} else if (!cart.equals(other.cart)) {
 			return false;
+		}
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
-		if (lineItems == null) {
-			if (other.lineItems != null)
+		}
+		if (lineNumber == null) {
+			if (other.lineNumber != null) {
 				return false;
-		} else if (!lineItems.equals(other.lineItems))
+			}
+		} else if (!lineNumber.equals(other.lineNumber)) {
 			return false;
-		if (quantity != other.quantity)
+		}
+		if (Double.doubleToLongBits(priceEach) != Double.doubleToLongBits(other.priceEach)) {
 			return false;
+		}
+		if (quantity != other.quantity) {
+			return false;
+		}
+		if (skuNumber == null) {
+			if (other.skuNumber != null) {
+				return false;
+			}
+		} else if (!skuNumber.equals(other.skuNumber)) {
+			return false;
+		}
 		return true;
 	}
-	
+
+
+
+
 }

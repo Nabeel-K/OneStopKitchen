@@ -11,13 +11,18 @@ import java.util.Date;
  */
 @Entity
 @Table(name="shipments")
-@NamedQuery(name="Shipment.findAll", query="SELECT s FROM Shipment s")
+@NamedQueries(value= {
+		@NamedQuery(name="Shipment.findAll", query="SELECT s FROM Shipment s"),
+		@NamedQuery(name="Shipment.findById", query="SELECT s FROM Shipment s WHERE s.shipmentId = :selectId"),
+		@NamedQuery(name="Shipment.deleteById", query="DELETE FROM Shipment s WHERE s.shipmentId = :deleteId")
+})
 public class Shipment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="shipment_id", unique=true, nullable=false)
-	private int shipmentId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long shipmentId;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_delivered")
@@ -40,8 +45,19 @@ public class Shipment implements Serializable {
 	 * @param dateShipped
 	 * @param order
 	 */
-	public Shipment(int shipmentId, Date dateDelivered, Date dateShipped, Orders order) {
+	public Shipment(Long shipmentId, Date dateDelivered, Date dateShipped, Orders order) {
 		this.setShipmentId(shipmentId);
+		this.setDateDelivered(dateDelivered);
+		this.setDateShipped(dateShipped);
+		this.setOrder(order);
+	}
+	
+	/**
+	 * @param dateDelivered
+	 * @param dateShipped
+	 * @param order
+	 */
+	public Shipment(Date dateDelivered, Date dateShipped, Orders order) {
 		this.setDateDelivered(dateDelivered);
 		this.setDateShipped(dateShipped);
 		this.setOrder(order);
@@ -50,11 +66,11 @@ public class Shipment implements Serializable {
 	public Shipment() {
 	}
 
-	public int getShipmentId() {
+	public Long getShipmentId() {
 		return this.shipmentId;
 	}
 
-	public void setShipmentId(int shipmentId) {
+	public void setShipmentId(Long shipmentId) {
 		this.shipmentId = shipmentId;
 	}
 
@@ -91,8 +107,6 @@ public class Shipment implements Serializable {
 		builder.append(dateDelivered);
 		builder.append(", dateShipped=");
 		builder.append(dateShipped);
-		builder.append(", order=");
-		builder.append(order);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -103,38 +117,53 @@ public class Shipment implements Serializable {
 		int result = 1;
 		result = prime * result + ((dateDelivered == null) ? 0 : dateDelivered.hashCode());
 		result = prime * result + ((dateShipped == null) ? 0 : dateShipped.hashCode());
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + shipmentId;
+		result = prime * result + ((shipmentId == null) ? 0 : shipmentId.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Shipment other = (Shipment) obj;
 		if (dateDelivered == null) {
-			if (other.dateDelivered != null)
+			if (other.dateDelivered != null) {
 				return false;
-		} else if (!dateDelivered.equals(other.dateDelivered))
+			}
+		} else if (!dateDelivered.equals(other.dateDelivered)) {
 			return false;
+		}
 		if (dateShipped == null) {
-			if (other.dateShipped != null)
+			if (other.dateShipped != null) {
 				return false;
-		} else if (!dateShipped.equals(other.dateShipped))
+			}
+		} else if (!dateShipped.equals(other.dateShipped)) {
 			return false;
+		}
 		if (order == null) {
-			if (other.order != null)
+			if (other.order != null) {
 				return false;
-		} else if (!order.equals(other.order))
+			}
+		} else if (!order.equals(other.order)) {
 			return false;
-		if (shipmentId != other.shipmentId)
+		}
+		if (shipmentId == null) {
+			if (other.shipmentId != null) {
+				return false;
+			}
+		} else if (!shipmentId.equals(other.shipmentId)) {
 			return false;
+		}
 		return true;
 	}
+
+
 
 }

@@ -1,7 +1,7 @@
 package com.kitchenworld.entity;
 
 import java.io.Serializable;
-import java.lang.Integer;
+import java.lang.Long;
 import java.util.List;
 
 import javax.persistence.*;
@@ -20,7 +20,9 @@ import javax.persistence.*;
 public class Cart implements Serializable {
 
 	@Id
-	private Integer cartId;
+	@Column(name="cart_id", unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long cartId;
 	
 	@OneToOne
 	private User user;
@@ -41,12 +43,17 @@ public class Cart implements Serializable {
 	 * @param user
 	 * @param cartItems
 	 */
-	public Cart(Integer cartId, User user, List<CartItems> cartItems) {
+	public Cart(Long cartId, User user, List<CartItems> cartItems) {
 		this.setCartId(cartId);
 		this.setUser(user);
 		this.setCartItems(cartItems);
 	}
 
+	
+	public Cart(User user, List<CartItems> cartItems) {
+		this.setUser(user);
+		this.setCartItems(cartItems);
+	}
 	/**
 	 * @return the cartItems
 	 */
@@ -63,11 +70,11 @@ public class Cart implements Serializable {
 	}
 
 
-	public Integer getCartId() {
+	public Long getCartId() {
 		return this.cartId;
 	}
 
-	public void setCartId(Integer cartId) {
+	public void setCartId(Long cartId) {
 		this.cartId = cartId;
 	}
 	
@@ -90,8 +97,6 @@ public class Cart implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Cart [cartId=");
 		builder.append(cartId);
-		builder.append(", user=");
-		builder.append(user);
 		builder.append(", cartItems=");
 		builder.append(cartItems);
 		builder.append("]");
@@ -105,38 +110,45 @@ public class Cart implements Serializable {
 		int result = 1;
 		result = prime * result + ((cartId == null) ? 0 : cartId.hashCode());
 		result = prime * result + ((cartItems == null) ? 0 : cartItems.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Cart other = (Cart) obj;
 		if (cartId == null) {
-			if (other.cartId != null)
+			if (other.cartId != null) {
 				return false;
-		} else if (!cartId.equals(other.cartId))
+			}
+		} else if (!cartId.equals(other.cartId)) {
 			return false;
+		}
 		if (cartItems == null) {
-			if (other.cartItems != null)
+			if (other.cartItems != null) {
 				return false;
-		} else if (!cartItems.equals(other.cartItems))
+			}
+		} else if (!cartItems.equals(other.cartItems)) {
 			return false;
+		}
 		if (user == null) {
-			if (other.user != null)
+			if (other.user != null) {
 				return false;
-		} else if (!user.equals(other.user))
+			}
+		} else if (!user.equals(other.user)) {
 			return false;
+		}
 		return true;
 	}
 
 
-	
 }

@@ -22,7 +22,7 @@ public class OrderDetailsService extends AbstractServices{
 	
 
 	@SuppressWarnings("unchecked")
-	public OrderDetail findOrderById(Long id) {
+	public OrderDetail findOrderDetailsById(Long id) {
 		Query getOrderDetails = em.createNamedQuery("OrderDetail.findById");
 		getOrderDetails.setParameter("selectId", id);
 		List<OrderDetail> results = getOrderDetails.getResultList();

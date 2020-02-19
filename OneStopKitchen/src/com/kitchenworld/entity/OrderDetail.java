@@ -161,8 +161,6 @@ public class OrderDetail implements Serializable {
 		builder.append(quantityOrdered);
 		builder.append(", skuNumber=");
 		builder.append(skuNumber);
-		builder.append(", order=");
-		builder.append(order);
 		builder.append("]");
 		return builder.toString();
 	}
