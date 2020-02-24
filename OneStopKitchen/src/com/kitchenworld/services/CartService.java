@@ -1,6 +1,11 @@
-/**
+/*
+ * Filename: CartService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
  * 
- */
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.List;
@@ -15,6 +20,11 @@ import com.kitchenworld.entity.CartItems;
  *
  */
 public class CartService extends AbstractServices {
+	
+	public CartService() {
+		super();
+	}
+	
 	public void addCart(Cart cart) {
 		em.getTransaction().begin();
 		em.persist(cart);

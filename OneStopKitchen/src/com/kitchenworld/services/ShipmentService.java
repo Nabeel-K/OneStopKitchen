@@ -1,6 +1,11 @@
-/**
+/*
+ * Filename: ShipmentService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
  * 
- */
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.Date;
@@ -14,6 +19,11 @@ import com.kitchenworld.entity.Shipment;
  *
  */
 public class ShipmentService extends AbstractServices {
+	
+	public ShipmentService() {
+		super();
+	}
+	
 	public void addShipment(Shipment shipment) {
 		em.getTransaction().begin();
 		em.persist(shipment);

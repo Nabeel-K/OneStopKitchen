@@ -1,6 +1,11 @@
-/**
+/*
+ * Filename: UserService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
  * 
- */
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.List;
@@ -11,32 +16,57 @@ import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.User;
 
 /**
- * @author CTStudent
+ * @author Nabeel
  *
  */
+@SuppressWarnings("unchecked")
 public class UserService extends AbstractServices {
 
+	public UserService() {
+		super();
+	}
+	
+	public boolean loginMatch(User user) {
+		String email = user.getEmail();
+		String password = user.getPassword();
+		boolean match;
+		
+		Query findUser = em.createQuery("SELECT u FROM User u WHERE u.email=\"" + email + "\" AND u.password = \"" + password +"\"");
+		List<User> matches = findUser.getResultList();
+		
+		if (matches.size() == 1) {
+			User authenticatedUser = matches.get(0);
+			user.setAddress(authenticatedUser.getAddress());
+			user.setFirstName(authenticatedUser.getFirstName());
+			user.setLastName(authenticatedUser.getLastName());
+			user.setCity(authenticatedUser.getCity());
+			user.setCountry(authenticatedUser.getCountry());
+			user.setState(authenticatedUser.getState());
+			user.setZipcode(authenticatedUser.getZipcode());
+			user.setOrders(authenticatedUser.getOrders());
+			user.setCart(authenticatedUser.getCart());
+			match =  true;
+		} else {
+			match = false;
+		}
+		return match;
+		
+	}
+	
 	public void addUser(User user) {
 		em.getTransaction().begin();
 		em.persist(user);
 		em.getTransaction().commit();
 	}
 
-	@SuppressWarnings("unchecked")
 	public User findUserById(Long id) {
-		Query getUser = em.createNamedQuery("User.findById");
+		Query getUser = em.createNamedQuery("findById");
 		getUser.setParameter("selectId", id);
-		List<User> results = getUser.getResultList();
-
-		return results.get(0);
+		return (User)getUser.getResultList().get(0);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers() {
-		Query getUsers = em.createNamedQuery("User.findAll");
-		List<User> results = getUsers.getResultList();
-
-		return results;
+		return em.createNamedQuery("findAll").getResultList();	
 	}
 
 	public void updateUserFirstName(Long id, String newName) {
@@ -102,6 +132,10 @@ public class UserService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
+	/**
+	 * @param id (Comment here)
+	 * @param newCart
+	 */
 	public void updateCart(Long id, Cart newCart) {
 		em.getTransaction().begin();
 		User userToUpdate = em.find(User.class, id);
@@ -110,7 +144,7 @@ public class UserService extends AbstractServices {
 	}
 
 	public void deleteUser(Long id) {
-		Query getUser = em.createNamedQuery("User.findById");
+		Query getUser = em.createNamedQuery("findById");
 		getUser.setParameter("selectId", id);
 		List<User> results = getUser.getResultList();
 		User user = results.get(0);

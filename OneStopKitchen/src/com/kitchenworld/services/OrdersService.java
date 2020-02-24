@@ -1,7 +1,11 @@
-/**
- * OrdersService.java
- * DESC: DAO Services for Orders entities
- */
+/*
+ * Filename: OrdersService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
+ * 
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.Date;
@@ -18,6 +22,11 @@ import com.kitchenworld.entity.Shipment;
  *
  */
 public class OrdersService extends AbstractServices{
+	
+	public OrdersService() {
+		super();
+	}
+	
 	public void addOrder(Orders order) {
 		em.getTransaction().begin();
 		em.persist(order);

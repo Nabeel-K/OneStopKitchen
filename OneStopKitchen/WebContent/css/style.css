@@ -4,29 +4,28 @@ html,body{
 
 }
 
-.title-bar{
-    border-bottom: 2px solid gray;
-}
-
-.homepage-content{
-    align-items: center;
-    text-align: center;
-}
-
 .item_block > img{
     width:200px;
     height:300px;
 }
 
-.header{
+#header-title{
 	text-align:center;
 	background:#89f5a6;
-	height: 70px;
+	height:90px;
 }
-.footer {
+#footer {
 	position: absolute;
 	bottom:0;
 	width:100%;
-	background:lightblue;
+	background:#f59189;
 	text-align:center;
+}
+
+.errorMessage{
+	color:red;
+}
+
+#createAccountForm, #loginForm{
+	margin:30px;
 }

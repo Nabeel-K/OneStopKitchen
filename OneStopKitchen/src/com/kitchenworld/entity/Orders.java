@@ -1,3 +1,11 @@
+/*
+ * Filename: Orders.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.entity;
 
 import java.io.Serializable;
@@ -14,7 +22,8 @@ import java.util.List;
 @NamedQueries(value = {
 		@NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.orderId = :selectId"),
 		@NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
-		@NamedQuery(name = "Orders.deleteById", query = "DELETE FROM Orders o WHERE o.orderId = :deleteId") })
+		@NamedQuery(name = "Orders.deleteById", query = "DELETE FROM Orders o WHERE o.orderId = :deleteId") 
+})
 public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 

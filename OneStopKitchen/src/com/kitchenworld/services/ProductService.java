@@ -1,7 +1,11 @@
-/**
- * ProductService.java
- * DESC: DAO Services for product entities
- */
+/*
+ * Filename: ProductService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
+ * 
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.List;
@@ -16,6 +20,11 @@ import com.kitchenworld.entity.Product;
  *
  */
 public class ProductService extends AbstractServices {
+	
+	public ProductService() {
+		super();
+	}
+	
 	public void addProduct(Product product) {
 		em.getTransaction().begin();
 		em.persist(product);

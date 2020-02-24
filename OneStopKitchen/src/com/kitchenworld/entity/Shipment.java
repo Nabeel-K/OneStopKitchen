@@ -1,3 +1,11 @@
+/*
+ * Filename: Shipment.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.entity;
 
 import java.io.Serializable;

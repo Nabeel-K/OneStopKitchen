@@ -1,3 +1,11 @@
+/*
+ * Filename: User.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.entity;
 
 import java.io.Serializable;
@@ -10,15 +18,15 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
-@NamedQueries(value = { @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.userId = :selectId"),
-		@NamedQuery(name = "User.deleteById", query = "DELETE FROM User u WHERE u.userId = :deleteId") })
+@NamedQueries(value = { @NamedQuery(name = "findAll", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "findById", query = "SELECT u FROM User u WHERE u.userId = :selectId"),
+		@NamedQuery(name = "deleteById", query = "DELETE FROM User u WHERE u.userId = :deleteId") })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "user_id", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
 	@Column(nullable = false, length = 320)

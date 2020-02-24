@@ -1,7 +1,12 @@
-/**
- * CategoryService.java
- * DESC:Service file for category entities
- */
+/*
+ * Filename: CategoryService.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-19-20 Original Creation
+ * Maint Date: 2-23-20 Updated Constructor
+ *
+ * 
+ * 
+ * */
 package com.kitchenworld.services;
 
 import java.util.List;
@@ -16,6 +21,11 @@ import com.kitchenworld.entity.Product;
  *
  */
 public class CategoryService extends AbstractServices {
+	
+	public CategoryService() {
+		super();
+	}
+	
 	public void addCategory(Category category) {
 		em.getTransaction().begin();
 		em.persist(category);
