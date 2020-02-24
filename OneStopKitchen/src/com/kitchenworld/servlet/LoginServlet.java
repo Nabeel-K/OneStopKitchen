@@ -1,6 +1,15 @@
+/*
+ * Filename: LoginServlet.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-23-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +23,7 @@ import com.kitchenworld.services.UserService;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet(description = "Servlet to handle validation of login", urlPatterns = { "/LoginServlet" })
+@WebServlet(description = "Servlet to handle validation of login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -30,12 +39,9 @@ public class LoginServlet extends HttpServlet {
 		UserService us = new UserService();
 		us.connect();
 		
-		User userLoggingIn = new User();
+		User userLoggingIn = us.loginMatch(email, pass);
 		
-		userLoggingIn.setEmail(email);
-		userLoggingIn.setPassword(pass);
-		
-		if(us.loginMatch(userLoggingIn)) {
+		if(userLoggingIn != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
 			response.sendRedirect("index.jsp");

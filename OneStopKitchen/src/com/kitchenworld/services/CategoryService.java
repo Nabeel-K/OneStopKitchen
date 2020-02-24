@@ -41,9 +41,9 @@ public class CategoryService extends AbstractServices {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Product> findAllProductsInCategory(Long id) {
-		Query getProducts = em.createQuery("SELECT p from Product p JOIN p.category g WHERE g.categoryId = :selectId");
-		getProducts.setParameter("selectId", id);
+	public List<Product> findAllProductsInCategory(String categoryName) {
+		Query getProducts = em.createQuery("SELECT p from Product p JOIN p.category g WHERE g.categoryName = :selectName");
+		getProducts.setParameter("selectName", categoryName);
 		return getProducts.getResultList();
 	}
 

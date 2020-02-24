@@ -1,3 +1,11 @@
+/*
+ * Filename: LogoutServlet.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-23-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.servlet;
 
 import java.io.IOException;

@@ -19,7 +19,7 @@
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
 
-	<div class="container-fluid">
+	<div class="main-container container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<h2>${categoryName}</h2>

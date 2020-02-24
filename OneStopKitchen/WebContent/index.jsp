@@ -17,11 +17,6 @@
 
 <!-- Internal Styling -->
 <style>
-#home-container {
-	padding: 0;
-	min-height: 100%;
-	position: relative;
-}
 
 #home-products-row {
 	padding: 25px;
@@ -33,7 +28,7 @@
 <body>
 		<%@ include file="html_fragments/header.jsp"%>
 
-	<div id="home-container" class="container-fluid">
+	<div class="main-container container-fluid">
 
 		<div class="row mt-5">
 			<div class="col-sm-12 col-md-8 col-lg-5 mx-auto">

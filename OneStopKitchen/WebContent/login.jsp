@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,31 +21,33 @@
 </head>
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
-	<div class="row">
-		<div class="col-md-4 offset-md-4">
-			<form id="loginForm" action="LoginServlet" method="POST">
-				<h2>Login</h2>
-				<p class="errorMessage">${errorMessage }</p>
-				<div class="form-group">
-					<label for="loginEmail">Email address</label> <input type="email"
-						class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp"
-						placeholder="Email">
-				</div>
+	<div class="main-container container-fluid">
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+				<form id="loginForm" action="login" method="POST">
+					<h2>Login</h2>
+					<p class="errorMessage">${errorMessage }</p>
+					<div class="form-group">
+						<label for="loginEmail">Email address</label> <input type="email"
+							class="form-control" id="loginEmail" name="loginEmail"
+							aria-describedby="emailHelp" placeholder="Email">
+					</div>
 
-				<div class="form-group">
-					<label for="loginPassword">Password</label> <input type="password"
-						class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
-				</div>
+					<div class="form-group">
+						<label for="loginPassword">Password</label> <input type="password"
+							class="form-control" id="loginPassword" name="loginPassword"
+							placeholder="Password">
+					</div>
 
-				<button type="submit" class="btn btn-primary">Login</button>
-				<p>
-					Need an account? <a href="./createAccount.jsp">Register Here!</a>
-				</p>
+					<button type="submit" class="btn btn-primary">Login</button>
+					<p>
+						Need an account? <a href="./createAccount.jsp">Register Here!</a>
+					</p>
 
-			</form>
+				</form>
+			</div>
 		</div>
+		<%@ include file="html_fragments/footer.html"%>
 	</div>
-	<%@ include file="html_fragments/footer.html"%>
-
 </body>
 </html>

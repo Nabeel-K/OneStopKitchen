@@ -30,7 +30,7 @@ public class Category implements Serializable {
 	@Column(name = "category_id", unique = true, nullable = false)
 	private Long categoryId;
 
-	@Column(name = "category_name", nullable = false, length = 20)
+	@Column(name = "category_name", unique=true, nullable = false, length = 20)
 	private String categoryName;
 
 	// bi-directional many-to-one association to Product

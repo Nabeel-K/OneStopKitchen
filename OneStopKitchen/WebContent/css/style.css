@@ -26,6 +26,8 @@ html,body{
 	color:red;
 }
 
-#createAccountForm, #loginForm{
-	margin:30px;
+.main-container {
+	padding: 0;
+	min-height: 100%;
+	position: relative;
 }

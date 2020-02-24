@@ -68,7 +68,7 @@ public class Populator {
 
 		/* ADD USERS */
 		User user1 = new User("bob@gold.com", "ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
-		User user2 = new User("doej@mail.com", "43a070d0ee87e7cc54345cd920528689", "John", "Doe");
+		User user2 = new User("dobmaej@mail.com", "43a070d0ee87e7cc54345cd920528689", "John", "Doe");
 
 		// With all values except for order and cart information
 		User user3 = new User("1234 Street st", "Boston", "USA", "doej@mail.com", "43a070d0ee87e7cc54345cd920528689",
@@ -120,10 +120,10 @@ public class Populator {
 		ps.addProduct(p10);
 
 		/* Update Categories with product lists */
-		cs.updateProducts(1L, cs.findAllProductsInCategory(1L));
-		cs.updateProducts(2L, cs.findAllProductsInCategory(2L));
-		cs.updateProducts(3L, cs.findAllProductsInCategory(3L));
-		cs.updateProducts(4L, cs.findAllProductsInCategory(4L));
+		cs.updateProducts(1L, cs.findAllProductsInCategory("Refrigerators"));
+		cs.updateProducts(2L, cs.findAllProductsInCategory("Microwaves"));
+		cs.updateProducts(3L, cs.findAllProductsInCategory("Small Appliances"));
+		cs.updateProducts(4L, cs.findAllProductsInCategory("Ovens and Stoves"));
 
 		/* ADD ORDERS */
 		os.addOrder(new Orders(new Date(), "PROCESSING", null, us.findUserById(1L), null));

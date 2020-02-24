@@ -1,3 +1,11 @@
+/*
+ * Filename: ProductServlet.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-23-20 Original Creation
+ * Maint Date: 
+ * 
+ * 
+ * */
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
@@ -41,7 +49,7 @@ public class ProductServlet extends HttpServlet {
 			ps.closeConnection();
 		} else {
 			CategoryService cs = new CategoryService();
-			List<Product> productsInCategory = cs.findAllProductsInCategory(1L); //update to use name of category
+			List<Product> productsInCategory = cs.findAllProductsInCategory(productType);
 			request.setAttribute("categoryName", cs.findCategoryById(1L).getCategoryName());
 			request.setAttribute("products", productsInCategory);
 			response.sendRedirect("shop.jsp");

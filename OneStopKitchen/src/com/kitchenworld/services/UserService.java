@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.User;
 
@@ -25,34 +27,25 @@ public class UserService extends AbstractServices {
 	public UserService() {
 		super();
 	}
-	
-	public boolean loginMatch(User user) {
-		String email = user.getEmail();
-		String password = user.getPassword();
-		boolean match;
-		
-		Query findUser = em.createQuery("SELECT u FROM User u WHERE u.email=\"" + email + "\" AND u.password = \"" + password +"\"");
+
+	public User loginMatch(String email, String password) {
+
+		System.out.println("email: " + email + "pass: " + password);
+		Query findUser = em.createQuery("SELECT u FROM User u WHERE u.email= :email").setParameter("email", email);
+
 		List<User> matches = findUser.getResultList();
-		
-		if (matches.size() == 1) {
-			User authenticatedUser = matches.get(0);
-			user.setAddress(authenticatedUser.getAddress());
-			user.setFirstName(authenticatedUser.getFirstName());
-			user.setLastName(authenticatedUser.getLastName());
-			user.setCity(authenticatedUser.getCity());
-			user.setCountry(authenticatedUser.getCountry());
-			user.setState(authenticatedUser.getState());
-			user.setZipcode(authenticatedUser.getZipcode());
-			user.setOrders(authenticatedUser.getOrders());
-			user.setCart(authenticatedUser.getCart());
-			match =  true;
-		} else {
-			match = false;
+		User authenticatedUser = null;
+		if (matches.size() > 0) {
+			System.out.println("heet");
+			if (BCrypt.checkpw(password, matches.get(0).getPassword())) {
+				authenticatedUser = matches.get(0);
+				System.out.println(authenticatedUser);
+			}
 		}
-		return match;
-		
+		return authenticatedUser;
+
 	}
-	
+
 	public void addUser(User user) {
 		em.getTransaction().begin();
 		em.persist(user);
@@ -62,11 +55,11 @@ public class UserService extends AbstractServices {
 	public User findUserById(Long id) {
 		Query getUser = em.createNamedQuery("findById");
 		getUser.setParameter("selectId", id);
-		return (User)getUser.getResultList().get(0);
+		return (User) getUser.getResultList().get(0);
 	}
 
 	public List<User> findAllUsers() {
-		return em.createNamedQuery("findAll").getResultList();	
+		return em.createNamedQuery("findAll").getResultList();
 	}
 
 	public void updateUserFirstName(Long id, String newName) {
@@ -133,7 +126,7 @@ public class UserService extends AbstractServices {
 	}
 
 	/**
-	 * @param id (Comment here)
+	 * @param id      (Comment here)
 	 * @param newCart
 	 */
 	public void updateCart(Long id, Cart newCart) {

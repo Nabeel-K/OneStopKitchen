@@ -29,10 +29,10 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
-	@Column(nullable = false, length = 320)
+	@Column(nullable = false, unique=true, length = 320)
 	private String email;
 
-	@Column(nullable = false, length = 32)
+	@Column(nullable = false, length = 60)
 	private String password;
 
 	@Column(name = "first_name", nullable = false, length = 50)
