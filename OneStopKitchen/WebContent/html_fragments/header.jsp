@@ -17,7 +17,7 @@
 					href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="false"> Products </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="ProductServlet">All</a>
+						<a class="dropdown-item" href="products">All</a>
 					</div></li>
 
 			</ul>

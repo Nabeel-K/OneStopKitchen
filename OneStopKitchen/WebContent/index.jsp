@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,16 +17,18 @@
 
 <!-- Internal Styling -->
 <style>
-
 #home-products-row {
 	padding: 25px;
+}
+.item-label{
+	display:block;
 }
 </style>
 
 <title>One Stop Kitchen</title>
 </head>
 <body>
-		<%@ include file="html_fragments/header.jsp"%>
+	<%@ include file="html_fragments/header.jsp"%>
 
 	<div class="main-container container-fluid">
 
@@ -95,6 +97,13 @@
 					height="200px">
 				<p>Clearance</p>
 			</div>
+			<c:forEach items="${categories}" var="category">
+				<a href="products?category=${category.categoryName }"> <img
+					class="item-block" src="images/fridge.png"
+					alt="${category.categoryName }" height="200px"> <span class="item-label">${category.categoryName }</span>
+
+				</a>
+			</c:forEach>
 
 		</div>
 		<%@ include file="html_fragments/footer.html"%>

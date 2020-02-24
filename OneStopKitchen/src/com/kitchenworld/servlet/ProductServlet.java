@@ -24,7 +24,7 @@ import com.kitchenworld.services.ProductService;
 /**
  * Servlet implementation class ProductServlet
  */
-@WebServlet("/ProductServlet")
+@WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,9 +50,9 @@ public class ProductServlet extends HttpServlet {
 		} else {
 			CategoryService cs = new CategoryService();
 			List<Product> productsInCategory = cs.findAllProductsInCategory(productType);
-			request.setAttribute("categoryName", cs.findCategoryById(1L).getCategoryName());
+			request.setAttribute("categoryName", productType);
 			request.setAttribute("products", productsInCategory);
-			response.sendRedirect("shop.jsp");
+			request.getRequestDispatcher("shop.jsp").forward(request, response);
 			cs.closeConnection();
 		}
 		
