@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="font-awesome/css/all.css">
+  <script defer src="font-awesome/js/all.js"></script> <!--load all styles -->
+
 <!-- Bootstrap -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <script
@@ -20,8 +26,9 @@
 #home-products-row {
 	padding: 25px;
 }
-.item-label{
-	display:block;
+
+.item-label {
+	display: block;
 }
 </style>
 
@@ -97,11 +104,12 @@
 					height="200px">
 				<p>Clearance</p>
 			</div>
+			<!-- Will replace the above template -->
 			<c:forEach items="${categories}" var="category">
 				<a href="products?category=${category.categoryName }"> <img
 					class="item-block" src="images/fridge.png"
-					alt="${category.categoryName }" height="200px"> <span class="item-label">${category.categoryName }</span>
-
+					alt="${category.categoryName }" height="200px"> <span
+					class="item-label">${category.categoryName }</span>
 				</a>
 			</c:forEach>
 

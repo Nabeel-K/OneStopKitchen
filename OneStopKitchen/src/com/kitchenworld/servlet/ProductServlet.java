@@ -1,8 +1,9 @@
 /*
  * Filename: ProductServlet.java
  * Author: Nabeel Khan
- * Creation Date: 2-23-20 Original Creation
- * Maint Date: 
+ * Creation Date: 2-24-20 Original Creation
+ * Maint Date: 2-25-20 Removed Unnecessary Constructor
+ * 
  * 
  * 
  * */
@@ -27,13 +28,6 @@ import com.kitchenworld.services.ProductService;
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProductServlet() {
-        super();
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

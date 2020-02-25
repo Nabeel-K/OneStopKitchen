@@ -22,6 +22,10 @@ html,body{
 	text-align:center;
 }
 
+#right-aligned-header-list{
+	position:relative;
+	top:10px;
+}
 .errorMessage{
 	color:red;
 }
@@ -30,4 +34,8 @@ html,body{
 	padding: 0;
 	min-height: 100%;
 	position: relative;
+}
+
+.cart-link{
+	margin-top:10px;
 }

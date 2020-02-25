@@ -2,7 +2,8 @@
  * Filename: LoginServlet.java
  * Author: Nabeel Khan
  * Creation Date: 2-23-20 Original Creation
- * Maint Date: 
+ * Maint Date: 2-25-20 Updated to add user's cart to session
+ * 
  * 
  * 
  * */
@@ -44,7 +45,8 @@ public class LoginServlet extends HttpServlet {
 		if(userLoggingIn != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
-			response.sendRedirect("index.jsp");
+			session.setAttribute("userCart", userLoggingIn.getCart());
+			response.sendRedirect("welcome");
 		} else {
 			request.setAttribute("errorMessage", "Invalid email or password. Please try again");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);

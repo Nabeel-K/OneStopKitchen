@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
- * 
+ * Maint Date: 2-25-20 Added find by name method
  * 
  * */
 package com.kitchenworld.services;
@@ -40,6 +40,14 @@ public class ProductService extends AbstractServices {
 		return results.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	public Product findProductByName(String productName) {
+		Query getProduct = em.createQuery("SELECT p FROM Product p WHERE p.productName = :selectName");
+		getProduct.setParameter("selectName", productName);
+		List<Product> results = getProduct.getResultList();
+		return results.get(0);
+	}	
+	
 	@SuppressWarnings("unchecked")
 	public List<Product> findAllProducts() {
 		Query getProducts = em.createNamedQuery("Product.findAll");

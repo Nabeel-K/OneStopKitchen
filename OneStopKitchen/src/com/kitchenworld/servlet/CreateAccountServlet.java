@@ -43,7 +43,8 @@ public class CreateAccountServlet extends HttpServlet {
 		newUser.setFirstName(request.getParameter("firstName"));
 		newUser.setLastName(request.getParameter("lastName"));
 		newUser.setEmail(request.getParameter("loginEmail"));
-		newUser.setPassword(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt()));
+		System.out.println(request.getParameter("createPassword"));
+		newUser.setPassword(BCrypt.hashpw(request.getParameter("createPassword"), BCrypt.gensalt()));
 		
 		Cart cart = new Cart();
 		cart.setUser(newUser);
@@ -52,7 +53,7 @@ public class CreateAccountServlet extends HttpServlet {
 		us.addUser(newUser);
 		CartService cs = new CartService();
 		cs.addCart(cart);
-		newUser.setCart(cart	);
+		newUser.setCart(cart);
 		List<User> allUsers = us.findAllUsers();
 		us.updateCart(allUsers.get(allUsers.size()-1).getUserId(), cart);
 		

@@ -23,11 +23,17 @@
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<c:if test="${sessionScope.loggedInUser == null}">
+					<li><i class="fas fa-shopping-cart fa-lg cart-link"></i>
+					<span class="badge">${fn:length (sessionScope.userCart.cartItems)}</span></li>
+
 					<li class="nav-item"><a class="nav-link" href="./login.jsp">Login</a></li>
 				</c:if>
 				<c:if test="${sessionScope.loggedInUser != null}">
 					<li class="nav-item"><p class=nav-link>Hello
 							${loggedInUser.email}</p></li>
+					<li><i class="fas fa-shopping-cart fa-lg cart-link"></i><span class="badge">${fn:length (sessionScope.userCart.cartItems)}
+					</span></li>
+
 					<li class="nav-item"><a class="nav-link" href="LogoutServlet">Log
 							Out</a></li>
 				</c:if>

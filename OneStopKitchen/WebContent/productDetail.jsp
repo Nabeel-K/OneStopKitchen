@@ -20,34 +20,27 @@
 
 <!--External CSS-->
 <link rel="stylesheet" href="./css/style.css">
-<title>One Stop Kitchen Products</title>
+<title>${product.productName } Details</title>
 </head>
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
-
 	<div class="main-container container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h2>${categoryName}</h2>
+		<div class="row mx-4">
+			<div class="col-md-12 mt-3">
+				<h2>${product.productName}</h2>
 			</div>
-			<c:forEach items="${products }" var="product">
-				<div class="col-sm-6 col-md-4 col-lg-3">
-					<a href="details?product=${product.productName}">
-						<img class="item-block" src="images/fridge.png"
-							alt="${product.productName }" height="200px">
-						<span>${product.productName }</span>
-						<span>
-							<b>Price: </b>${product.price }</span>
-						<span>
-							<b>Quantity Left: </b>${product.quantityInStock }</span>
-					</a>
-				</div>
-
-			</c:forEach>
+			<div class="product-images col-md-6 col-sm-12 mt-3">
+				<img class="item-image" src="images/fridge.png"
+					alt="${product.productName }" height="200px">
+			</div>
+			<div class="col-md-6 col-sm-12 mt-3">
+				<p><b>Description: </b> ${product.description }</p>
+				<p><b>Price: </b>${product.price }</p>
+				<p><b>Quantity Left: </b>${product.quantityInStock }</p>
+			</div>
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 
 	</div>
-
 </body>
 </html>
