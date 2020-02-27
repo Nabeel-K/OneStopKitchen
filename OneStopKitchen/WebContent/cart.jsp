@@ -25,12 +25,31 @@
 </head>
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
-	<div class="main-container">
+	<div class="main-container container">
 		<div class="row mt-4">
 			<div class="col-md-12">
 				<h2>Your Cart</h2>
 			</div>
-			<c:if test="${fn:length()<=0}"
+			<c:if test="${fn:length(sessionScope.userCart.cartItems)<=0}">
+				<c:forEach items="${sessionScope.userCart.cartItems}" var="cartItem">
+					<div class="col-md-12">
+						<img class="item-block" src="images/fridge.png"
+							alt="${cartItem.skuNumber }" height="200px">
+							<span>${cartItem.skuNumber }</span>
+							<p>${cartItem.priceEach }</p>
+							<form action="updateCart" method="POST">
+								<label for="quantity">Quantity</label>
+								<input id="quantity" name="quantity" type="number" value="${cartItem.priceEach }">
+								<input name="submit" type="submit" value="Update">
+							</form>
+					</div>
+				</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(sessionScope.userCart.cartItems) == 0}">
+				<div class="col-md-12">
+					<h5>No items in the cart</h5>
+				</div>
+			</c:if>
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 	</div>

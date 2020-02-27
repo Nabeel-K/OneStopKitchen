@@ -43,7 +43,6 @@ public class CreateAccountServlet extends HttpServlet {
 		newUser.setFirstName(request.getParameter("firstName"));
 		newUser.setLastName(request.getParameter("lastName"));
 		newUser.setEmail(request.getParameter("loginEmail"));
-		System.out.println(request.getParameter("createPassword"));
 		newUser.setPassword(BCrypt.hashpw(request.getParameter("createPassword"), BCrypt.gensalt()));
 		
 		Cart cart = new Cart();
@@ -62,7 +61,7 @@ public class CreateAccountServlet extends HttpServlet {
 		session.setAttribute("userCart", cart);
 		us.closeConnection();
 		cs.closeConnection();
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("welcome");
 		
 	}
 

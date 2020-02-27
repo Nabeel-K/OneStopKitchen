@@ -29,18 +29,12 @@ public class UserService extends AbstractServices {
 	}
 
 	public User loginMatch(String email, String password) {
-
 		Query findUser = em.createQuery("SELECT u FROM User u WHERE u.email= :email").setParameter("email", email);
 
 		List<User> matches = findUser.getResultList();
 		User authenticatedUser = null;
-		if (matches.size() > 0) {
-			System.out.println(matches.get(0));
-
-			if (BCrypt.checkpw(password, matches.get(0).getPassword())) {
-				authenticatedUser = matches.get(0);
-				System.out.println(authenticatedUser);
-			}
+		if (!matches.isEmpty() && BCrypt.checkpw(password, matches.get(0).getPassword())) {
+			authenticatedUser = matches.get(0);
 		}
 		return authenticatedUser;
 
