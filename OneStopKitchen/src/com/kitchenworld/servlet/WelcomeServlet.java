@@ -1,6 +1,7 @@
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,7 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kitchenworld.entity.Cart;
+import com.kitchenworld.entity.CartItems;
 import com.kitchenworld.entity.Category;
 import com.kitchenworld.services.CategoryService;
 
@@ -30,6 +34,20 @@ public class WelcomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userCart") == null) {
+			Cart emptyCart = new Cart();
+			List<CartItems> cartItemList = new ArrayList<>();
+			emptyCart.setCartItems(cartItemList);
+			session.setAttribute("userCart", emptyCart);
+			
+		} else { //test code, delete me after you are done
+			Cart emptyCart = (Cart)session.getAttribute("userCart");
+			List<CartItems> cartItemList = new ArrayList<>();
+			emptyCart.setCartItems(cartItemList);
+			session.setAttribute("userCart", emptyCart);
+		}
+		
 		CategoryService cs = new CategoryService();
 		List<Category> categories = cs.findAllCategories();
 		request.setAttribute("categories", categories);
@@ -40,7 +58,6 @@ public class WelcomeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("I hit here first");
 		doGet(request, response);
 	}
 

@@ -37,6 +37,13 @@
 				<p><b>Description: </b> ${product.description }</p>
 				<p><b>Price: </b>${product.price }</p>
 				<p><b>Quantity Left: </b>${product.quantityInStock }</p>
+				<form action="cart" method="POST">
+					<label for="quantity">Quantity: </label>
+					<input type="number" id="quantity" name="quantity" min="1" max="${product.quantityInStock }" value="1">
+					<input type="hidden" name="productName" value="${product.productName }">
+					<input type="hidden" name="productPrice" value="${product.price }">
+					<input type="submit" value="Add to Cart">
+				</form>
 			</div>
 		</div>
 		<%@ include file="html_fragments/footer.html"%>

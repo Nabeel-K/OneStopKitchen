@@ -3,7 +3,14 @@
  */
 package com.kitchenworld.drivers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.CartItems;
@@ -83,17 +90,44 @@ public class Populator {
 		us.addUser(user3);
 		us.addUser(user4);
 		us.addUser(user5);
+		
+		List<byte[]> images = new ArrayList<>();
+		File dir = new File("categoryImages");
+		if(dir.isDirectory()) {
+			for(File image : dir.listFiles()) {
+				try (FileInputStream fileInputStream = new FileInputStream(image)){
+					byte[] imageToSave = new byte[(int) image.length()];
+					while(fileInputStream.read(imageToSave) > 0){
+						System.out.println("saving...");
+					}
+					images.add(imageToSave);
+				} catch (FileNotFoundException e) {
+					System.err.println("Could not find image");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.err.println("something horrible happened");
+					e.printStackTrace();
+				}
+			}
+		}
 
 		/* ADD CATEGORIES */
-		Category c1 = new Category("Refrigerators");
-		Category c2 = new Category("Microwaves");
-		Category c3 = new Category("Small Appliances");
-		Category c4 = new Category("Ovens and Stoves");
+		Category c1 = new Category("Refrigerators", images.get(0));
+		Category c2 = new Category("Microwaves", images.get(1));
+		Category c3 = new Category("Small Appliances", images.get(0));
+		Category c4 = new Category("Ovens and Stoves", images.get(1));
 
 		cs.addCategory(c1);
 		cs.addCategory(c2);
 		cs.addCategory(c3);
 		cs.addCategory(c4);
+		
+		Category testImage = cs.findCategoryById(1L);
+		 try(FileOutputStream fos = new FileOutputStream("images/output.png");){
+	            fos.write(testImage.getImage());
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
 
 		/* ADD PRODUCTS */
 		Product p1 = new Product("Cooks Fast", 530.10, "Samsung Stove", 15, cs.findCategoryById(4L));

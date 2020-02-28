@@ -25,21 +25,22 @@
 </head>
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
-	<div class="main-container container">
-		<div class="row mt-4">
-			<div class="col-md-12">
+	<div class="main-container container-fluid">
+		<div class="row mt-4 ml-5 mr-5">
+			<div class="col-md-12 mb-5">
 				<h2>Your Cart</h2>
 			</div>
-			<c:if test="${fn:length(sessionScope.userCart.cartItems)<=0}">
+			<c:if test="${fn:length(sessionScope.userCart.cartItems)>=0}">
 				<c:forEach items="${sessionScope.userCart.cartItems}" var="cartItem">
-					<div class="col-md-12">
+					<div class="col-md-8 offset-1 mt-5 mb-5">
 						<img class="item-block" src="images/fridge.png"
 							alt="${cartItem.skuNumber }" height="200px">
 							<span>${cartItem.skuNumber }</span>
 							<p>${cartItem.priceEach }</p>
 							<form action="updateCart" method="POST">
 								<label for="quantity">Quantity</label>
-								<input id="quantity" name="quantity" type="number" value="${cartItem.priceEach }">
+								<input id="quantity" name="quantity" type="number"
+									min="1" value="${cartItem.quantity }">
 								<input name="submit" type="submit" value="Update">
 							</form>
 					</div>
