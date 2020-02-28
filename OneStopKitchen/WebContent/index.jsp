@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
@@ -10,7 +10,8 @@
 <meta charset="ISO-8859-1">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="font-awesome/css/all.css">
-  <script defer src="font-awesome/js/all.js"></script> <!--load all styles -->
+<script defer src="font-awesome/js/all.js"></script>
+<!--load all styles -->
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -29,6 +30,9 @@
 
 .item-label {
 	display: block;
+}
+span{
+	display:block;
 }
 </style>
 
@@ -106,11 +110,13 @@
 			</div>
 			<!-- Will replace the above template -->
 			<c:forEach items="${categories}" var="category">
-				<a href="products?category=${category.categoryName }"> <img
-					class="item-block" src="images/fridge.png"
-					alt="${category.categoryName }" height="200px"> <span
-					class="item-label">${category.categoryName }</span>
-				</a>
+				<div class="col-md-4 col-lg-3">
+					<a href="products?category=${category.categoryName }"> <img
+						class="item-block" src="${category.imagePath }"
+						alt="${category.categoryName }" height="200px"> <span
+						class="item-label">${category.categoryName }</span>
+					</a>
+				</div>
 			</c:forEach>
 
 		</div>

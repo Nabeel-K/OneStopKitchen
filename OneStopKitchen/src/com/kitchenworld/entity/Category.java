@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-27-20 Added image attribute
- * 
+ * Maint Date:2-28-20 Changed image type from BLOB to String path
  * 
  * */
 package com.kitchenworld.entity;
@@ -11,12 +11,11 @@ package com.kitchenworld.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * The persistent class for the category database table.
- * 
+ * @author Nabeel
  */
 @Entity
 @Table(name = "category")
@@ -35,9 +34,8 @@ public class Category implements Serializable {
 	@Column(name = "category_name", unique=true, nullable = false, length = 20)
 	private String categoryName;
 	
-	@Lob
-	@Column(name="category_image", nullable=false, columnDefinition="mediumblob")
-	private byte[] image;
+	@Column(name="category_image", nullable=false)
+	private String imagePath;
 
 	// bi-directional many-to-one association to Product
 	@OneToMany(mappedBy = "category")
@@ -50,35 +48,35 @@ public class Category implements Serializable {
 	/**
 	 * @param categoryId
 	 * @param categoryName
-	 * @param image
+	 * @param imagePath
 	 * @param products
 	 */
-	public Category(Long categoryId, String categoryName, byte[] image, List<Product> products) {
+	public Category(Long categoryId, String categoryName, String imagePath, List<Product> products) {
 		this.setCategoryId(categoryId);
 		this.setCategoryName(categoryName);
-		this.setImage(image);
+		this.setImagePath(imagePath);
 		this.setProducts(products);	}
 
 	
 	/**
 	 * @param categoryName
-	 * @param image
+	 * @param imagePath
 	 * @param products
 	 */
-	public Category(String categoryName, byte[] image, List<Product> products) {
+	public Category(String categoryName, String imagePath, List<Product> products) {
 		this.setCategoryName(categoryName);
-		this.setImage(image);
+		this.setImagePath(imagePath);
 		this.setProducts(products);
 	}
 
 	/**
 	 * Constructor for initial category creation when running populator
 	 * @param categoryName
-	 * @param image
+	 * @param imagePath
 	 */
-	public Category(String categoryName, byte[] image) {
+	public Category(String categoryName,String imagePath) {
 		this.setCategoryName(categoryName);
-		this.setImage(image);
+		this.setImagePath(imagePath);
 	}
 
 	
@@ -111,17 +109,17 @@ public class Category implements Serializable {
 	}
 
 	/**
-	 * @return the image
+	 * @return the imagePath
 	 */
-	public byte[] getImage() {
-		return image;
+	public String getImagePath() {
+		return imagePath;
 	}
 
 	/**
-	 * @param image the image to set
+	 * @param imagePath the imagePath to set
 	 */
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	/**
@@ -146,8 +144,8 @@ public class Category implements Serializable {
 		builder.append(categoryId);
 		builder.append(", categoryName=");
 		builder.append(categoryName);
-		builder.append(", image=");
-		builder.append(Arrays.toString(image));
+		builder.append(", imagePath=");
+		builder.append(imagePath);
 		builder.append(", products=");
 		builder.append(products);
 		builder.append("]");
@@ -160,7 +158,7 @@ public class Category implements Serializable {
 		int result = 1;
 		result = prime * result + ((categoryId == null) ? 0 : categoryId.hashCode());
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
-		result = prime * result + Arrays.hashCode(image);
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
 		result = prime * result + ((products == null) ? 0 : products.hashCode());
 		return result;
 	}
@@ -191,7 +189,11 @@ public class Category implements Serializable {
 		} else if (!categoryName.equals(other.categoryName)) {
 			return false;
 		}
-		if (!Arrays.equals(image, other.image)) {
+		if (imagePath == null) {
+			if (other.imagePath != null) {
+				return false;
+			}
+		} else if (!imagePath.equals(other.imagePath)) {
 			return false;
 		}
 		if (products == null) {
@@ -203,5 +205,7 @@ public class Category implements Serializable {
 		}
 		return true;
 	}
+
+	
 
 }

@@ -50,6 +50,7 @@ public class WelcomeServlet extends HttpServlet {
 		
 		CategoryService cs = new CategoryService();
 		List<Category> categories = cs.findAllCategories();
+		cs.closeConnection();
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
