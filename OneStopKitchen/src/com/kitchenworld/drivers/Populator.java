@@ -86,7 +86,7 @@ public class Populator {
 
 		/* ADD CATEGORIES */
 		Category c1 = new Category("Refrigerators", "./images/fridge.png");
-		Category c2 = new Category("Microwaves","./images/microwave.png");
+		Category c2 = new Category("Microwaves", "./images/microwave.png");
 		Category c3 = new Category("Small Appliances", "./images/toaster.png");
 		Category c4 = new Category("Ovens and Stoves", "./images/gas_stove.png");
 
@@ -94,21 +94,28 @@ public class Populator {
 		cs.addCategory(c2);
 		cs.addCategory(c3);
 		cs.addCategory(c4);
-		
-		System.out.println(cs.findCategoryById(2L).getImagePath());
-		
+
 		/* ADD PRODUCTS */
-		Product p1 = new Product("Cooks Fast", 530.10, "Samsung Stove", 15, cs.findCategoryById(4L));
-		Product p2 = new Product("Keeps food fresh longer", 700.10, "Maytag Refrigerator", 10, cs.findCategoryById(1L));
-		Product p3 = new Product("Mess-Free Opening", 30.80, "Automaitc Can Opener", 80, cs.findCategoryById(3L));
-		Product p4 = new Product("Cooks Faster", 799.99, "Samsung Stove Mk II", 10, cs.findCategoryById(4L));
-		Product p5 = new Product("Warms food", 89.99, "GE Microwave", 20, cs.findCategoryById(2L));
-		Product p6 = new Product("New Defrost Setting", 109.10, "Samsung Microwave", 7, cs.findCategoryById(2L));
-		Product p7 = new Product("Cooks at moderate tempo", 499.10, "Whirlpool Stove", 15, cs.findCategoryById(4L));
-		Product p8 = new Product("Makes great smoothies", 129.10, "Blender", 15, cs.findCategoryById(3L));
-		Product p9 = new Product("Now with better ice maker", 1299.10, "Samsung Refrigerator", 2,
+		Product p1 = new Product("Cooks Fast", 530.10, "Samsung Stove", 15, "./images/gas_stove.png",
+				cs.findCategoryById(4L));
+		Product p2 = new Product("Keeps food fresh longer", 700.10, "Maytag Refrigerator", 10, "./images/fridge.png",
 				cs.findCategoryById(1L));
-		Product p10 = new Product("The best coffee", 49.10, "MyBrand Coffee Maker", 99, cs.findCategoryById(3L));
+		Product p3 = new Product("Mess-Free Opening", 30.80, "Automaitc Can Opener", 80, "./images/toaster.png",
+				cs.findCategoryById(3L));
+		Product p4 = new Product("Cooks Faster", 799.99, "Samsung Stove Mk II", 10, "./images/gas_stove.png",
+				cs.findCategoryById(4L));
+		Product p5 = new Product("Warms food", 89.99, "GE Microwave", 20, "./images/microwave.png",
+				cs.findCategoryById(2L));
+		Product p6 = new Product("New Defrost Setting", 109.10, "Samsung Microwave", 7, "./images/microwave.png",
+				cs.findCategoryById(2L));
+		Product p7 = new Product("Cooks at moderate tempo", 499.10, "Whirlpool Stove", 15, "./images/gas_stove.png",
+				cs.findCategoryById(4L));
+		Product p8 = new Product("Makes great smoothies", 129.10, "Blender", 15, "./images/toaster.png",
+				cs.findCategoryById(3L));
+		Product p9 = new Product("Now with better ice maker", 1299.10, "Samsung Refrigerator", 2, "./images/fridge.png",
+				cs.findCategoryById(1L));
+		Product p10 = new Product("The best coffee", 49.10, "MyBrand Coffee Maker", 99, "./images/toaster.png",
+				cs.findCategoryById(3L));
 
 		ps.addProduct(p1);
 		ps.addProduct(p2);
@@ -236,7 +243,6 @@ public class Populator {
 		cts.addCart(new Cart(us.findUserById(3L), null));
 		cts.addCart(new Cart(us.findUserById(4L), null));
 		cts.addCart(new Cart(us.findUserById(5L), null));
-
 
 		/* ADD CART ITEMS */
 		cis.addCartItem(new CartItems(1, 5, 39.99, "LE90023", cts.findCartById(1L)));

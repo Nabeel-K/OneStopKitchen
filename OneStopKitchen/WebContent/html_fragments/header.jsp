@@ -1,6 +1,8 @@
 <div id="header">
 	<div id="header-title">
-		<h1>One Stop Kitchen</h1>
+		<img srcset="images/logo.png 640w, images/logo-small.png 320w"
+		sizes="(max-width:640px) 320px, 640px"
+		src="images/logo.png" alt="header-image">
 		<h4>Your One Stop for Appliances Big and Small</h4>
 	</div>
 	<nav id="header-nav"

@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 /**
  * The persistent class for the products database table.
- * 
+ * @author Nabeel
  */
 @Entity
 @Table(name="products")
@@ -43,10 +43,18 @@ public class Product implements Serializable {
 	@Column(name="quantity_in_stock", nullable=false)
 	private int quantityInStock;
 
+	@Column(name="product_image", nullable=false)
+	private String imagePath;
+	
 	//bi-directional many-to-one association to Category
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false)
 	private Category category;
+	
+	
+	public Product() {
+	}
+
 	
 
 	/**
@@ -55,84 +63,167 @@ public class Product implements Serializable {
 	 * @param price
 	 * @param productName
 	 * @param quantityInStock
+	 * @param imagePath
 	 * @param category
 	 */
 	public Product(Long productId, String description, double price, String productName, int quantityInStock,
-			 Category category) {
+			 String imagePath, Category category) {
 		this.setProductId(productId);
 		this.setDescription(description);
 		this.setPrice(price);
 		this.setProductName(productName);
 		this.setQuantityInStock(quantityInStock);
+		this.setImagePath(imagePath);
 		this.setCategory(category);
 	}
 
 	public Product(String description, double price, String productName, int quantityInStock,
-			 Category category) {
+			 String imagePath, Category category) {
 		this.setDescription(description);
 		this.setPrice(price);
 		this.setProductName(productName);
 		this.setQuantityInStock(quantityInStock);
+		this.setImagePath(imagePath);
 		this.setCategory(category);
 	}
 	
-	public Product(String description, double price, String productName, int quantityInStock) {
+	public Product(String description, double price, String productName, int quantityInStock,
+			String imagePath) {
 		this.setDescription(description);
 		this.setPrice(price);
 		this.setProductName(productName);
 		this.setQuantityInStock(quantityInStock);
-	}
-	
-	public Product() {
+		this.setImagePath(imagePath);
+
 	}
 
+
+
+	/**
+	 * @return the productId
+	 */
 	public Long getProductId() {
-		return this.productId;
+		return productId;
 	}
 
+
+
+	/**
+	 * @param productId the productId to set
+	 */
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
 
+
+
+	/**
+	 * @return the description
+	 */
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
+
+
+	/**
+	 * @param description the description to set
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+
+
+	/**
+	 * @return the price
+	 */
 	public double getPrice() {
-		return this.price;
+		return price;
 	}
 
+
+
+	/**
+	 * @param price the price to set
+	 */
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
+
+
+	/**
+	 * @return the productName
+	 */
 	public String getProductName() {
-		return this.productName;
+		return productName;
 	}
 
+
+
+	/**
+	 * @param productName the productName to set
+	 */
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 
+
+
+	/**
+	 * @return the quantityInStock
+	 */
 	public int getQuantityInStock() {
-		return this.quantityInStock;
+		return quantityInStock;
 	}
 
+
+
+	/**
+	 * @param quantityInStock the quantityInStock to set
+	 */
 	public void setQuantityInStock(int quantityInStock) {
 		this.quantityInStock = quantityInStock;
 	}
 
-	public Category getCategory() {
-		return this.category;
+
+
+	/**
+	 * @return the imagePath
+	 */
+	public String getImagePath() {
+		return imagePath;
 	}
 
+
+
+	/**
+	 * @param imagePath the imagePath to set
+	 */
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+
+
+	/**
+	 * @return the category
+	 */
+	public Category getCategory() {
+		return category;
+	}
+
+
+
+	/**
+	 * @param category the category to set
+	 */
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+
 
 	@Override
 	public String toString() {
@@ -147,17 +238,22 @@ public class Product implements Serializable {
 		builder.append(productName);
 		builder.append(", quantityInStock=");
 		builder.append(quantityInStock);
+		builder.append(", imagePath=");
+		builder.append(imagePath);
 		builder.append(", category=");
 		builder.append(category.getCategoryName());
 		builder.append("]");
 		return builder.toString();
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -166,6 +262,8 @@ public class Product implements Serializable {
 		result = prime * result + quantityInStock;
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -191,6 +289,13 @@ public class Product implements Serializable {
 				return false;
 			}
 		} else if (!description.equals(other.description)) {
+			return false;
+		}
+		if (imagePath == null) {
+			if (other.imagePath != null) {
+				return false;
+			}
+		} else if (!imagePath.equals(other.imagePath)) {
 			return false;
 		}
 		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price)) {

@@ -31,19 +31,20 @@
 .item-label {
 	display: block;
 }
-span{
-	display:block;
+
+span {
+	display: block;
 }
 </style>
 
 <title>One Stop Kitchen</title>
 </head>
 <body>
-	<%@ include file="html_fragments/header.jsp"%>
-
 	<div class="main-container container-fluid">
+		<%@ include file="html_fragments/header.jsp"%>
 
-		<div class="row mt-5">
+
+		<div class="row pt-5 mr-0">
 			<div class="col-sm-12 col-md-8 col-lg-5 mx-auto">
 				<div id="home-carousel" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -73,52 +74,23 @@ span{
 				</div>
 			</div>
 		</div>
-		<h2>Explore Our Stock</h2>
+		<div class="container body-container mt-4 mb-5">
+			<h2>Explore Our Stock</h2>
 
-		<div id="home-products-row" class="row">
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png" alt="Refrigerators"
-					height="200px">
-				<p>Refrigerators</p>
-			</div>
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png" alt="Ovens"
-					height="200px">
-				<p>Ovens</p>
+			<div id="home-products-row" class="row mr-0">
 
-			</div>
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png" alt="Microwaves"
-					height="200px">
-				<p>Microwaves</p>
+				<c:forEach items="${categories}" var="category">
+					<div class="col-md-4 col-lg-3 mb-4">
+						<div class="item-container">
+							<a href="products?category=${category.categoryName }"> <img
+								class="item-block" src="${category.imagePath }"
+								alt="${category.categoryName }"> <span class="item-label">${category.categoryName }</span>
+							</a>
+						</div>
+					</div>
+				</c:forEach>
 
 			</div>
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png"
-					alt="Small-appliances" height="200px">
-				<p>Small Appliances</p>
-			</div>
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png" alt="Tools"
-					height="200px">
-				<p>Tools</p>
-			</div>
-			<div class="col-md-4 col-lg-3">
-				<img class="item-block" src="images/fridge.png" alt="Clearance"
-					height="200px">
-				<p>Clearance</p>
-			</div>
-			<!-- Will replace the above template -->
-			<c:forEach items="${categories}" var="category">
-				<div class="col-md-4 col-lg-3">
-					<a href="products?category=${category.categoryName }"> <img
-						class="item-block" src="${category.imagePath }"
-						alt="${category.categoryName }" height="200px"> <span
-						class="item-label">${category.categoryName }</span>
-					</a>
-				</div>
-			</c:forEach>
-
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 

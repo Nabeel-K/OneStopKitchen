@@ -26,7 +26,7 @@
 <body>
 	<%@ include file="html_fragments/header.jsp"%>
 	<div class="main-container container-fluid">
-		<div class="row mt-4 ml-5 mr-5">
+		<div class="row pt-4 ml-5 mr-5">
 			<div class="col-md-12 mb-5">
 				<h2>Your Cart</h2>
 			</div>
