@@ -19,6 +19,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- External JS -->
+<script src="${pageContext.request.contextPath}/js/createAccount.js"  type="text/javascript"></script>
+
 <!--External CSS-->
 <link rel="stylesheet" href="./css/style.css">
 <title>Create Your Account</title>
@@ -35,29 +38,31 @@
 						<h2>Register</h2>
 
 						<div class="form-group">
-							<label for="firstName">First Name</label> <input type="text"
-								class="form-control" id="firstName" name="firstName"
+
+							<label for="firstName">First Name</label> <input required
+								type="text" class="form-control" id="firstName" name="firstName"
 								placeholder="First Name">
 						</div>
 						<div class="form-group">
-							<label for="lastName">Last Name</label> <input type="text"
-								class="form-control" id="lastName" name="lastName"
+							<label for="lastName">Last Name</label> <input required
+								type="text" class="form-control" id="lastName" name="lastName"
 								placeholder="Last Name">
 						</div>
 						<div class="form-group">
-							<label for="loginEmail">Email address</label> <input type="email"
-								class="form-control" id="loginEmail" name="loginEmail"
-								aria-describedby="emailHelp" placeholder="Email">
+							<label for="loginEmail">Email address</label> <input required
+								type="email" class="form-control" id="loginEmail"
+								name="loginEmail" aria-describedby="emailHelp"
+								placeholder="Email">
 						</div>
 						<div class="form-group">
-							<label for="createPassword">Password</label> <input
+							<label for="createPassword">Password</label> <input required
 								type="password" class="form-control" id="createPassword"
 								name="createPassword" placeholder="Password">
 						</div>
 						<div class="form-group">
 							<label for="confirmPassword">Confirm Password</label> <input
 								type="password" class="form-control" id="confirmPassword"
-								name="confirmPassword" placeholder="Confirm Password">
+								placeholder="Confirm Password">
 						</div>
 
 						<button type="submit" class="btn btn-primary">Register
@@ -71,5 +76,10 @@
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 	</div>
+	
+<script>
+	document.getElementById("createAccountForm").addEventListener("submit", validateAccountCreation, true);
+
+</script>
 </body>
 </html>

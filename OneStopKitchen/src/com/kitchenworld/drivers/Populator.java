@@ -57,14 +57,7 @@ public class Populator {
 	}
 
 	private void run() {
-		us.connect();
-		cs.connect();
-		ps.connect();
-		os.connect();
-		ods.connect();
-		ss.connect();
-		cts.connect();
-		cis.connect();
+	
 
 		/* ADD USERS */
 		User user1 = new User("bob@gold.com", "ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
