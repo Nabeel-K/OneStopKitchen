@@ -24,33 +24,45 @@
 <title>Cart</title>
 </head>
 <body>
-	<%@ include file="html_fragments/header.jsp"%>
 	<div class="main-container container-fluid">
-		<div class="row pt-4 ml-5 mr-5">
-			<div class="col-md-12 mb-5">
-				<h2>Your Cart</h2>
-			</div>
-			<c:if test="${fn:length(sessionScope.userCart.cartItems)>=0}">
-				<c:forEach items="${sessionScope.userCart.cartItems}" var="cartItem">
-					<div class="col-md-8 offset-1 mt-5 mb-5">
-						<img class="item-block" src="images/fridge.png"
-							alt="${cartItem.skuNumber }" height="200px">
-							<span>${cartItem.skuNumber }</span>
+		<%@ include file="html_fragments/header.jsp"%>
+
+		<div class="body-container container">
+			<div class="row pt-4 ml-5 mr-5">
+				<div class="col-md-12 mb-5">
+					<h2>Your Cart</h2>
+				</div>
+				<c:if test="${fn:length(sessionScope.userCart.cartItems)>0}">
+					<div class="col-md-12">
+						<h4>SubTotal:<span> $ ${cartTotal }</span></h4>
+						<a href="checkout?cartTotal=${cartTotal }" class="btn btn-outline-primary">Checkout</a>
+						<a href="products" class="btn btn-outline-primary">Continue
+							Shopping</a>
+
+					</div>
+					<c:forEach items="${sessionScope.userCart.cartItems}"
+						var="cartItem">
+						<div class="col-md-8 offset-1 mt-5 mb-5">
+							<img class="item-block" src="images/fridge.png"
+								alt="${cartItem.skuNumber }" height="200px"> <span>${cartItem.skuNumber }</span>
 							<p>${cartItem.priceEach }</p>
 							<form action="updateCart" method="POST">
-								<label for="quantity">Quantity</label>
-								<input id="quantity" name="quantity" type="number"
-									min="1" value="${cartItem.quantity }">
-								<input name="submit" type="submit" value="Update">
+								<label for="quantity">Quantity</label> <input id="quantity"
+									name="quantity" type="number" min="1"
+									value="${cartItem.quantity }"> <input name="submit"
+									type="submit" value="Update">
 							</form>
+						</div>
+					</c:forEach>
+				</c:if>
+				<c:if test="${fn:length(sessionScope.userCart.cartItems) == 0}">
+					<div class="col-md-12">
+						<h5>No items in the cart</h5>
+						<a href="products" class="btn btn-outline-primary">Continue
+							Shopping</a>
 					</div>
-				</c:forEach>
-			</c:if>
-			<c:if test="${fn:length(sessionScope.userCart.cartItems) == 0}">
-				<div class="col-md-12">
-					<h5>No items in the cart</h5>
-				</div>
-			</c:if>
+				</c:if>
+			</div>
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 	</div>

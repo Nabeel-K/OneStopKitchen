@@ -41,11 +41,6 @@ public class WelcomeServlet extends HttpServlet {
 			emptyCart.setCartItems(cartItemList);
 			session.setAttribute("userCart", emptyCart);
 			
-		} else { //test code, delete me after you are done
-			Cart emptyCart = (Cart)session.getAttribute("userCart");
-			List<CartItems> cartItemList = new ArrayList<>();
-			emptyCart.setCartItems(cartItemList);
-			session.setAttribute("userCart", emptyCart);
 		}
 		
 		CategoryService cs = new CategoryService();

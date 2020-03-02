@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-26-20 Original Creation
  * Maint Date: 2-27-20 Finished functionality
- * 
+ * Maint Date: 3-01-20 Added Cart total calculation
  * 
  * */
 package com.kitchenworld.servlet;
@@ -23,51 +23,64 @@ import com.kitchenworld.entity.CartItems;
 
 /**
  * Servlet implementation class CartServlet
+ * 
  * @author Nabeel
  */
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CartServlet() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String itemName = request.getParameter("productName");
-		double itemPrice = Double.parseDouble(request.getParameter("productPrice"));
-		int quantityOrdered = Integer.parseInt(request.getParameter("quantity"));
-		
-		HttpSession session = request.getSession();
-		
-		Cart tempCart = (Cart)session.getAttribute("userCart");
-		
-		CartItems item = new CartItems();
-		item.setSkuNumber(itemName);
-		item.setPriceEach(itemPrice);
-		item.setQuantity(quantityOrdered);
-		item.setCart(tempCart);
-		item.setLineNumber(tempCart.getCartItems().size() + 1);
-		
-		List<CartItems> newItems = tempCart.getCartItems();
-		newItems.add(item);
-		tempCart.setCartItems(newItems);
-		
-		session.setAttribute("userCart", tempCart);
-		response.sendRedirect("cart.jsp");
-		
+	public CartServlet() {
+		super();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String itemName = request.getParameter("productName");
+		String unparsedPrice = request.getParameter("productPrice");
+		String unparsedQuantity = request.getParameter("quantity");
+
+		HttpSession session = request.getSession();
+		Cart tempCart = (Cart) session.getAttribute("userCart");
+		List<CartItems> items = tempCart.getCartItems();
+
+		if (itemName != null && unparsedPrice != null && unparsedQuantity != null) {
+			CartItems itemToAdd = new CartItems();
+			double itemPrice = Double.parseDouble(unparsedPrice);
+			int quantityOrdered = Integer.parseInt(unparsedQuantity);
+			itemToAdd.setSkuNumber(itemName);
+			itemToAdd.setPriceEach(itemPrice);
+			itemToAdd.setQuantity(quantityOrdered);
+			itemToAdd.setCart(tempCart);
+			itemToAdd.setLineNumber(tempCart.getCartItems().size() + 1);
+			items.add(itemToAdd);
+			tempCart.setCartItems(items);
+		}
+
+		double total = 0;
+		for (CartItems item : items) {
+			total += (item.getPriceEach() * item.getQuantity());
+		}
+
+		session.setAttribute("userCart", tempCart);
+		request.setAttribute("cartTotal", total);
+		request.getRequestDispatcher("cart.jsp").forward(request, response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

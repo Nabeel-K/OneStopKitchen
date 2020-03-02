@@ -80,7 +80,7 @@ span {
 			<div id="home-products-row" class="row mr-0">
 
 				<c:forEach items="${categories}" var="category">
-					<div class="col-md-4 col-lg-3 mb-4">
+					<div class="col-md-4 col-lg-3 mb-4 item-container">
 						<div class="item-container">
 							<a href="products?category=${category.categoryName }"> <img
 								class="item-block" src="${category.imagePath }"

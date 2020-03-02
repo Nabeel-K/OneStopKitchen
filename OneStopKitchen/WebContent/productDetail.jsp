@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html>
@@ -10,7 +10,8 @@
 <meta charset="ISO-8859-1">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="font-awesome/css/all.css">
-  <script defer src="font-awesome/js/all.js"></script> <!--load all styles -->
+<script defer src="font-awesome/js/all.js"></script>
+<!--load all styles -->
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -20,17 +21,20 @@
 
 <!--External CSS-->
 <link rel="stylesheet" href="./css/style.css">
-<title>${product.productName } Details</title>
+
+<title>${product.productName }Details</title>
 </head>
 <body>
-	<%@ include file="html_fragments/header.jsp"%>
 	<div class="main-container container-fluid">
-		<div class="row mx-4">
+		<%@ include file="html_fragments/header.jsp"%>
+	
+		<div class="body-container container">
+		<div class="row">
 			<div class="col-md-12 mt-3">
 				<h2>${product.productName}</h2>
 			</div>
 			<div class="product-images col-md-6 col-sm-12 mt-3">
-				<img class="item-image" src="images/fridge.png"
+				<img class="item-image" src="${product.imagePath}"
 					alt="${product.productName }" height="200px">
 			</div>
 			<div class="col-md-6 col-sm-12 mt-3">
@@ -45,6 +49,7 @@
 					<input type="submit" value="Add to Cart">
 				</form>
 			</div>
+		</div>
 		</div>
 		<%@ include file="html_fragments/footer.html"%>
 

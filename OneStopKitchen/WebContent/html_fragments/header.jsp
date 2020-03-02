@@ -1,9 +1,11 @@
 <div id="header">
 	<div id="header-title">
-		<img srcset="images/logo.png 640w, images/logo-small.png 320w"
-		sizes="(max-width:640px) 320px, 640px"
-		src="images/logo.png" alt="header-image">
-		<h4>Your One Stop for Appliances Big and Small</h4>
+		<a href="welcome" class="home-link"> <img
+			srcset="images/logo.png 640w, images/logo-small.png 320w"
+			sizes="(max-width:640px) 320px, 640px" src="images/logo.png"
+			alt="header-image">
+			<h4>Your One Stop for Appliances Big and Small</h4>
+		</a>
 	</div>
 	<nav id="header-nav"
 		class="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,15 +27,17 @@
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<c:if test="${sessionScope.loggedInUser == null}">
-					<li><a href="./cart.jsp" ><i class="fas fa-shopping-cart fa-lg cart-link"></i></a>
-					<span class="badge">${fn:length (sessionScope.userCart.cartItems)}</span></li>
+					<li><a href="cart"><i
+							class="fas fa-shopping-cart fa-lg cart-link"></i></a> <span
+						class="badge">${fn:length (sessionScope.userCart.cartItems)}</span></li>
 
 					<li class="nav-item"><a class="nav-link" href="./login.jsp">Login</a></li>
 				</c:if>
 				<c:if test="${sessionScope.loggedInUser != null}">
 					<li class="nav-item"><p class=nav-link>Hello
 							${loggedInUser.email}</p></li>
-					<li><i class="fas fa-shopping-cart fa-lg cart-link"></i><span class="badge">${fn:length (sessionScope.userCart.cartItems)}
+					<li><a href="cart"><i class="fas fa-shopping-cart fa-lg cart-link"></i></a><span
+						class="badge">${fn:length (sessionScope.userCart.cartItems)}
 					</span></li>
 
 					<li class="nav-item"><a class="nav-link" href="LogoutServlet">Log

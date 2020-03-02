@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import com.kitchenworld.entity.OrderDetail;
 import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.Shipment;
+import com.kitchenworld.entity.User;
 
 /**
  * @author Nabeel
@@ -87,6 +88,13 @@ public class OrdersService extends AbstractServices{
 		em.getTransaction().begin();
 		Orders orderToUpdate = em.find(Orders.class, id);
 		orderToUpdate.setShipments(newShipmentDetails);
+		em.getTransaction().commit();
+	}
+	
+	public void updateOrderUsers(Long id, User user) {
+		em.getTransaction().begin();
+		Orders orderToUpdate = em.find(Orders.class, id);
+		orderToUpdate.setUser(user);
 		em.getTransaction().commit();
 	}
 	
