@@ -74,7 +74,7 @@ span {
 				</div>
 			</div>
 		</div>
-		<div class="container body-container mt-4 mb-5">
+		<div class="container body-container mt-4 p-5 mb-5">
 			<h2>Explore Our Stock</h2>
 
 			<div id="home-products-row" class="row mr-0">

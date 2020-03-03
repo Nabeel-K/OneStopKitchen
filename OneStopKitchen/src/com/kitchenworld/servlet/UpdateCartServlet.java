@@ -20,6 +20,7 @@ import com.kitchenworld.entity.CartItems;
 
 /**
  * Servlet implementation class UpdateCartServlet
+ * 
  * @author Nabeel
  */
 @WebServlet("/updatecart")
@@ -27,19 +28,21 @@ public class UpdateCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String item = request.getParameter("cartItem");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String updateItem = request.getParameter("cartItem");
 		String quantity = request.getParameter("quantity");
-		if(!item.equals(null) && !quantity.equals(null)) {
+		if (!updateItem.equals(null) && !quantity.equals(null)) {
 			int newQuantity = Integer.parseInt(quantity);
 			HttpSession session = request.getSession();
-			Cart cart =(Cart) session.getAttribute("userCart");
+			Cart cart = (Cart) session.getAttribute("userCart");
 			int itemIndexToUpdate = -1;
 			int i = 0;
 			for (CartItems itemToUpdate : cart.getCartItems()) {
-				if(itemToUpdate.getSkuNumber().contentEquals(item)) {
+				if (itemToUpdate.getSkuNumber().contentEquals(updateItem)) {
 					itemIndexToUpdate = i;
 					break;
 				}
@@ -49,14 +52,22 @@ public class UpdateCartServlet extends HttpServlet {
 			updatedItem.setQuantity(newQuantity);
 			cart.getCartItems().set(itemIndexToUpdate, updatedItem);
 			session.setAttribute("userCart", cart);
+
+			int newTotalQuantity = 0;
+			for (CartItems item : cart.getCartItems()) {
+				newTotalQuantity += item.getQuantity();
+			}
+			session.setAttribute("userCartQuantity", newTotalQuantity);
 		}
 		response.sendRedirect("cart");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

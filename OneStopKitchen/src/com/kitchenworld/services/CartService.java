@@ -3,6 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
+ * Maint Date: 3-03-20 Added deleteAllItemsFromCart method
  * 
  * 
  * */
@@ -64,6 +65,11 @@ public class CartService extends AbstractServices {
 		Query deleteCart = em.createNamedQuery("Cart.deleteById");
 		deleteCart.setParameter("deleteId", id);
 		deleteCart.executeUpdate();
+	}
+	
+	public void deleteAllItemsInCart(Long id) {
+		Query deleteItems = em.createQuery("DELETE FROM CartItems WHERE cart_id = :deleteId");
+		deleteItems.setParameter("deleteId",id).executeUpdate();
 	}
 
 }

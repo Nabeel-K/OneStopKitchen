@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.UserService;
 
@@ -38,13 +39,17 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("loginEmail");
 		String pass = request.getParameter("loginPassword");
 		UserService us = new UserService();
-		us.connect();
 		
 		User userLoggingIn = us.loginMatch(email, pass);
 		
 		if(userLoggingIn != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
+			if(userLoggingIn.getCart() == null) {
+				Cart newCart = new Cart();
+				newCart.setUser(userLoggingIn);
+				userLoggingIn.setCart(newCart);
+			}
 			session.setAttribute("userCart", userLoggingIn.getCart());
 			response.sendRedirect("welcome");
 		} else {

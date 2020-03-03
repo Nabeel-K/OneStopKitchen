@@ -22,14 +22,15 @@
 					aria-haspopup="true" aria-expanded="false"> Products </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="products">All</a>
-					</div></li>
+					</div>
+				</li>
 
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<c:if test="${sessionScope.loggedInUser == null}">
 					<li><a href="cart"><i
 							class="fas fa-shopping-cart fa-lg cart-link"></i></a> <span
-						class="badge">${fn:length (sessionScope.userCart.cartItems)}</span></li>
+						class="badge">${sessionScope.userCartQuantity}</span></li>
 
 					<li class="nav-item"><a class="nav-link" href="./login.jsp">Login</a></li>
 				</c:if>
@@ -37,7 +38,7 @@
 					<li class="nav-item"><p class=nav-link>Hello
 							${loggedInUser.email}</p></li>
 					<li><a href="cart"><i class="fas fa-shopping-cart fa-lg cart-link"></i></a><span
-						class="badge">${fn:length (sessionScope.userCart.cartItems)}
+						class="badge">${sessionScope.userCartQuantity}
 					</span></li>
 
 					<li class="nav-item"><a class="nav-link" href="LogoutServlet">Log

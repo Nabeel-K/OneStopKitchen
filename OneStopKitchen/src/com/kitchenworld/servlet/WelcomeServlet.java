@@ -1,3 +1,10 @@
+/*
+ * Filename: WelcomeServlet.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-24-20 Original Creation
+ * Maint Date: 3-02-20 Added cart quantity to accurately keep track of number of items in cart
+ * 
+ * */
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
@@ -41,6 +48,10 @@ public class WelcomeServlet extends HttpServlet {
 			emptyCart.setCartItems(cartItemList);
 			session.setAttribute("userCart", emptyCart);
 			
+		}
+		
+		if (session.getAttribute("userCartQuantity") == null) {
+			session.setAttribute("userCartQuantity", 0);
 		}
 		
 		CategoryService cs = new CategoryService();

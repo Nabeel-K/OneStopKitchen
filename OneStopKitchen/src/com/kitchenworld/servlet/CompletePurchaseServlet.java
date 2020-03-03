@@ -1,3 +1,9 @@
+/*
+ * Filename: CompletePurchaseServlet.java
+ * Author: Nabeel Khan
+ * Creation Date: 3-01-20 Original Creation
+ * Maint Date 3-03-20 Added handler for removing the quantity of items from session
+ * */
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
@@ -22,6 +28,7 @@ import com.kitchenworld.services.OrdersService;
 
 /**
  * Servlet implementation class CompletePurchaseServlet
+ * @author Nabeel
  */
 @WebServlet("/purchase")
 public class CompletePurchaseServlet extends HttpServlet {
@@ -75,6 +82,8 @@ public class CompletePurchaseServlet extends HttpServlet {
 		os.closeConnection();
 		
 		session.removeAttribute("userCart");
+		session.removeAttribute("userCartQuantity");
+
 		response.sendRedirect("orderplaced.jsp");
 	}
 
