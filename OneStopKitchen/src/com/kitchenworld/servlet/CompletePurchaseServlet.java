@@ -75,7 +75,7 @@ public class CompletePurchaseServlet extends HttpServlet {
 		os.closeConnection();
 		
 		session.removeAttribute("userCart");
-		response.sendRedirect("welcome");
+		response.sendRedirect("orderplaced.jsp");
 	}
 
 	/**

@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -50,7 +51,7 @@
 
 				<div class="col-md-12">
 					<h4>
-						SubTotal:<span> $ ${cartTotal }</span>
+						SubTotal:<span>$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${cartTotal }"/></span>
 					</h4>
 				</div>
 				<div class="col-md-12">
@@ -66,7 +67,7 @@
 								<td><img class="item-block" src="images/fridge.png"
 									alt="${cartItem.skuNumber }" height="200px"> <span>${cartItem.skuNumber }</span>
 								</td>
-								<td><p>${cartItem.priceEach }</p></td>
+								<td><p>$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${cartTotal }"/></p></td>
 								<td><p>${cartItem.quantity}</p></td>
 							</tr>
 						</c:forEach>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ include file="html_fragments/taglibs.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -28,16 +27,18 @@
 		<%@ include file="html_fragments/header.jsp"%>
 
 		<div class="body-container container">
-			<div class="row pt-4 ml-5 mr-5">
+			<div class="row pt-4 ml-5 mb-5 mr-5">
 				<div class="col-md-12 mb-5">
 					<h2>Your Cart</h2>
 				</div>
 				<c:if test="${fn:length(sessionScope.userCart.cartItems)>0}">
 					<div class="col-md-12">
-						<h4>SubTotal:<span> $ ${cartTotal }</span></h4>
-						<a href="checkout?cartTotal=${cartTotal }" class="btn btn-outline-primary">Checkout</a>
-						<a href="products" class="btn btn-outline-primary">Continue
-							Shopping</a>
+						<h4>
+							SubTotal:<span> $ <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${cartTotal }"/></span>
+						</h4>
+						<a href="checkout?cartTotal=${cartTotal }"
+							class="btn btn-primary">Checkout</a> <a href="products"
+							class="btn btn-outline-primary">Continue Shopping</a>
 
 					</div>
 					<c:forEach items="${sessionScope.userCart.cartItems}"
@@ -45,13 +46,20 @@
 						<div class="col-md-8 offset-1 mt-5 mb-5">
 							<img class="item-block" src="images/fridge.png"
 								alt="${cartItem.skuNumber }" height="200px"> <span>${cartItem.skuNumber }</span>
-							<p>${cartItem.priceEach }</p>
-							<form action="updateCart" method="POST">
-								<label for="quantity">Quantity</label> <input id="quantity"
-									name="quantity" type="number" min="1"
-									value="${cartItem.quantity }"> <input name="submit"
-									type="submit" value="Update">
+							$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${cartItem.priceEach }"/>
+							<form action="updatecart?cartItem=${cartItem.skuNumber }"
+								method="POST">
+								<div class=form-group>
+									<label for="quantity">Quantity</label> <input
+										class="form-control" id="quantity" name="quantity"
+										type="number" min="1" value="${cartItem.quantity }">
+									<button type="submit" class="btn btn-primary">Update</button>
+								</div>
+								<a href="deleteitem?cartItem=${cartItem.skuNumber }"
+									class="btn btn-outline-primary">Remove from Cart</a>
 							</form>
+
+
 						</div>
 					</c:forEach>
 				</c:if>

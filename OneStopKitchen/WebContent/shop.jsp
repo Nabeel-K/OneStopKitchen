@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -23,10 +23,9 @@
 <link rel="stylesheet" href="./css/style.css">
 <!-- Internal CSS -->
 <style>
-	span:first-of-type{
-		display:block;
-	}
-
+span:first-of-type {
+	display: block;
+}
 </style>
 <title>One Stop Kitchen Products</title>
 </head>
@@ -36,7 +35,7 @@
 		<%@ include file="html_fragments/header.jsp"%>
 
 		<div class="body-container container pt-5 mb-5">
-			<div class="row mr-0">
+			<div class="row mr-0 p-5 mb-5">
 				<div class="col-md-12">
 					<h2>${categoryName}</h2>
 				</div>
@@ -44,9 +43,11 @@
 					<div class="col-sm-6 col-md-4 col-lg-3 mb-4 item-container">
 						<a href="details?product=${product.productName}"> <img
 							class="item-block" src="${product.imagePath }"
-							alt="${product.productName }">
-							<span>${product.productName }</span> <span> <b>Price:
-							</b>${product.price }</span> <span> <b>Quantity Left: </b>${product.quantityInStock }</span>
+							alt="${product.productName }"> <span>${product.productName }</span>
+							<span> <b>Price: </b> $<fmt:formatNumber type="number"
+									minFractionDigits="2" maxFractionDigits="2"
+									value="${product.price }" /></span> <span> <b>Quantity
+									Left: </b>${product.quantityInStock }</span>
 						</a>
 					</div>
 
