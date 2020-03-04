@@ -251,7 +251,16 @@ public class Populator {
 		cis.addCartItem(new CartItems(1, 5, 19.99, "LE98623", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(2, 7, 39.99, "LE03023", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(3, 2, 29.99, "LE7823", cts.findCartById(5L)));
-
+		
+		System.out.println(cts.findCartById(1L));
+		for (CartItems item : cts.findAllItemsInCart(1L)) {
+			System.out.println(item);
+			item.setCart(null);
+			cis.deleteCartItems(cis.findCartItemsById(item.getId()));
+		}
+		cts.findCartById(1L).setCartItems(null);		
+		cts.deleteCart(cts.findCartById(1L));
+	
 	}
 
 	private void close() {

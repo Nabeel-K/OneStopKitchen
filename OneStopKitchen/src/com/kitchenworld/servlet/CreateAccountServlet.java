@@ -50,8 +50,6 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		UserService us = new UserService();
 		us.addUser(newUser);
-		CartService cs = new CartService();
-		cs.addCart(cart);
 		newUser.setCart(cart);
 		List<User> allUsers = us.findAllUsers();
 		us.updateCart(allUsers.get(allUsers.size()-1).getUserId(), cart);
@@ -60,7 +58,6 @@ public class CreateAccountServlet extends HttpServlet {
 		session.setAttribute("loggedInUser", newUser);
 		session.setAttribute("userCart", cart);
 		us.closeConnection();
-		cs.closeConnection();
 		response.sendRedirect("welcome");
 		
 	}

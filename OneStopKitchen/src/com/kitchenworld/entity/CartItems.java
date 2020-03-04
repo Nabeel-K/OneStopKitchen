@@ -17,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries(value = {
-		@NamedQuery(name = "CartItems.findById", query = "SELECT c FROM CartItems c WHERE c.id = :selectKey"),
+		@NamedQuery(name = "CartItems.findById", query = "SELECT c FROM CartItems c WHERE c.id = :selectId"),
 		@NamedQuery(name = "CartItems.findAll", query = "SELECT c FROM CartItems c"),
 		@NamedQuery(name = "CartItems.deleteById", query = "DELETE FROM CartItems c WHERE c.id = :deleteId") })
 public class CartItems implements Serializable {

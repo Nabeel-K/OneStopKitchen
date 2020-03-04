@@ -61,10 +61,13 @@ public class CartService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
-	public void deleteCart(Long id) {
-		Query deleteCart = em.createNamedQuery("Cart.deleteById");
-		deleteCart.setParameter("deleteId", id);
-		deleteCart.executeUpdate();
+	public void deleteCart(Cart cart) {
+//		Query deleteCart = em.createNamedQuery("Cart.deleteById");
+//		deleteCart.setParameter("deleteId", id);
+//		deleteCart.executeUpdate();
+		em.getTransaction().begin();
+		em.remove(cart);
+		em.getTransaction().commit();
 	}
 	
 	public void deleteAllItemsInCart(Long id) {

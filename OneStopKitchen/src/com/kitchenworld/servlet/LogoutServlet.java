@@ -9,6 +9,7 @@
 package com.kitchenworld.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -44,24 +45,25 @@ public class LogoutServlet extends HttpServlet {
 		Cart cartToSave = (Cart) session.getAttribute("userCart");
 		List<CartItems> itemsToSave = cartToSave.getCartItems();
 		
-		cartToSave.setUser((User)session.getAttribute("loggedInUser"));
-		for (CartItems item: itemsToSave) {
-			item.setCart(cartToSave);
-		}
-		
 		CartService cs = new CartService();
 		CartItemsService cis = new CartItemsService();
-		//cs.deleteAllItemsInCart(cartToSave.getCartId());
 		
+		for(CartItems item : cs.findAllItemsInCart(cartToSave.getCartId())) {
+			cis.deleteCartItems(cis.findCartItemsById(item.getId()));
+		}
 		for (CartItems item: itemsToSave) {
 			cis.addCartItem(item);
 		}
 		cs.closeConnection();
 		cis.closeConnection();
 		
+		Cart emptyCart = new Cart();
+		List<CartItems> cartItemList = new ArrayList<>();
+		emptyCart.setCartItems(cartItemList);
+		
 		session.removeAttribute("loggedInUser");
-		session.removeAttribute("userCart");
-		session.removeAttribute("userCartQuantity");
+		session.setAttribute("userCart",emptyCart);
+		session.setAttribute("userCartQuantity",0);
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 

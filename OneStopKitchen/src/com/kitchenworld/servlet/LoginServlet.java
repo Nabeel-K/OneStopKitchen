@@ -43,13 +43,9 @@ public class LoginServlet extends HttpServlet {
 		User userLoggingIn = us.loginMatch(email, pass);
 		
 		if(userLoggingIn != null) {
+			System.out.println(userLoggingIn.getCart());
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
-			if(userLoggingIn.getCart() == null) {
-				Cart newCart = new Cart();
-				newCart.setUser(userLoggingIn);
-				userLoggingIn.setCart(newCart);
-			}
 			session.setAttribute("userCart", userLoggingIn.getCart());
 			response.sendRedirect("welcome");
 		} else {

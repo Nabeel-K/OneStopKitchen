@@ -23,6 +23,8 @@ import com.kitchenworld.entity.CartItems;
 import com.kitchenworld.entity.OrderDetail;
 import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.User;
+import com.kitchenworld.services.CartItemsService;
+import com.kitchenworld.services.CartService;
 import com.kitchenworld.services.OrderDetailsService;
 import com.kitchenworld.services.OrdersService;
 
@@ -77,13 +79,28 @@ public class CompletePurchaseServlet extends HttpServlet {
 		
 		if(loggedInUser != null) {
 			os.updateOrderUsers(idToUpdate, loggedInUser);
+			List<CartItems> items = cart.getCartItems();
+			CartService cs = new CartService();
+			CartItemsService cis = new CartItemsService();
+			System.out.println(cs.findAllItemsInCart(cart.getCartId()));
+			for(CartItems item : cs.findAllItemsInCart(cart.getCartId())) {
+				cis.deleteCartItems(cis.findCartItemsById(item.getId()));
+			}
+			cs.closeConnection();
+			cis.closeConnection();
+			items.clear();
+			cart.setCartItems(items);
+			session.setAttribute("userCart", cart);
+		} else {
+			Cart emptyCart = new Cart();
+			List<CartItems> cartItemList = new ArrayList<>();
+			emptyCart.setCartItems(cartItemList);
+			session.setAttribute("userCart",emptyCart);
 		}
 		
 		os.closeConnection();
 		
-		session.removeAttribute("userCart");
-		session.removeAttribute("userCartQuantity");
-
+		session.setAttribute("userCartQuantity",0);
 		response.sendRedirect("orderplaced.jsp");
 	}
 
