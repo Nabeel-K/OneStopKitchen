@@ -54,12 +54,21 @@ span {
 
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-							<img class="d-block w-100" src="images/kitchen.jpg"
-								alt="washing-machines">
+							<img class="d-block w-100
+							0" src="images/kitchen.jpg"
+								alt="home-kitchen">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Welcome to One Stop Kitchen</h5>
+								<p>Browse our products until you find the appliance for you!</p>
+							</div>
 						</div>
 						<div class="carousel-item">
 							<img class="d-block w-100" src="images/modern-kitchen.jpg"
-								alt="washing-machines">
+								alt="stoves">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Featuring a wide selection of stoves</h5>
+								<p>All for affordable prices!</p>
+							</div>
 						</div>
 					</div>
 					<a class="carousel-control-prev" href="#home-carousel"
