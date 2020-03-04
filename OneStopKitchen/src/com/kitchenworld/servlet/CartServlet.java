@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.CartItems;
+import com.kitchenworld.services.CartService;
 
 /**
  * Servlet implementation class CartServlet
@@ -46,10 +47,15 @@ public class CartServlet extends HttpServlet {
 		String itemName = request.getParameter("productName");
 		String unparsedPrice = request.getParameter("productPrice");
 		String unparsedQuantity = request.getParameter("quantity");
+		String imagePath = request.getParameter("imagePath");
 
 		HttpSession session = request.getSession();
 		Cart tempCart = (Cart) session.getAttribute("userCart");
+		CartService cis = new CartService();
 		List<CartItems> items = tempCart.getCartItems();
+		
+		cis.closeConnection();
+		System.out.println(items);
 
 		if (itemName != null && unparsedPrice != null && unparsedQuantity != null) {
 			CartItems itemToAdd = new CartItems();
@@ -68,6 +74,7 @@ public class CartServlet extends HttpServlet {
 				itemToAdd.setPriceEach(itemPrice);
 				itemToAdd.setQuantity(quantityOrdered);
 				itemToAdd.setCart(tempCart);
+				itemToAdd.setImagePath(imagePath);
 				itemToAdd.setLineNumber(tempCart.getCartItems().size() + 1);
 				items.add(itemToAdd);
 				tempCart.setCartItems(items);
@@ -78,6 +85,7 @@ public class CartServlet extends HttpServlet {
 		double total = 0;
 		int cartQuantity = 0;
 		for (CartItems item : items) {
+			System.out.println("aaaaaaa");
 			total += (item.getPriceEach() * item.getQuantity());
 			cartQuantity += item.getQuantity();
 		}

@@ -54,6 +54,8 @@ public class LogoutServlet extends HttpServlet {
 		for (CartItems item: itemsToSave) {
 			cis.addCartItem(item);
 		}
+		cs.updateCartItems(cartToSave.getCartId(), itemsToSave);
+
 		cs.closeConnection();
 		cis.closeConnection();
 		

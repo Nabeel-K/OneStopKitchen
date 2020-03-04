@@ -44,7 +44,7 @@
 					<c:forEach items="${sessionScope.userCart.cartItems}"
 						var="cartItem">
 						<div class="col-md-8 offset-1 mt-5 mb-5">
-							<img class="item-block" src="images/fridge.png"
+							<img class="item-block" src="${cartItem.imagePath }"
 								alt="${cartItem.skuNumber }" height="200px"> <span>${cartItem.skuNumber }</span>
 							$<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${cartItem.priceEach }"/>
 							<form action="updatecart?cartItem=${cartItem.skuNumber }"

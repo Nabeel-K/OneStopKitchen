@@ -56,19 +56,23 @@ public class WelcomeServlet extends HttpServlet {
 
 		} else {
 			cart = (Cart) session.getAttribute("userCart");
-			int cartQuantity = 0;
 
-			CartService cs = new CartService();
-			cartItemList = cs.findAllItemsInCart(cart.getCartId());
+			if (session.getAttribute("loggedInUser") != null){
+				int cartQuantity = 0;
+
+				CartService cs = new CartService();
+				cartItemList = cs.findAllItemsInCart(cart.getCartId());
+				
+					for (CartItems item : cartItemList) {
+						cartQuantity += item.getQuantity();
+					}
+					session.setAttribute("userCartQuantity", cartQuantity);
+			}
 			
-				for (CartItems item : cartItemList) {
-					cartQuantity += item.getQuantity();
-				}
-				session.setAttribute("userCartQuantity", cartQuantity);
 			
 		}
 
-		if (session.getAttribute("userCartQuantity") == null) {
+		if (session.getAttribute("userCartQuantity")==null) {
 			session.setAttribute("userCartQuantity", 0);
 		}
 

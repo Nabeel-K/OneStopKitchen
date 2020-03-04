@@ -38,6 +38,9 @@ public class CartItems implements Serializable {
 
 	@Column(name = "sku_number", nullable = false)
 	private String skuNumber;
+	
+	@Column(name="image")
+	private String imagePath;
 
 	@ManyToOne
 	@JoinColumn(name = "cart_id", nullable = false)
@@ -57,12 +60,13 @@ public class CartItems implements Serializable {
 	 * @param skuNumber
 	 * @param cart
 	 */
-	public CartItems(Long id, Integer lineNumber, int quantity, double priceEach, String skuNumber, Cart cart) {
+	public CartItems(Long id, Integer lineNumber, int quantity, double priceEach, String skuNumber, String imagePath, Cart cart) {
 		this.setId(id);
 		this.setLineNumber(lineNumber);
 		this.setQuantity(quantity);
 		this.setPriceEach(priceEach);
 		this.setSkuNumber(skuNumber);
+		this.setImagePath(imagePath);
 		this.setCart(cart);
 	}
 
@@ -152,6 +156,20 @@ public class CartItems implements Serializable {
 	}
 
 	/**
+	 * @return the imagePath
+	 */
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	/**
+	 * @param imagePath the imagePath to set
+	 */
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	/**
 	 * @return the cart
 	 */
 	public Cart getCart() {
@@ -178,6 +196,10 @@ public class CartItems implements Serializable {
 		builder.append(priceEach);
 		builder.append(", skuNumber=");
 		builder.append(skuNumber);
+		builder.append(", imagePath=");
+		builder.append(imagePath);
+		builder.append(", cart=");
+		builder.append(cart.getCartId());
 		builder.append("]");
 		return builder.toString();
 	}
@@ -187,6 +209,7 @@ public class CartItems implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
 		result = prime * result + ((lineNumber == null) ? 0 : lineNumber.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(priceEach);
@@ -222,6 +245,13 @@ public class CartItems implements Serializable {
 		} else if (!id.equals(other.id)) {
 			return false;
 		}
+		if (imagePath == null) {
+			if (other.imagePath != null) {
+				return false;
+			}
+		} else if (!imagePath.equals(other.imagePath)) {
+			return false;
+		}
 		if (lineNumber == null) {
 			if (other.lineNumber != null) {
 				return false;
@@ -244,5 +274,7 @@ public class CartItems implements Serializable {
 		}
 		return true;
 	}
+
+
 
 }

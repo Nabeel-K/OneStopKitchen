@@ -42,7 +42,8 @@
 						<b>Description: </b> ${product.description }
 					</p>
 					<p>
-						<b>Price: </b> $<fmt:formatNumber type="number" minFractionDigits="2"
+						<b>Price: </b> $
+						<fmt:formatNumber type="number" minFractionDigits="2"
 							maxFractionDigits="2" value="${product.price }" />
 					</p>
 					<p>
@@ -53,7 +54,9 @@
 							max="${product.quantityInStock }" value="1"> <input
 							type="hidden" name="productName" value="${product.productName }">
 						<input type="hidden" name="productPrice" value="${product.price }">
-						<input type="submit" value="Add to Cart">
+						<input type="hidden" name="imagePath"
+							value="${product.imagePath }"> <input type="submit"
+							value="Add to Cart">
 					</form>
 				</div>
 			</div>

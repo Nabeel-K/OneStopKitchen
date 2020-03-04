@@ -26,6 +26,7 @@
 span:first-of-type {
 	display: block;
 }
+
 </style>
 <title>One Stop Kitchen Products</title>
 </head>

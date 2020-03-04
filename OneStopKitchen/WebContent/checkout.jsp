@@ -66,7 +66,7 @@ span {
 						<c:forEach items="${sessionScope.userCart.cartItems}"
 							var="cartItem">
 							<tr>
-								<td><img class="item-block" src="images/fridge.png"
+								<td><img class="item-block" src="${cartItem.imagePath }"
 									alt="${cartItem.skuNumber }" height="200px"> <span>${cartItem.skuNumber }</span>
 								</td>
 								<td><p>
