@@ -22,8 +22,12 @@
 					aria-haspopup="true" aria-expanded="false"> Products </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="products">All</a>
-					</div>
-				</li>
+						<c:forEach items="${sessionScope.categories}" var="category">
+							<a class="dropdown-item"
+								href="products?category=${category.categoryName }">
+								${category.categoryName } </a>
+						</c:forEach>
+					</div></li>
 
 			</ul>
 			<ul class="navbar-nav ml-auto">
@@ -33,13 +37,15 @@
 						class="badge">${sessionScope.userCartQuantity}</span></li>
 
 					<li class="nav-item"><a class="nav-link" href="./login.jsp">Login</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="./createAccount.jsp">Register</a></li>
 				</c:if>
 				<c:if test="${sessionScope.loggedInUser != null}">
 					<li class="nav-item"><p class=nav-link>Hello
 							${loggedInUser.email}</p></li>
-					<li><a href="cart"><i class="fas fa-shopping-cart fa-lg cart-link"></i></a><span
-						class="badge">${sessionScope.userCartQuantity}
-					</span></li>
+					<li><a href="cart"><i
+							class="fas fa-shopping-cart fa-lg cart-link"></i></a><span
+						class="badge">${sessionScope.userCartQuantity} </span></li>
 
 					<li class="nav-item"><a class="nav-link" href="LogoutServlet">Log
 							Out</a></li>

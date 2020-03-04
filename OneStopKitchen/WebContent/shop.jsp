@@ -34,7 +34,7 @@ span:first-of-type {
 	<div class="main-container container-fluid">
 		<%@ include file="html_fragments/header.jsp"%>
 
-		<div class="body-container container pt-5 mb-5">
+		<div class="body-container container pt-5 mt-5 mb-5">
 			<div class="row mr-0 p-5 mb-5">
 				<div class="col-md-12">
 					<h2>${categoryName}</h2>
