@@ -42,6 +42,7 @@ public class CartServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String itemName = request.getParameter("productName");
@@ -53,9 +54,8 @@ public class CartServlet extends HttpServlet {
 		Cart tempCart = (Cart) session.getAttribute("userCart");
 		CartService cis = new CartService();
 		List<CartItems> items = tempCart.getCartItems();
-		
+
 		cis.closeConnection();
-		System.out.println(items);
 
 		if (itemName != null && unparsedPrice != null && unparsedQuantity != null) {
 			CartItems itemToAdd = new CartItems();
@@ -85,7 +85,6 @@ public class CartServlet extends HttpServlet {
 		double total = 0;
 		int cartQuantity = 0;
 		for (CartItems item : items) {
-			System.out.println("aaaaaaa");
 			total += (item.getPriceEach() * item.getQuantity());
 			cartQuantity += item.getQuantity();
 		}
@@ -101,6 +100,7 @@ public class CartServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

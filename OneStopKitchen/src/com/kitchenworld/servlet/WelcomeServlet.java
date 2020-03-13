@@ -26,6 +26,8 @@ import com.kitchenworld.services.CategoryService;
 
 /**
  * Servlet implementation class WelcomeServlet
+ * 
+ * @author Nabeel
  */
 @WebServlet(description = "Servlet to handle the landing page information", urlPatterns = { "/welcome" })
 public class WelcomeServlet extends HttpServlet {
@@ -42,6 +44,7 @@ public class WelcomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -57,29 +60,28 @@ public class WelcomeServlet extends HttpServlet {
 		} else {
 			cart = (Cart) session.getAttribute("userCart");
 
-			if (session.getAttribute("loggedInUser") != null){
+			if (session.getAttribute("loggedInUser") != null) {
 				int cartQuantity = 0;
 
 				CartService cs = new CartService();
 				cartItemList = cs.findAllItemsInCart(cart.getCartId());
-				
-					for (CartItems item : cartItemList) {
-						cartQuantity += item.getQuantity();
-					}
-					session.setAttribute("userCartQuantity", cartQuantity);
+
+				for (CartItems item : cartItemList) {
+					cartQuantity += item.getQuantity();
+				}
+				session.setAttribute("userCartQuantity", cartQuantity);
 			}
-			
-			
+
 		}
 
-		if (session.getAttribute("userCartQuantity")==null) {
+		if (session.getAttribute("userCartQuantity") == null) {
 			session.setAttribute("userCartQuantity", 0);
 		}
 
 		CategoryService cs = new CategoryService();
 		List<Category> categories = cs.findAllCategories();
 		cs.closeConnection();
-		
+
 		session.setAttribute("categories", categories);
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -89,6 +91,7 @@ public class WelcomeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

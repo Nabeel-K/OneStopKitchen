@@ -1,6 +1,11 @@
 /**
+ * Filename: Populator.java
+ * Author: Nabeel Khan
+ * Creation Date: 2-23-20 Original Creation
+ * Maint Date: 2-26-20 added more populations for new entities
+ * Maint Date: 3-1-20 Fixed method calls to reflect updated definitions
  * 
- */
+ * */
 package com.kitchenworld.drivers;
 
 import java.util.Date;
@@ -23,6 +28,8 @@ import com.kitchenworld.services.ShipmentService;
 import com.kitchenworld.services.UserService;
 
 /**
+ * Populates the database upon running
+ * 
  * @author Nabeel
  *
  */
@@ -56,9 +63,10 @@ public class Populator {
 		p.close();
 	}
 
+	/**
+	 * Runs all services necessary to populate the database
+	 */
 	private void run() {
-	
-
 		/* ADD USERS */
 		User user1 = new User("bob@gold.com", "ba4d5eaeb28b670caebbebc331d5daba", "Bob", "Stevens");
 		User user2 = new User("dobmaej@mail.com", "43a070d0ee87e7cc54345cd920528689", "John", "Doe");
@@ -251,18 +259,11 @@ public class Populator {
 		cis.addCartItem(new CartItems(1, 5, 19.99, "LE98623", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(2, 7, 39.99, "LE03023", cts.findCartById(5L)));
 		cis.addCartItem(new CartItems(3, 2, 29.99, "LE7823", cts.findCartById(5L)));
-		
-		System.out.println(cts.findCartById(1L));
-		for (CartItems item : cts.findAllItemsInCart(1L)) {
-			System.out.println(item);
-			item.setCart(null);
-			cis.deleteCartItems(cis.findCartItemsById(item.getId()));
-		}
-		cts.findCartById(1L).setCartItems(null);		
-		cts.deleteCart(cts.findCartById(1L));
-	
 	}
 
+	/**
+	 * Closes the connection to the database for all services
+	 */
 	private void close() {
 		us.closeConnection();
 		cs.closeConnection();

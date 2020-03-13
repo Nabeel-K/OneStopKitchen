@@ -21,20 +21,25 @@ import com.kitchenworld.services.ProductService;
 
 /**
  * Servlet implementation class ProductDetailServlet
+ * 
+ * @author Nabeel
  */
 @WebServlet(description = "Handles the details page for a single product", urlPatterns = { "/details" })
 public class ProductDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String productName = request.getParameter("product");
 		ProductService ps = new ProductService();
 		Product product = ps.findProductByName(productName);
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("productDetail.jsp").forward(request, response);
-		
+
 	}
 }

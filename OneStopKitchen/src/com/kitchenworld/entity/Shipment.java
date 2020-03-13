@@ -13,7 +13,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * The persistent class for the shipments database table.
+ * The persistent class for the shipments database table. Not fully implemented
+ * @author Nabeel
+
  * 
  */
 @Entity

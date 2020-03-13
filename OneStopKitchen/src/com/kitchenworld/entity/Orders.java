@@ -16,38 +16,56 @@ import java.util.List;
 /**
  * The persistent class for the orders database table.
  * 
+ * @author Nabeel
  */
 @Entity
 @Table(name = "orders")
 @NamedQueries(value = {
 		@NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.orderId = :selectId"),
 		@NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
-		@NamedQuery(name = "Orders.deleteById", query = "DELETE FROM Orders o WHERE o.orderId = :deleteId") 
-})
+		@NamedQuery(name = "Orders.deleteById", query = "DELETE FROM Orders o WHERE o.orderId = :deleteId") })
 public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id of this order
+	 */
 	@Id
 	@Column(name = "order_id", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
+	/**
+	 * Date this order was placed
+	 */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_ordered", nullable = false)
 	private Date dateOrdered;
 
+	/**
+	 * Status of this order
+	 */
 	@Column(name = "order_status", length = 15)
 	private String orderStatus;
 
+	/**
+	 * Details in this order
+	 */
 	// bi-directional many-to-one association to OrderDetail
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> orderDetails;
 
+	/**
+	 * The user this order belongs to
+	 */
 	// bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	/**
+	 * Shipments related to this order, not yet implemented
+	 */
 	// bi-directional many-to-one association to Shipment
 	@OneToMany(mappedBy = "order")
 	private List<Shipment> shipments;
@@ -56,6 +74,8 @@ public class Orders implements Serializable {
 	}
 
 	/**
+	 * Full Constructor
+	 * 
 	 * @param orderId
 	 * @param dateOrdered
 	 * @param orderStatus
@@ -65,15 +85,17 @@ public class Orders implements Serializable {
 	 */
 	public Orders(Long orderId, Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, User user,
 			List<Shipment> shipments) {
-		this.orderId = orderId;
-		this.dateOrdered = dateOrdered;
-		this.orderStatus = orderStatus;
-		this.orderDetails = orderDetails;
-		this.user = user;
-		this.shipments = shipments;
+		this.setOrderId(orderId);
+		this.setDateOrdered(dateOrdered);
+		this.setOrderStatus(orderStatus);
+		this.setOrderDetails(orderDetails);
+		this.setUser(user);
+		this.setShipments(shipments);
 	}
 
 	/**
+	 * Constructor for testing
+	 * 
 	 * @param dateOrdered
 	 * @param orderStatus
 	 * @param orderDetails
@@ -82,25 +104,26 @@ public class Orders implements Serializable {
 	 */
 	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, User user,
 			List<Shipment> shipments) {
-		this.dateOrdered = dateOrdered;
-		this.orderStatus = orderStatus;
-		this.orderDetails = orderDetails;
-		this.user = user;
-		this.shipments = shipments;
+		this.setDateOrdered(dateOrdered);
+		this.setOrderStatus(orderStatus);
+		this.setOrderDetails(orderDetails);
+		this.setUser(user);
+		this.setShipments(shipments);
 	}
 
-	// In case order was made by a guest, in which case user will be null
 	/**
+	 * In case order was made by a guest, in which case user will be null
+	 * 
 	 * @param dateOrdered
 	 * @param orderStatus
 	 * @param orderDetails
 	 * @param shipments
 	 */
 	public Orders(Date dateOrdered, String orderStatus, List<OrderDetail> orderDetails, List<Shipment> shipments) {
-		this.dateOrdered = dateOrdered;
-		this.orderStatus = orderStatus;
-		this.orderDetails = orderDetails;
-		this.shipments = shipments;
+		this.setDateOrdered(dateOrdered);
+		this.setOrderStatus(orderStatus);
+		this.setOrderDetails(orderDetails);
+		this.setShipments(shipments);
 	}
 
 	/**

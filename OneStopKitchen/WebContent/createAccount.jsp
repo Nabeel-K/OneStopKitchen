@@ -59,11 +59,6 @@
 								type="password" class="form-control" id="createPassword"
 								name="createPassword" placeholder="Password">
 						</div>
-						<div class="form-group">
-							<label for="confirmPassword">Confirm Password</label> <input
-								type="password" class="form-control" id="confirmPassword"
-								placeholder="Confirm Password">
-						</div>
 
 						<button type="submit" class="btn btn-primary">Register
 							Account</button>

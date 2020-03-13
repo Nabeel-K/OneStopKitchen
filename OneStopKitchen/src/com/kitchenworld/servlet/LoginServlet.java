@@ -23,26 +23,28 @@ import com.kitchenworld.services.UserService;
 
 /**
  * Servlet implementation class LoginServlet
+ * 
  * @author Nabeel
  */
 @WebServlet(description = "Servlet to handle validation of login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String email = request.getParameter("loginEmail");
 		String pass = request.getParameter("loginPassword");
 		UserService us = new UserService();
-		
+
 		User userLoggingIn = us.loginMatch(email, pass);
-		
-		if(userLoggingIn != null) {
+
+		if (userLoggingIn != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
 			session.setAttribute("userCart", userLoggingIn.getCart());
@@ -55,10 +57,12 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

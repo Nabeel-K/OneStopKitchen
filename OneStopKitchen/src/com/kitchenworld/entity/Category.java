@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * The persistent class for the category database table.
+ * 
  * @author Nabeel
  */
 @Entity
@@ -26,17 +27,29 @@ import java.util.List;
 public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id of this category
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "category_id", unique = true, nullable = false)
 	private Long categoryId;
 
-	@Column(name = "category_name", unique=true, nullable = false, length = 20)
+	/**
+	 * Name of this category
+	 */
+	@Column(name = "category_name", unique = true, nullable = false, length = 20)
 	private String categoryName;
-	
-	@Column(name="category_image", nullable=false)
+
+	/**
+	 * Image path of this category's image in filesystem
+	 */
+	@Column(name = "category_image", nullable = false)
 	private String imagePath;
 
+	/**
+	 * Products belonging to this category
+	 */
 	// bi-directional many-to-one association to Product
 	@OneToMany(mappedBy = "category")
 	private List<Product> products;
@@ -55,9 +68,9 @@ public class Category implements Serializable {
 		this.setCategoryId(categoryId);
 		this.setCategoryName(categoryName);
 		this.setImagePath(imagePath);
-		this.setProducts(products);	}
+		this.setProducts(products);
+	}
 
-	
 	/**
 	 * @param categoryName
 	 * @param imagePath
@@ -71,15 +84,15 @@ public class Category implements Serializable {
 
 	/**
 	 * Constructor for initial category creation when running populator
+	 * 
 	 * @param categoryName
 	 * @param imagePath
 	 */
-	public Category(String categoryName,String imagePath) {
+	public Category(String categoryName, String imagePath) {
 		this.setCategoryName(categoryName);
 		this.setImagePath(imagePath);
 	}
 
-	
 	/**
 	 * @return the categoryId
 	 */
@@ -136,7 +149,6 @@ public class Category implements Serializable {
 		this.products = products;
 	}
 
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -205,7 +217,5 @@ public class Category implements Serializable {
 		}
 		return true;
 	}
-
-	
 
 }

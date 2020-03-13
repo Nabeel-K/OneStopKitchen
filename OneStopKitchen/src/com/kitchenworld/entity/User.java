@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * The persistent class for the users database table.
  * 
+ * @author Nabeel
  */
 @Entity
 @Table(name = "users")
@@ -24,43 +25,79 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id of this user
+	 */
 	@Id
 	@Column(name = "user_id", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
-	@Column(nullable = false, unique=true, length = 320)
+	/**
+	 * Email address of this user
+	 */
+	@Column(nullable = false, unique = true, length = 320)
 	private String email;
 
+	/**
+	 * Password of this user
+	 */
 	@Column(nullable = false, length = 60)
 	private String password;
 
+	/**
+	 * First name of this user
+	 */
 	@Column(name = "first_name", nullable = false, length = 50)
 	private String firstName;
 
+	/**
+	 * Last Name of this user
+	 */
 	@Column(name = "last_name", nullable = false, length = 50)
 	private String lastName;
 
+	/**
+	 * Street address of this user
+	 */
 	@Column(length = 50)
 	private String address;
 
+	/**
+	 * City of this user
+	 */
 	@Column(length = 50)
 	private String city;
 
+	/**
+	 * Country of this user
+	 */
 	@Column(length = 3)
 	private String country;
 
+	/**
+	 * State of this user
+	 */
 	@Column(length = 50)
 	private String state;
 
+	/**
+	 * Zipcode of this user
+	 */
 	@Column(length = 20)
 	private String zipcode;
 
+	/**
+	 * Orders this user has made
+	 */
 	// bi-directional many-to-one association to Order
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Orders> orders;
 
-	@OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
+	/**
+	 * Cart of this user
+	 */
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Cart cart;
 
 	/**
@@ -106,7 +143,7 @@ public class User implements Serializable {
 	 * @param cart
 	 */
 
-	// Constructor for information regarding the users name and location
+	/** Constructor for information regarding the users name and location */
 	public User(String address, String city, String country, String email, String password, String firstName,
 			String lastName, String state, String zipcode) {
 		this.setAddress(address);
@@ -120,7 +157,7 @@ public class User implements Serializable {
 		this.setZipcode(zipcode);
 	}
 
-	// Constructor using information necessary for account creation
+	/** Constructor using information necessary for account creation */
 	public User(String email, String password, String firstName, String lastName) {
 		this.setEmail(email);
 		this.setPassword(password);

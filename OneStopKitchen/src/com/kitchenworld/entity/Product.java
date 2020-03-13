@@ -11,53 +11,71 @@ package com.kitchenworld.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the products database table.
+ * 
  * @author Nabeel
  */
 @Entity
-@Table(name="products")
-@NamedQueries(value= {
-		@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p"),
-		@NamedQuery(name="Product.findById", query="SELECT p FROM Product p WHERE p.productId = :selectId"),
-		@NamedQuery(name="Product.deleteById", query="DELETE FROM Product p WHERE p.productId = :deleteId")
-})
+@Table(name = "products")
+@NamedQueries(value = { @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
+		@NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.productId = :selectId"),
+		@NamedQuery(name = "Product.deleteById", query = "DELETE FROM Product p WHERE p.productId = :deleteId") })
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id of this product
+	 */
 	@Id
-	@Column(name="product_id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "product_id", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long productId;
 
+	/**
+	 * Description of this product
+	 */
 	@Lob
 	private String description;
 
-	@Column(nullable=false, precision=10, scale=2)
+	/**
+	 * Price of this product
+	 */
+	@Column(nullable = false, precision = 10, scale = 2)
 	private double price;
 
-	@Column(name="product_name", unique=true, nullable=false, length=50)
+	/**
+	 * Name of this product
+	 */
+	@Column(name = "product_name", unique = true, nullable = false, length = 50)
 	private String productName;
 
-	@Column(name="quantity_in_stock", nullable=false)
+	/**
+	 * Quantity left of this product
+	 */
+	@Column(name = "quantity_in_stock", nullable = false)
 	private int quantityInStock;
 
-	@Column(name="product_image", nullable=false)
+	/**
+	 * Path of this product's image in the filesystem
+	 */
+	@Column(name = "product_image", nullable = false)
 	private String imagePath;
-	
-	//bi-directional many-to-one association to Category
+
+	/**
+	 * Category of this product
+	 */
+	// bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name="category_id", nullable=false)
+	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
-	
-	
+
 	public Product() {
 	}
 
-	
-
 	/**
+	 * Full Constructor
+	 * 
 	 * @param productId
 	 * @param description
 	 * @param price
@@ -67,7 +85,7 @@ public class Product implements Serializable {
 	 * @param category
 	 */
 	public Product(Long productId, String description, double price, String productName, int quantityInStock,
-			 String imagePath, Category category) {
+			String imagePath, Category category) {
 		this.setProductId(productId);
 		this.setDescription(description);
 		this.setPrice(price);
@@ -77,8 +95,18 @@ public class Product implements Serializable {
 		this.setCategory(category);
 	}
 
-	public Product(String description, double price, String productName, int quantityInStock,
-			 String imagePath, Category category) {
+	/**
+	 * First testing Constructor
+	 * 
+	 * @param description
+	 * @param price
+	 * @param productName
+	 * @param quantityInStock
+	 * @param imagePath
+	 * @param category
+	 */
+	public Product(String description, double price, String productName, int quantityInStock, String imagePath,
+			Category category) {
 		this.setDescription(description);
 		this.setPrice(price);
 		this.setProductName(productName);
@@ -86,9 +114,17 @@ public class Product implements Serializable {
 		this.setImagePath(imagePath);
 		this.setCategory(category);
 	}
-	
-	public Product(String description, double price, String productName, int quantityInStock,
-			String imagePath) {
+
+	/**
+	 * Second testing Constructor
+	 * 
+	 * @param description
+	 * @param price
+	 * @param productName
+	 * @param quantityInStock
+	 * @param imagePath
+	 */
+	public Product(String description, double price, String productName, int quantityInStock, String imagePath) {
 		this.setDescription(description);
 		this.setPrice(price);
 		this.setProductName(productName);
@@ -96,8 +132,6 @@ public class Product implements Serializable {
 		this.setImagePath(imagePath);
 
 	}
-
-
 
 	/**
 	 * @return the productId
@@ -106,16 +140,12 @@ public class Product implements Serializable {
 		return productId;
 	}
 
-
-
 	/**
 	 * @param productId the productId to set
 	 */
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-
-
 
 	/**
 	 * @return the description
@@ -124,16 +154,12 @@ public class Product implements Serializable {
 		return description;
 	}
 
-
-
 	/**
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
 
 	/**
 	 * @return the price
@@ -142,16 +168,12 @@ public class Product implements Serializable {
 		return price;
 	}
 
-
-
 	/**
 	 * @param price the price to set
 	 */
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
-
 
 	/**
 	 * @return the productName
@@ -160,16 +182,12 @@ public class Product implements Serializable {
 		return productName;
 	}
 
-
-
 	/**
 	 * @param productName the productName to set
 	 */
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-
-
 
 	/**
 	 * @return the quantityInStock
@@ -178,16 +196,12 @@ public class Product implements Serializable {
 		return quantityInStock;
 	}
 
-
-
 	/**
 	 * @param quantityInStock the quantityInStock to set
 	 */
 	public void setQuantityInStock(int quantityInStock) {
 		this.quantityInStock = quantityInStock;
 	}
-
-
 
 	/**
 	 * @return the imagePath
@@ -196,16 +210,12 @@ public class Product implements Serializable {
 		return imagePath;
 	}
 
-
-
 	/**
 	 * @param imagePath the imagePath to set
 	 */
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-
-
 
 	/**
 	 * @return the category
@@ -214,16 +224,12 @@ public class Product implements Serializable {
 		return category;
 	}
 
-
-
 	/**
 	 * @param category the category to set
 	 */
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -246,8 +252,6 @@ public class Product implements Serializable {
 		return builder.toString();
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -262,8 +266,6 @@ public class Product implements Serializable {
 		result = prime * result + quantityInStock;
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -321,7 +323,4 @@ public class Product implements Serializable {
 		return true;
 	}
 
-
-
-	
 }

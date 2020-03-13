@@ -13,7 +13,8 @@ import javax.persistence.*;
 
 /**
  * Entity implementation class for Entity: CartItems
- *
+ * 
+ * @author Nabeel
  */
 @Entity
 @NamedQueries(value = {
@@ -22,26 +23,47 @@ import javax.persistence.*;
 		@NamedQuery(name = "CartItems.deleteById", query = "DELETE FROM CartItems c WHERE c.id = :deleteId") })
 public class CartItems implements Serializable {
 
+	/**
+	 * Id of the item
+	 */
 	@Id
 	@Column(name = "cartline_id", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * The items line number in a given cart
+	 */
 	@Column(name = "line_number", nullable = false)
 	private Integer lineNumber;
 
+	/**
+	 * The amount of this item in the cart
+	 */
 	@Column(name = "quantity")
 	private int quantity;
 
+	/**
+	 * The Price of this item
+	 */
 	@Column(name = "price_each")
 	private double priceEach;
 
+	/**
+	 * The skuNumber/name of this item
+	 */
 	@Column(name = "sku_number", nullable = false)
 	private String skuNumber;
-	
-	@Column(name="image")
+
+	/**
+	 * location of this item's image in the filesystem
+	 */
+	@Column(name = "image")
 	private String imagePath;
 
+	/**
+	 * The cart this item belongs to
+	 */
 	@ManyToOne
 	@JoinColumn(name = "cart_id", nullable = false)
 	private Cart cart;
@@ -53,6 +75,8 @@ public class CartItems implements Serializable {
 	}
 
 	/**
+	 * Full constructor
+	 * 
 	 * @param id
 	 * @param lineNumber
 	 * @param quantity
@@ -60,7 +84,8 @@ public class CartItems implements Serializable {
 	 * @param skuNumber
 	 * @param cart
 	 */
-	public CartItems(Long id, Integer lineNumber, int quantity, double priceEach, String skuNumber, String imagePath, Cart cart) {
+	public CartItems(Long id, Integer lineNumber, int quantity, double priceEach, String skuNumber, String imagePath,
+			Cart cart) {
 		this.setId(id);
 		this.setLineNumber(lineNumber);
 		this.setQuantity(quantity);
@@ -71,6 +96,8 @@ public class CartItems implements Serializable {
 	}
 
 	/**
+	 * Constructor for population and testing purposes
+	 * 
 	 * @param lineNumber
 	 * @param quantity
 	 * @param priceEach
@@ -274,7 +301,5 @@ public class CartItems implements Serializable {
 		}
 		return true;
 	}
-
-
 
 }

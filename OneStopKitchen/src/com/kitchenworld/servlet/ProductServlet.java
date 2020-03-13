@@ -24,17 +24,22 @@ import com.kitchenworld.services.ProductService;
 
 /**
  * Servlet implementation class ProductServlet
+ * 
+ * @author Nabeel
  */
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String productType = request.getParameter("category");
-		if(productType == null) {
+		if (productType == null) {
 			ProductService ps = new ProductService();
 			List<Product> allProducts = ps.findAllProducts();
 			request.setAttribute("categoryName", "All Products");
@@ -49,13 +54,16 @@ public class ProductServlet extends HttpServlet {
 			request.getRequestDispatcher("shop.jsp").forward(request, response);
 			cs.closeConnection();
 		}
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

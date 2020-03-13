@@ -35,36 +35,38 @@ public class CreateAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		User newUser = new User();
 		newUser.setFirstName(request.getParameter("firstName"));
 		newUser.setLastName(request.getParameter("lastName"));
 		newUser.setEmail(request.getParameter("loginEmail"));
 		newUser.setPassword(BCrypt.hashpw(request.getParameter("createPassword"), BCrypt.gensalt()));
-		
+
 		Cart cart = new Cart();
 		cart.setUser(newUser);
-		
+
 		UserService us = new UserService();
 		us.addUser(newUser);
 		newUser.setCart(cart);
 		List<User> allUsers = us.findAllUsers();
-		us.updateCart(allUsers.get(allUsers.size()-1).getUserId(), cart);
-		
+		us.updateCart(allUsers.get(allUsers.size() - 1).getUserId(), cart);
+
 		HttpSession session = request.getSession();
 		session.setAttribute("loggedInUser", newUser);
 		session.setAttribute("userCart", cart);
 		us.closeConnection();
 		response.sendRedirect("welcome");
-		
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

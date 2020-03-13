@@ -13,23 +13,28 @@ import com.kitchenworld.entity.CartItems;
 
 /**
  * Servlet implementation class DeleteCartItemServlet
+ * 
+ * @author Nabeel
  */
 @WebServlet("/deleteitem")
 public class DeleteCartItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
+
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String item = request.getParameter("cartItem");
-		if(!item.equals(null)) {
+		if (item != null) {
 			HttpSession session = request.getSession();
-			Cart cart =(Cart) session.getAttribute("userCart");
+			Cart cart = (Cart) session.getAttribute("userCart");
 			int itemIndexToRemove = -1;
 			int i = 0;
 			for (CartItems itemToRemove : cart.getCartItems()) {
-				if(itemToRemove.getSkuNumber().contentEquals(item)) {
+				if (itemToRemove.getSkuNumber().contentEquals(item)) {
 					itemIndexToRemove = i;
 					break;
 				}
@@ -42,9 +47,12 @@ public class DeleteCartItemServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

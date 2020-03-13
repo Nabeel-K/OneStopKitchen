@@ -30,6 +30,7 @@ import com.kitchenworld.services.OrdersService;
 
 /**
  * Servlet implementation class CompletePurchaseServlet
+ * 
  * @author Nabeel
  */
 @WebServlet("/purchase")
@@ -37,11 +38,14 @@ public class CompletePurchaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		User loggedInUser = (User) session.getAttribute("loggedInUser");
 		Cart cart = (Cart) session.getAttribute("userCart");
 		Orders order = new Orders();
@@ -49,15 +53,14 @@ public class CompletePurchaseServlet extends HttpServlet {
 
 		order.setDateOrdered(new Date());
 		order.setOrderStatus("PROCESSING");
-		
+
 		OrdersService os = new OrdersService();
 		OrderDetailsService ods = new OrderDetailsService();
-		
+
 		long idToUpdate = os.findAllOrders().size() + 1;
 
-		
 		os.addOrder(order);
-		
+
 		int i = 1;
 		for (CartItems item : cart.getCartItems()) {
 			OrderDetail orderDetail = new OrderDetail();
@@ -68,21 +71,21 @@ public class CompletePurchaseServlet extends HttpServlet {
 			orderDetail.setPriceEach(item.getPriceEach());
 			orderDetail.setQuantityOrdered(item.getQuantity());
 			orderDetail.setSkuNumber(item.getSkuNumber());
-			
+
 			orderDetails.add(orderDetail);
-			
+
 			ods.addOrderDetails(orderDetail);
 		}
 		ods.closeConnection();
-		
+
 		os.updateOrderDetailsList(idToUpdate, orderDetails);
-		
-		if(loggedInUser != null) {
+
+		if (loggedInUser != null) {
 			os.updateOrderUsers(idToUpdate, loggedInUser);
 			List<CartItems> items = cart.getCartItems();
 			CartService cs = new CartService();
 			CartItemsService cis = new CartItemsService();
-			for(CartItems item : cs.findAllItemsInCart(cart.getCartId())) {
+			for (CartItems item : cs.findAllItemsInCart(cart.getCartId())) {
 				cis.deleteCartItems(cis.findCartItemsById(item.getId()));
 			}
 			cs.closeConnection();
@@ -94,19 +97,22 @@ public class CompletePurchaseServlet extends HttpServlet {
 			Cart emptyCart = new Cart();
 			List<CartItems> cartItemList = new ArrayList<>();
 			emptyCart.setCartItems(cartItemList);
-			session.setAttribute("userCart",emptyCart);
+			session.setAttribute("userCart", emptyCart);
 		}
-		
+
 		os.closeConnection();
-		
-		session.setAttribute("userCartQuantity",0);
+
+		session.setAttribute("userCartQuantity", 0);
 		response.sendRedirect("orderplaced.jsp");
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

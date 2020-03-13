@@ -5,4 +5,4 @@
  * @author Nabeel
  *
  */
-package com.kitchenworld.constants;
+package com.kitchenworld.util;

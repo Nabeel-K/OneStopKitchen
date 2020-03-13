@@ -11,49 +11,67 @@ package com.kitchenworld.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the order_details database table.
  * 
+ * @author Nabeel
  */
 @Entity
-@Table(name="order_details")
-@NamedQueries(value= {
-		@NamedQuery(name="OrderDetail.findById", query="SELECT o FROM OrderDetail o WHERE o.id = :selectId"),
-		@NamedQuery(name="OrderDetail.findAll", query="SELECT o FROM OrderDetail o"),
-		@NamedQuery(name="OrderDetail.deleteById", query="DELETE FROM OrderDetail o WHERE o.id = :deleteId")
-})
+@Table(name = "order_details")
+@NamedQueries(value = {
+		@NamedQuery(name = "OrderDetail.findById", query = "SELECT o FROM OrderDetail o WHERE o.id = :selectId"),
+		@NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o"),
+		@NamedQuery(name = "OrderDetail.deleteById", query = "DELETE FROM OrderDetail o WHERE o.id = :deleteId") })
 public class OrderDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Id of this detail
+	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="line_id", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "line_id", unique = true, nullable = false)
 	private Long id;
-	
-	@Column(name="line_number", nullable=false)
+
+	/**
+	 * The orderDetail line number in a given order
+	 *
+	 */
+	@Column(name = "line_number", nullable = false)
 	private Integer lineNumber;
 
-	@Column(name="price_each", nullable=false, precision=10, scale=2)
+	/**
+	 * Price each of this detail
+	 */
+	@Column(name = "price_each", nullable = false, precision = 10, scale = 2)
 	private double priceEach;
 
-	@Column(name="quantity_ordered", nullable=false)
+	/**
+	 * Amount of this detail requested
+	 */
+	@Column(name = "quantity_ordered", nullable = false)
 	private int quantityOrdered;
-	
+
+	/**
+	 * SkuNumber or name of this detail
+	 */
 	@Column(name = "sku_number", nullable = false)
 	private String skuNumber;
 
-	//bi-directional many-to-one association to Order
+	/**
+	 * The order this detail belongs to
+	 */
+	// bi-directional many-to-one association to Order
 	@ManyToOne
-	@JoinColumn(name="order_id", nullable=false, updatable=false)
+	@JoinColumn(name = "order_id", nullable = false, updatable = false)
 	private Orders order;
-
 
 	public OrderDetail() {
 	}
 
-
 	/**
+	 * Full Constructor
+	 * 
 	 * @param id
 	 * @param lineNumber
 	 * @param priceEach
@@ -70,22 +88,23 @@ public class OrderDetail implements Serializable {
 		this.setSkuNumber(skuNumber);
 		this.setOrder(order);
 	}
+
 	/**
+	 * Constructor for testing purposes
+	 * 
 	 * @param lineNumber
 	 * @param priceEach
 	 * @param quantityOrdered
 	 * @param skuNumber
 	 * @param order
 	 */
-	public OrderDetail(Integer lineNumber, double priceEach, int quantityOrdered, String skuNumber,
-			Orders order) {
+	public OrderDetail(Integer lineNumber, double priceEach, int quantityOrdered, String skuNumber, Orders order) {
 		this.setLineNumber(lineNumber);
 		this.setPriceEach(priceEach);
 		this.setQuantityOrdered(quantityOrdered);
 		this.setSkuNumber(skuNumber);
 		this.setOrder(order);
 	}
-
 
 	public Long getId() {
 		return this.id;
@@ -118,16 +137,12 @@ public class OrderDetail implements Serializable {
 		return lineNumber;
 	}
 
-
-
 	/**
 	 * @param lineNumber the lineNumber to set
 	 */
 	public void setLineNumber(Integer lineNumber) {
 		this.lineNumber = lineNumber;
 	}
-
-
 
 	/**
 	 * @return the skuNumber
@@ -136,16 +151,12 @@ public class OrderDetail implements Serializable {
 		return skuNumber;
 	}
 
-
-
 	/**
 	 * @param skuNumber the skuNumber to set
 	 */
 	public void setSkuNumber(String skuNumber) {
 		this.skuNumber = skuNumber;
 	}
-
-
 
 	public Orders getOrder() {
 		return this.order;
@@ -154,7 +165,6 @@ public class OrderDetail implements Serializable {
 	public void setOrder(Orders order) {
 		this.order = order;
 	}
-
 
 	@Override
 	public String toString() {
@@ -173,7 +183,6 @@ public class OrderDetail implements Serializable {
 		return builder.toString();
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -187,7 +196,6 @@ public class OrderDetail implements Serializable {
 		result = prime * result + ((skuNumber == null) ? 0 : skuNumber.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -238,6 +246,4 @@ public class OrderDetail implements Serializable {
 		return true;
 	}
 
-
-	
 }
