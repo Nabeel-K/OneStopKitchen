@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
- * 
+ * Maint Date: 3-12-20 Updated delete method
  * 
  * 
  * */
@@ -36,7 +36,9 @@ public class OrderDetailsService extends AbstractServices {
 		Query getOrderDetails = em.createNamedQuery("OrderDetail.findById");
 		getOrderDetails.setParameter("selectId", id);
 		List<OrderDetail> results = getOrderDetails.getResultList();
-
+		if(results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 
@@ -74,10 +76,10 @@ public class OrderDetailsService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
-	public void deleteOrderDetails(Long id) {
-		Query deleteOrderDetails = em.createNamedQuery("OrderDetail.deleteById");
-		deleteOrderDetails.setParameter("deleteId", id);
-		deleteOrderDetails.executeUpdate();
+	public void deleteOrderDetails(OrderDetail detail) {
+		em.getTransaction().begin();
+		em.remove(detail);
+		em.getTransaction().commit();
 	}
 
 }

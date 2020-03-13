@@ -235,7 +235,7 @@ public class CartItems implements Serializable {
 			if (other.cart != null) {
 				return false;
 			}
-		} else if (!cart.equals(other.cart)) {
+		} else if (!cart.getCartId().equals(other.cart.getCartId())) {
 			return false;
 		}
 		if (id == null) {

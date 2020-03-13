@@ -26,6 +26,9 @@ public class CartItemsService extends AbstractServices {
 		super();
 	}
 	
+	/**
+	 * @param item
+	 */
 	public void addCartItem(CartItems item) {
 		em.getTransaction().begin();
 		em.persist(item);
@@ -36,7 +39,9 @@ public class CartItemsService extends AbstractServices {
 		Query getCartItems = em.createNamedQuery("CartItems.findById");
 		getCartItems.setParameter("selectId", id);
 		List<CartItems> results = getCartItems.getResultList();
-
+		if (results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 
@@ -88,9 +93,6 @@ public class CartItemsService extends AbstractServices {
 	}
 
 	public void deleteCartItems(CartItems item) {
-//		Query deleteCartItems = em.createNamedQuery("CartItems.deleteById");
-//		deleteCartItems.setParameter("deleteId", id);
-//		deleteCartItems.executeUpdate();
 		em.getTransaction().begin();
 		em.remove(item);
 		em.getTransaction().commit();

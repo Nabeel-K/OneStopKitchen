@@ -22,7 +22,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.User;
-import com.kitchenworld.services.CartService;
 import com.kitchenworld.services.UserService;
 
 /**

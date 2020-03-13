@@ -199,7 +199,11 @@ public class Orders implements Serializable {
 		builder.append(", orderDetails=");
 		builder.append(orderDetails);
 		builder.append(", user=");
-		builder.append(user.getEmail());
+		if (this.getUser() == null) {
+			builder.append("null");
+		} else {
+			builder.append(user.getEmail());
+		}
 		builder.append(", shipments=");
 		builder.append(shipments);
 		builder.append("]");
@@ -215,7 +219,6 @@ public class Orders implements Serializable {
 		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
 		result = prime * result + ((orderStatus == null) ? 0 : orderStatus.hashCode());
 		result = prime * result + ((shipments == null) ? 0 : shipments.hashCode());
-//		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 

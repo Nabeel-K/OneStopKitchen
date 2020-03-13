@@ -82,7 +82,6 @@ public class CompletePurchaseServlet extends HttpServlet {
 			List<CartItems> items = cart.getCartItems();
 			CartService cs = new CartService();
 			CartItemsService cis = new CartItemsService();
-			System.out.println(cs.findAllItemsInCart(cart.getCartId()));
 			for(CartItems item : cs.findAllItemsInCart(cart.getCartId())) {
 				cis.deleteCartItems(cis.findCartItemsById(item.getId()));
 			}

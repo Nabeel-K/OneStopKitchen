@@ -3,7 +3,8 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
- * 
+ * Maint Date: 3-12-20 Updated delete method
+ *
  * 
  * */
 package com.kitchenworld.services;
@@ -17,6 +18,8 @@ import com.kitchenworld.entity.OrderDetail;
 import com.kitchenworld.entity.Orders;
 import com.kitchenworld.entity.Shipment;
 import com.kitchenworld.entity.User;
+
+import static com.kitchenworld.constants.JpqlConstants.*;
 
 /**
  * @author Nabeel
@@ -37,9 +40,11 @@ public class OrdersService extends AbstractServices{
 	@SuppressWarnings("unchecked")
 	public Orders findOrderById(Long id) {
 		Query getOrder = em.createNamedQuery("Orders.findById");
-		getOrder.setParameter("selectId", id);
+		getOrder.setParameter(SELECT_ID, id);
 		List<Orders> results = getOrder.getResultList();
-		
+		if(results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 	
@@ -52,14 +57,14 @@ public class OrdersService extends AbstractServices{
 	@SuppressWarnings("unchecked")
 	public List<OrderDetail> findAllOrderDetailsInOrder(Long id) {
 		Query getDetails = em.createQuery("SELECT od from OrderDetail od JOIN od.order o WHERE o.orderId = :selectId");
-		getDetails.setParameter("selectId", id);
+		getDetails.setParameter(SELECT_ID, id);
 		return getDetails.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Shipment> findAllShipmentsInOrder(Long id){
 		Query getShipments = em.createQuery("SELECT s from Shipment s JOIN s.order o WHERE o.orderId = :selectId");
-		getShipments.setParameter("selectId", id);
+		getShipments.setParameter(SELECT_ID, id);
 		return getShipments.getResultList();
 	}
 	
@@ -98,10 +103,10 @@ public class OrdersService extends AbstractServices{
 		em.getTransaction().commit();
 	}
 	
-	public void deleteOrder(Long id) {
-		Query deleteOrder = em.createNamedQuery("Orders.deleteById");
-		deleteOrder.setParameter("deleteId", id);
-		deleteOrder.executeUpdate();
+	public void deleteOrder(Orders order) {
+		em.getTransaction().begin();
+		em.remove(order);
+		em.getTransaction().commit();
 	}
 	
 	

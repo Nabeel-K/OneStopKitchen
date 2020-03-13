@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
- * 
+ * Maint Date: 3-12-20 Updated delete method
  * 
  * */
 package com.kitchenworld.services;
@@ -130,15 +130,9 @@ public class UserService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
-	public void deleteUser(Long id) {
-		Query getUser = em.createNamedQuery("findById");
-		getUser.setParameter("selectId", id);
-		List<User> results = getUser.getResultList();
-		User user = results.get(0);
-
+	public void deleteUser(User user) {
 		em.getTransaction().begin();
 		em.remove(user);
-		em.flush();
 		em.getTransaction().commit();
 	}
 }

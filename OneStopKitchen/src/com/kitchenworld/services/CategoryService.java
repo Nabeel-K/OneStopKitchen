@@ -3,7 +3,7 @@
  * Author: Nabeel Khan
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
- *
+ * Maint Date: 3-12-29 Updated delete method
  * 
  * 
  * */
@@ -37,6 +37,9 @@ public class CategoryService extends AbstractServices {
 		Query getCategory = em.createNamedQuery("Category.findById");
 		getCategory.setParameter("selectId", id);
 		List<Category> results = getCategory.getResultList();
+		if(results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 
@@ -67,9 +70,9 @@ public class CategoryService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
-	public void deleteCategory(Long id) {
-		Query deleteCategory = em.createNamedQuery("Category.deleteById");
-		deleteCategory.setParameter("deleteId", id);
-		deleteCategory.executeUpdate();
+	public void deleteCategory(Category category) {
+		em.getTransaction().begin();
+		em.remove(category);
+		em.getTransaction().commit();
 	}
 }

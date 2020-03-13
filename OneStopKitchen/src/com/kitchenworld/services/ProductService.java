@@ -4,6 +4,7 @@
  * Creation Date: 2-19-20 Original Creation
  * Maint Date: 2-23-20 Updated Constructor
  * Maint Date: 2-25-20 Added find by name method
+ * Maint Date: 3-12-20 Updated delete method
  * 
  * */
 package com.kitchenworld.services;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.kitchenworld.entity.Category;
 import com.kitchenworld.entity.Product;
 
 /**
@@ -36,7 +36,9 @@ public class ProductService extends AbstractServices {
 		Query getProduct = em.createNamedQuery("Product.findById");
 		getProduct.setParameter("selectId", id);
 		List<Product> results = getProduct.getResultList();
-
+		if(results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 
@@ -51,9 +53,7 @@ public class ProductService extends AbstractServices {
 	@SuppressWarnings("unchecked")
 	public List<Product> findAllProducts() {
 		Query getProducts = em.createNamedQuery("Product.findAll");
-		List<Product> results = getProducts.getResultList();
-
-		return results;
+		return getProducts.getResultList();
 	}
 
 	public void updateProductName(Long id, String newName) {
@@ -84,16 +84,10 @@ public class ProductService extends AbstractServices {
 		em.getTransaction().commit();
 	}
 
-	public void updateProductCategory(Long id, Category category) {
-		em.getTransaction().begin();
-		Product productToUpdate = em.find(Product.class, id);
-		productToUpdate.setCategory(category);
-		em.getTransaction().commit();
-	}
 
-	public void deleteProduct(Long id) {
-		Query deleteProduct = em.createNamedQuery("Product.deleteById");
-		deleteProduct.setParameter("deleteId", id);
-		deleteProduct.executeUpdate();
+	public void deleteProduct(Product product) {
+		em.getTransaction().begin();
+		em.remove(product);
+		em.getTransaction().commit();
 	}
 }

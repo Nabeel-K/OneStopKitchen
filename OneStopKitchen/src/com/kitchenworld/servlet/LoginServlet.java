@@ -18,12 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kitchenworld.entity.Cart;
 import com.kitchenworld.entity.User;
 import com.kitchenworld.services.UserService;
 
 /**
  * Servlet implementation class LoginServlet
+ * @author Nabeel
  */
 @WebServlet(description = "Servlet to handle validation of login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
@@ -43,7 +43,6 @@ public class LoginServlet extends HttpServlet {
 		User userLoggingIn = us.loginMatch(email, pass);
 		
 		if(userLoggingIn != null) {
-			System.out.println(userLoggingIn.getCart());
 			HttpSession session = request.getSession();
 			session.setAttribute("loggedInUser", userLoggingIn);
 			session.setAttribute("userCart", userLoggingIn.getCart());

@@ -281,7 +281,7 @@ public class Product implements Serializable {
 			if (other.category != null) {
 				return false;
 			}
-		} else if (!category.equals(other.category)) {
+		} else if (!category.getCategoryName().equals(other.category.getCategoryName())) {
 			return false;
 		}
 		if (description == null) {

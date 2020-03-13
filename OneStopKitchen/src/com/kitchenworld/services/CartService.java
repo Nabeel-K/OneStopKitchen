@@ -21,11 +21,11 @@ import com.kitchenworld.entity.CartItems;
  *
  */
 public class CartService extends AbstractServices {
-	
+
 	public CartService() {
 		super();
 	}
-	
+
 	public void addCart(Cart cart) {
 		em.getTransaction().begin();
 		em.persist(cart);
@@ -37,7 +37,9 @@ public class CartService extends AbstractServices {
 		Query getCart = em.createNamedQuery("Cart.findById");
 		getCart.setParameter("selectId", id);
 		List<Cart> results = getCart.getResultList();
-
+		if(results.isEmpty()) {
+			return null;
+		}
 		return results.get(0);
 	}
 
@@ -62,17 +64,9 @@ public class CartService extends AbstractServices {
 	}
 
 	public void deleteCart(Cart cart) {
-//		Query deleteCart = em.createNamedQuery("Cart.deleteById");
-//		deleteCart.setParameter("deleteId", id);
-//		deleteCart.executeUpdate();
 		em.getTransaction().begin();
 		em.remove(cart);
 		em.getTransaction().commit();
-	}
-	
-	public void deleteAllItemsInCart(Long id) {
-		Query deleteItems = em.createQuery("DELETE FROM CartItems WHERE cart_id = :deleteId");
-		deleteItems.setParameter("deleteId",id).executeUpdate();
 	}
 
 }

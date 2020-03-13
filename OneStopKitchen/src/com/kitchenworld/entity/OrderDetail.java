@@ -19,7 +19,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="order_details")
 @NamedQueries(value= {
-		@NamedQuery(name="OrderDetail.findById", query="SELECT o FROM OrderDetail o WHERE o.id = :selectKey"),
+		@NamedQuery(name="OrderDetail.findById", query="SELECT o FROM OrderDetail o WHERE o.id = :selectId"),
 		@NamedQuery(name="OrderDetail.findAll", query="SELECT o FROM OrderDetail o"),
 		@NamedQuery(name="OrderDetail.deleteById", query="DELETE FROM OrderDetail o WHERE o.id = :deleteId")
 })
